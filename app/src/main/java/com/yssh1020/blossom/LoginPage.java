@@ -144,6 +144,13 @@ public class LoginPage extends FragmentActivity {
                 if(!userdata.isError()){
                     Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
 
+                    //로그인 성공 후 메인화면으로 이동
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
                 }else{
                     Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
