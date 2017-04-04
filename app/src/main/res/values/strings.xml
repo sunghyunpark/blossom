@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Blossom</string>
+    <!--로그인 인트로 화면-->
+    <string name="login_txt1">Welcome</string>
+    <string name="login_txt2">별다른 가입 절차 없이 생년과 성별만 선택하시면 바로 이용할 수 있습니다</string>
+    <string name="login_birth_btn_txt">년도 선택</string>
+    <string name="login_gender_male_txt">남성</string>
+    <string name="login_gender_female_txt">여성</string>
+    <string name="login_start_txt">시작하기</string>
+    <string name="no_selected_birth_alert_txt">생년월일을 선택해주세요</string>
+</resources>
