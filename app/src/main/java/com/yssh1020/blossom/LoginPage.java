@@ -31,6 +31,8 @@ import retrofit2.Response;
 
 public class LoginPage extends FragmentActivity {
 
+    private SessionManager mSessionManager;
+
     //Viewpager
     private ViewPager mViewPager;
 
@@ -54,6 +56,7 @@ public class LoginPage extends FragmentActivity {
      * 화면 초기화
      */
     private void InitView(){
+        mSessionManager = new SessionManager(getApplicationContext());
         final ImageView select_circle1 = (ImageView) findViewById(R.id.circle_1);
         final ImageView select_circle2 = (ImageView) findViewById(R.id.circle_2);
         register_layout = (ViewGroup)findViewById(R.id.register_layout);
@@ -143,6 +146,8 @@ public class LoginPage extends FragmentActivity {
                 UserResponse userdata = response.body();
                 if(!userdata.isError()){
                     Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
+
+                    mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
 
                     //로그인 성공 후 메인화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

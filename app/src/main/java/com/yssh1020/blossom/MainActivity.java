@@ -20,6 +20,8 @@ import tab5.FragmentPage5;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
+    private SessionManager session;    // session
+
     ImageView tab1, tab2, tab3, tab4, tab5;    //하단 탭 버튼들
     private ViewGroup bottom_tab_menu;
 
@@ -34,7 +36,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         startActivity(new Intent(getApplicationContext(), SplashPage.class));
 
         InitData();
-        InitView();
     }
 
     private void InitData(){
@@ -44,6 +45,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         AppController.getInstance().setDISPLAY_WIDTH(display.getWidth());
         AppController.getInstance().setDISPLAY_HEIGHT(display.getHeight());
         AppController.getInstance().setServer_base_ip("http://sunghyun1020.cafe24.com/blossom/");
+
+        session = new SessionManager(getApplicationContext());
+        if(!session.isLoggedIn()){
+            //세션 만료
+            startActivity(new Intent(getApplicationContext(),LoginPage.class));
+            finish();
+        }else{
+            InitView();
+        }
     }
 
     private void InitView(){
