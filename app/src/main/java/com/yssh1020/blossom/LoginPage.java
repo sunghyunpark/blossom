@@ -21,10 +21,12 @@ import com.squareup.otto.Subscribe;
 import api.ApiClient;
 import api.ApiInterface;
 import db.RealmConfig;
+import db.model.UserData;
 import dialog.SelectBirthDialog;
 import event.BusProvider;
 import event.GenderSelectEvent;
 import io.realm.Realm;
+import model.User;
 import model.UserResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -114,13 +116,24 @@ public class LoginPage extends FragmentActivity {
         });
     }
 
+    /**
+     * realm 초기화
+     */
     private void InitDB(){
         realmConfig = new RealmConfig();
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
     }
 
-    private void InsertDB(){
+    private void InsertDB(String uid, String email, String birth, String gender, String created_at){
         mRealm.beginTransaction();
+        UserData userData = new UserData();
+        userData.setUid(Integer.parseInt(uid));
+        userData.setEmail(email);
+        userData.setBirth(birth);
+        userData.setGender(gender);
+        userData.setCreated_at(created_at);
+        mRealm.copyToRealmOrUpdate(userData);
+        mRealm.commitTransaction();
 
     }
 
@@ -162,6 +175,16 @@ public class LoginPage extends FragmentActivity {
                     Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
 
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
+                    User.getInstance().setUid(userdata.getUser().getUid());
+                    User.getInstance().setEmail(userdata.getUser().getEmail());
+                    User.getInstance().setBirth(userdata.getUser().getBirth());
+                    User.getInstance().setGender(userdata.getUser().getGender());
+                    User.getInstance().setCreated_at(userdata.getUser().getCreated_at());
+
+                    //realm에 저장
+                    InsertDB(userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getBirth(),
+                            userdata.getUser().getGender(), userdata.getUser().getCreated_at());
+
                     //로그인 성공 후 메인화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

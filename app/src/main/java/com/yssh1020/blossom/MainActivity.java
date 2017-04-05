@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import db.RealmConfig;
+import db.model.UserData;
+import io.realm.Realm;
+import model.User;
 import tab1.FragmentPage1;
 import tab2.FragmentPage2;
 import tab4.FragmentPage4;
@@ -27,6 +32,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     //현재 페이지
     private int current_page;
+    //realm
+    private Realm mRealm;
+    private RealmConfig realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             finish();
         }else{
             InitView();
+            realmConfig = new RealmConfig();
+            mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+            UserData user = mRealm.where(UserData.class).equalTo("uid",Integer.parseInt(User.getInstance().getUid())).findFirst();
+            Log.d("UserInfo", "UserUid : "+user.getUid()+"");
+            Log.d("UserInfo", "UserEmail : "+user.getEmail());
+            Log.d("UserInfo", "UserBirth : "+user.getBirth());
+            Log.d("UserInfo", "UserGender : "+user.getGender());
+            Log.d("UserInfo", "Created_at : "+user.getCreated_at());
         }
     }
 
