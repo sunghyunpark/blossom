@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import db.RealmConfig;
 import db.model.UserData;
@@ -65,14 +66,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             finish();
         }else{
             InitView();
-            realmConfig = new RealmConfig();
-            mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
-            UserData user = mRealm.where(UserData.class).equalTo("uid",Integer.parseInt(User.getInstance().getUid())).findFirst();
-            Log.d("UserInfo", "UserUid : "+user.getUid()+"");
-            Log.d("UserInfo", "UserEmail : "+user.getEmail());
-            Log.d("UserInfo", "UserBirth : "+user.getBirth());
-            Log.d("UserInfo", "UserGender : "+user.getGender());
-            Log.d("UserInfo", "Created_at : "+user.getCreated_at());
         }
     }
 
@@ -106,6 +99,26 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentTransaction.commit();
         tab1.setImageResource(R.mipmap.tab1_click_img);
         current_page = 1;
+
+        SaveUserInfo();
+    }
+
+    private void SaveUserInfo(){
+        realmConfig = new RealmConfig();
+        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+        UserData user = mRealm.where(UserData.class).equalTo("no",1).findFirst();
+
+        User.getInstance().setUid(user.getUid());
+        User.getInstance().setEmail(user.getEmail());
+        User.getInstance().setBirth(user.getBirth());
+        User.getInstance().setGender(user.getGender());
+        User.getInstance().setCreated_at(user.getCreated_at());
+        Log.d("UserInfo", "UserUid : "+user.getUid()+"");
+        Log.d("UserInfo", "UserEmail : "+user.getEmail());
+        Log.d("UserInfo", "UserBirth : "+user.getBirth());
+        Log.d("UserInfo", "UserGender : "+user.getGender());
+        Log.d("UserInfo", "Created_at : "+user.getCreated_at());
+        Toast.makeText(getApplicationContext(),User.getInstance().getUid(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

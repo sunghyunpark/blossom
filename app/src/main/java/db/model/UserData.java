@@ -7,8 +7,11 @@ import io.realm.annotations.Required;
 
 public class UserData extends RealmObject{
 
+
     @PrimaryKey
-    private int uid;
+    private int no;
+    @Required
+    private String  uid;
     @Required
     private String email;
     @Required
@@ -18,12 +21,20 @@ public class UserData extends RealmObject{
     @Required
     private String created_at;
 
+    public int getNo() {
+        return no;
+    }
 
-    public int getUid() {
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
