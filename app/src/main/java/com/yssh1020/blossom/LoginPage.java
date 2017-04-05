@@ -20,9 +20,11 @@ import com.squareup.otto.Subscribe;
 
 import api.ApiClient;
 import api.ApiInterface;
+import db.RealmConfig;
 import dialog.SelectBirthDialog;
 import event.BusProvider;
 import event.GenderSelectEvent;
+import io.realm.Realm;
 import model.UserResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +35,9 @@ public class LoginPage extends FragmentActivity {
 
     private SessionManager mSessionManager;
 
+    //realm
+    private Realm mRealm;
+    private RealmConfig realmConfig;
     //Viewpager
     private ViewPager mViewPager;
 
@@ -49,6 +54,7 @@ public class LoginPage extends FragmentActivity {
         BusProvider.getInstance().register(this);
 
         InitView();
+        InitDB();
 
     }
 
@@ -108,6 +114,16 @@ public class LoginPage extends FragmentActivity {
         });
     }
 
+    private void InitDB(){
+        realmConfig = new RealmConfig();
+        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+    }
+
+    private void InsertDB(){
+        mRealm.beginTransaction();
+
+    }
+
     /**
      * 성별 선택 초기화
      * @param male
@@ -133,11 +149,9 @@ public class LoginPage extends FragmentActivity {
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-
         /*
         최초 가입이므로 이메일 주소는 빈값
          */
-
         Call<UserResponse> call = apiService.post_user("register","",birth,gender);
         call.enqueue(new Callback<UserResponse>() {
             @Override
@@ -148,7 +162,6 @@ public class LoginPage extends FragmentActivity {
                     Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
 
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
-
                     //로그인 성공 후 메인화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

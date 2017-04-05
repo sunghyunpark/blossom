@@ -38,6 +38,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         InitData();
     }
 
+    /**
+     * 단말기 정보(가로/세로 크기)
+     * server ip
+     */
     private void InitData(){
         Display display;
         display = ((WindowManager)getApplicationContext().getSystemService(getApplicationContext().WINDOW_SERVICE)).getDefaultDisplay();
