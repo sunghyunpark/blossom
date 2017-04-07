@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray">
+
+
+    <ImageView
+        android:id="@+id/background_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorHalfBlack"></LinearLayout>
+
+    <EditText
+        android:id="@+id/article_text_edit_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:hint="@string/article_edit_box_hint"
+        android:textColorHint="@color/colorGray"
+        android:textColor="@color/colorWhite"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:textSize="20dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <!--아이콘 색상 dbdbdb-->
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/close_btn"
+            android:layout_centerVertical="true"/>
+
+        <Button
+            android:id="@+id/save_btb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:textColor="@color/upload_page_color"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:text="@string/article_upload_save_txt"/>
+    </RelativeLayout>
+
+</RelativeLayout>

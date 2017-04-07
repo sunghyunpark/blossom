@@ -21,6 +21,7 @@ import io.realm.Realm;
 import model.User;
 import tab1.FragmentPage1;
 import tab2.FragmentPage2;
+import tab3.Upload_Article;
 import tab4.FragmentPage4;
 import tab5.FragmentPage5;
 
@@ -166,6 +167,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 break ;
             case R.id.tab_3 :
+                startActivity(new Intent(getApplicationContext(), Upload_Article.class));
 
                 break ;
             case R.id.tab_4:
