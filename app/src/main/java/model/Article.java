@@ -8,7 +8,7 @@ package model;
 public class Article {
 
     private String article_text;
-    private String article_picture;
+    private String article_photo;
     private String article_created_at;
 
     public String getArticle_text() {
@@ -19,12 +19,12 @@ public class Article {
         this.article_text = article_text;
     }
 
-    public String getArticle_picture() {
-        return article_picture;
+    public String getArticle_photo() {
+        return article_photo;
     }
 
-    public void setArticle_picture(String article_picture) {
-        this.article_picture = article_picture;
+    public void setArticle_photo(String article_photo) {
+        this.article_photo = article_photo;
     }
 
     public String getArticle_created_at() {

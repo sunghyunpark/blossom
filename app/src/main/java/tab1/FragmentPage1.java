@@ -65,12 +65,12 @@ public class FragmentPage1 extends Fragment {
         Article a = new Article();
         a.setArticle_text("test1");
         a.setArticle_created_at("123");
-        a.setArticle_picture("asdf");
+        a.setArticle_photo("asdf");
         listItems.add(a);
         Article a2 = new Article();
         a2.setArticle_text("test2");
         a2.setArticle_created_at("123");
-        a2.setArticle_picture("asdf");
+        a2.setArticle_photo("asdf");
         listItems.add(a2);
 
         mCardAdapter = new CardsDataAdapter(getActivity(), listItems);

@@ -1,8 +1,8 @@
 package tab3;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +14,13 @@ import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
+import api.ApiClient;
+import api.ApiInterface;
+import model.CommonResponse;
 import model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Upload_Article extends Activity {
@@ -50,15 +56,43 @@ public class Upload_Article extends Activity {
                 .into(bg_img);
     }
 
-    private void Upload_Article(String udi, String article_text, String article_photo){
+    /**
+     * 아티클 업로드
+     * @param uid -> 사용자 id
+     * @param article_text -> article 내용
+     * @param article_photo -> article 사진
+     */
+    private void Upload_Article(String uid, String article_text, String article_photo){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        /*
+        최초 가입이므로 이메일 주소는 빈값
+         */
+        Call<CommonResponse> call = apiService.post_article("upload",uid,article_text,article_photo);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
 
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
     }
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            Resources res = getResources();
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.setAlpha(0.55f);
             }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
