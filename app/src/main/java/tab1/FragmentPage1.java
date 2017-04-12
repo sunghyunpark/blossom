@@ -57,41 +57,21 @@ public class FragmentPage1 extends Fragment {
             }
         }
 
-        mCardStack = (CardStack) v.findViewById(R.id.container);
-
-        mCardStack.setContentResource(R.layout.card_content);
-        //mCardStack.setEnableLoop(true);
-        //mCardStack.setEnableRotation(true);
-        //mCardStack.setStackMargin(20);
-
-        listItems = new ArrayList<Article>();
-        Article a = new Article();
-        a.setArticle_text("test1");
-        a.setArticle_created_at("123");
-        a.setArticle_photo("asdf");
-        listItems.add(a);
-        Article a2 = new Article();
-        a2.setArticle_text("test2");
-        a2.setArticle_created_at("123");
-        a2.setArticle_photo("asdf");
-        listItems.add(a2);
-
-        mCardAdapter = new CardsDataAdapter(getActivity(), listItems);
-        mCardAdapter.add(listItems.get(0));
-        mCardAdapter.add(listItems.get(1));
-
-        mCardStack.setAdapter(mCardAdapter);
-        mCardStack.setVisibleCardNum(2);
-        if (mCardStack.getAdapter() != null) {
-            Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
-        }
-
         LoadArticle();
 
         return v;
     }
 
     private void LoadArticle(){
+        mCardStack = (CardStack) v.findViewById(R.id.container);
+        mCardStack.setContentResource(R.layout.card_content);
+        //mCardStack.setEnableLoop(true);
+        //mCardStack.setEnableRotation(true);
+        //mCardStack.setStackMargin(20);
+
+        listItems = new ArrayList<Article>();
+        mCardAdapter = new CardsDataAdapter(getActivity(), listItems);
+
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -104,6 +84,23 @@ public class FragmentPage1 extends Fragment {
                 if(!articleResponse.isError()){
                     Toast.makeText(getActivity(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
 
+                    int dataSize = articleResponse.getArticle().size();
+                    Article article;
+                    for(int i=0;i<dataSize;i++){
+                        article = new Article();
+                        article.setArticle_id(articleResponse.getArticle().get(i).getArticle_id());
+                        article.setUid(articleResponse.getArticle().get(i).getUid());
+                        article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
+                        article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
+                        article.setArticle_created_at(articleResponse.getArticle().get(i).getArticle_created_at());
+                        listItems.add(article);
+                        mCardAdapter.add(listItems.get(i));
+                    }
+                    mCardStack.setAdapter(mCardAdapter);
+                    mCardStack.setVisibleCardNum(2);
+                    if (mCardStack.getAdapter() != null) {
+                        Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
+                    }
 
                 }else{
                     Toast.makeText(getActivity(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
