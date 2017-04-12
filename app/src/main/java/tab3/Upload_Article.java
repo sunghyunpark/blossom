@@ -26,6 +26,7 @@ public class Upload_Article extends Activity {
     private ImageView bg_img;    //백그라운드 배경
     private EditText article_edit_box;
     private Button save_btn;
+    private ImageView back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,9 @@ public class Upload_Article extends Activity {
         bg_img = (ImageView)findViewById(R.id.background_img);
         article_edit_box = (EditText)findViewById(R.id.article_text_edit_box);
         save_btn = (Button)findViewById(R.id.save_btb);
+        back_btn = (ImageView)findViewById(R.id.back_btn);
         save_btn.setOnTouchListener(myOnTouchListener);
+        back_btn.setOnTouchListener(myOnTouchListener);
 
         LoadBackground();
     }
@@ -98,6 +101,10 @@ public class Upload_Article extends Activity {
                     case R.id.save_btb:
                         String article_text_str = article_edit_box.getText().toString();
                         Upload_Article(User.getInstance().getUid(), article_text_str, "img/img3.jpg" );
+                        finish();
+                        break;
+
+                    case R.id.back_btn:
                         finish();
                         break;
 
