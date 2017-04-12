@@ -9,11 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
-
 import api.ApiClient;
 import api.ApiInterface;
 import model.CommonResponse;
@@ -65,9 +63,6 @@ public class Upload_Article extends Activity {
     private void Upload_Article(String uid, String article_text, String article_photo){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        /*
-        최초 가입이므로 이메일 주소는 빈값
-         */
         Call<CommonResponse> call = apiService.post_article("upload",uid,article_text,article_photo);
         call.enqueue(new Callback<CommonResponse>() {
             @Override
@@ -102,8 +97,7 @@ public class Upload_Article extends Activity {
                 switch(v.getId()){
                     case R.id.save_btb:
                         String article_text_str = article_edit_box.getText().toString();
-                        Upload_Article(User.getInstance().getUid(), article_text_str,
-                                AppController.getInstance().getServer_base_ip()+"img/img3.jpg" );
+                        Upload_Article(User.getInstance().getUid(), article_text_str, "img/img3.jpg" );
                         finish();
                         break;
 

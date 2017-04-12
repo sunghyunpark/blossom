@@ -88,4 +88,8 @@ public class FragmentPage1 extends Fragment {
         return v;
     }
 
+    private void LoadArticle(){
+
+    }
+
 }
