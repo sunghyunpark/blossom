@@ -166,7 +166,7 @@ public class LoginPage extends FragmentActivity {
         /*
         최초 가입이므로 이메일 주소는 빈값
          */
-        Call<UserResponse> call = apiService.post_user("register","",birth,gender);
+        Call<UserResponse> call = apiService.PostUser("register","",birth,gender);
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {

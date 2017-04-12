@@ -7,9 +7,27 @@ package model;
 
 public class Article {
 
+    private String article_id;
+    private String uid;
     private String article_text;
     private String article_photo;
     private String article_created_at;
+
+    public String getArticle_id() {
+        return article_id;
+    }
+
+    public void setArticle_id(String article_id) {
+        this.article_id = article_id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getArticle_text() {
         return article_text;

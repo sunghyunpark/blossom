@@ -4,17 +4,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.yssh1020.blossom.R;
-
 import java.util.ArrayList;
-
 import adapter.CardsDataAdapter;
+import api.ApiClient;
+import api.ApiInterface;
 import cardstack.CardStack;
 import model.Article;
+import model.ArticleResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * created by sunghyun 2017-03-27
@@ -59,7 +62,7 @@ public class FragmentPage1 extends Fragment {
         mCardStack.setContentResource(R.layout.card_content);
         //mCardStack.setEnableLoop(true);
         //mCardStack.setEnableRotation(true);
-//        mCardStack.setStackMargin(20);
+        //mCardStack.setStackMargin(20);
 
         listItems = new ArrayList<Article>();
         Article a = new Article();
@@ -83,13 +86,36 @@ public class FragmentPage1 extends Fragment {
             Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
         }
 
-
+        LoadArticle();
 
         return v;
     }
 
     private void LoadArticle(){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
 
+        Call<ArticleResponse> call = apiService.GetArticle("article");
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+
+                ArticleResponse articleResponse = response.body();
+                if(!articleResponse.isError()){
+                    Toast.makeText(getActivity(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
+
+                }else{
+                    Toast.makeText(getActivity(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
     }
 
 }

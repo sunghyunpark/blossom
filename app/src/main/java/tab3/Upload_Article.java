@@ -63,7 +63,7 @@ public class Upload_Article extends Activity {
     private void Upload_Article(String uid, String article_text, String article_photo){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<CommonResponse> call = apiService.post_article("upload",uid,article_text,article_photo);
+        Call<CommonResponse> call = apiService.PostArticle("upload",uid,article_text,article_photo);
         call.enqueue(new Callback<CommonResponse>() {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
