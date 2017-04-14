@@ -18,6 +18,8 @@ import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
 
+import event.BusProvider;
+import event.SelectArticleBGEvent;
 import model.ArticleBg;
 
 
@@ -92,6 +94,13 @@ public class SelectBG_Activity extends Activity {
                 final ArticleBG_VHitem VHitem = (ArticleBG_VHitem)holder;
 
                 VHitem.article_bg_img_layout.setLayoutParams(Set_HalfSize_Display(getApplicationContext()));
+                VHitem.article_bg_img_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        BusProvider.getInstance().post(new SelectArticleBGEvent(currentItem.getArticle_background_url()));
+                        finish();
+                    }
+                });
 
                 Picasso.with(getApplicationContext())
                         .load(AppController.getInstance().getServer_img_path()+"article_bg/"+currentItem.getArticle_background_url())

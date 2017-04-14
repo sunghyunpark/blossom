@@ -10,11 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 import api.ApiClient;
 import api.ApiInterface;
+import event.BusProvider;
+import event.SelectArticleBGEvent;
 import model.CommonResponse;
 import model.User;
 import retrofit2.Call;
@@ -28,11 +32,14 @@ public class Upload_Article extends Activity {
     private EditText article_edit_box;
     private Button save_btn;
     private ImageView back_btn, select_bg_btn;
+    private String imgPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_article);
+
+        BusProvider.getInstance().register(this);
 
         InitView();
 
@@ -48,15 +55,15 @@ public class Upload_Article extends Activity {
         back_btn.setOnTouchListener(myOnTouchListener);
         select_bg_btn.setOnTouchListener(myOnTouchListener);
 
-        LoadBackground();
+        LoadBackground(AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_1.jpg");
     }
 
     /**
      * Background Img Load
      */
-    private void LoadBackground(){
+    private void LoadBackground(String imgPath){
         Picasso.with(getApplicationContext())
-                .load(AppController.getInstance().getServer_base_ip()+"img/img3.jpg")
+                .load(imgPath)
                 .into(bg_img);
     }
 
@@ -88,6 +95,18 @@ public class Upload_Article extends Activity {
                 Log.e("tag", t.toString());
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Always unregister when an object no longer should be on the bus.
+        BusProvider.getInstance().unregister(this);
+        super.onDestroy();
+    }
+    @Subscribe
+    public void FinishLoad(SelectArticleBGEvent mPushEvent) {
+        imgPath = mPushEvent.getImgPath();
+        LoadBackground(AppController.getInstance().getServer_img_path()+"/article_bg/"+imgPath);
     }
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
