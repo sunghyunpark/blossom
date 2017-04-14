@@ -2,6 +2,7 @@ package tab3;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -114,6 +115,7 @@ public class Upload_Article extends Activity {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            Resources res = getResources();
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.setAlpha(0.55f);
             }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
@@ -123,8 +125,13 @@ public class Upload_Article extends Activity {
                 switch(v.getId()){
                     case R.id.save_btb:
                         String article_text_str = article_edit_box.getText().toString();
-                        Upload_Article(User.getInstance().getUid(), article_text_str, imgPath);
-                        finish();
+                        article_text_str = article_text_str.trim();
+                        if(article_text_str.equals("") || article_text_str == null){
+                            Toast.makeText(getApplicationContext(),String.format(res.getString(R.string.no_exist_text)),Toast.LENGTH_SHORT).show();
+                        }else{
+                            Upload_Article(User.getInstance().getUid(), article_text_str, imgPath);
+                            finish();
+                        }
                         break;
                     case R.id.back_btn:
                         finish();
