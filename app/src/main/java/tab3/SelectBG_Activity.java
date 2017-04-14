@@ -2,6 +2,7 @@ package tab3;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +30,15 @@ public class SelectBG_Activity extends Activity {
     RecyclerAdapter adapter;
     RecyclerView recyclerView;
 
+    private int select_pos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selectbg_activity);
+
+        Intent intent = getIntent();
+        select_pos = intent.getExtras().getInt("select_pos");
 
         InitView();
 
@@ -52,7 +58,7 @@ public class SelectBG_Activity extends Activity {
 
     private void SetList(){
         ArticleBg item;
-        for(int i=1;i<=11;i++){
+        for(int i=1;i<=25;i++){
             item = new ArticleBg();
             item.setArticle_background_url("article_bg_"+i+".jpg");
             listItems.add(item);
@@ -96,7 +102,7 @@ public class SelectBG_Activity extends Activity {
                 VHitem.article_bg_img_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        BusProvider.getInstance().post(new SelectArticleBGEvent(currentItem.getArticle_background_url()));
+                        BusProvider.getInstance().post(new SelectArticleBGEvent(currentItem.getArticle_background_url(), position));
                         finish();
                     }
                 });
@@ -106,17 +112,23 @@ public class SelectBG_Activity extends Activity {
                         //.transform(PicassoTransformations.resizeTransformation)
                         .into(VHitem.article_bg_img);
 
+                if(position == select_pos){
+                    VHitem.checked_img.setVisibility(View.VISIBLE);
+                }
+
 
             }
         }
         class ArticleBG_VHitem extends RecyclerView.ViewHolder{
             ViewGroup article_bg_img_layout;
             ImageView article_bg_img;
+            ImageView checked_img;
 
             public ArticleBG_VHitem(View itemView){
                 super(itemView);
                 article_bg_img = (ImageView) itemView.findViewById(R.id.article_bg_img);
                 article_bg_img_layout = (ViewGroup)itemView.findViewById(R.id.article_bg_img_layout);
+                checked_img = (ImageView)itemView.findViewById(R.id.checked_img);
             }
         }
         @Override

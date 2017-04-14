@@ -4,9 +4,11 @@ public class SelectArticleBGEvent
 {
 
     private String imgPath;
-    public SelectArticleBGEvent(String imgPath){
-        this.imgPath = imgPath;
+    private int pos;
 
+    public SelectArticleBGEvent(String imgPath, int pos){
+        this.imgPath = imgPath;
+        this.pos = pos;
     }
 
     public String getImgPath() {
@@ -15,6 +17,14 @@ public class SelectArticleBGEvent
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 }
 

@@ -34,6 +34,7 @@ public class Upload_Article extends Activity {
     private Button save_btn;
     private ImageView back_btn, select_bg_btn;
     private String imgPath;
+    private int select_pos = 0;    //selectBG_Activity에서 선택한 아이템 position
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class Upload_Article extends Activity {
     @Subscribe
     public void FinishLoad(SelectArticleBGEvent mPushEvent) {
         imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/"+mPushEvent.getImgPath();
+        select_pos = mPushEvent.getPos();
         LoadBackground(imgPath);
     }
 
@@ -138,7 +140,9 @@ public class Upload_Article extends Activity {
                         break;
 
                     case R.id.select_bg_btn:
-                        startActivity(new Intent(getApplicationContext(), SelectBG_Activity.class));
+                        Intent intent_select_bg = new Intent(getApplicationContext(),SelectBG_Activity.class);
+                        intent_select_bg.putExtra("select_pos", select_pos);
+                        startActivity(intent_select_bg);
                         break;
 
                 }
