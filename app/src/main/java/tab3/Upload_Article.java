@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
@@ -27,13 +30,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Upload_Article extends Activity {
+public class Upload_Article extends Activity implements TextWatcher {
 
     private ImageView bg_img;    //백그라운드 배경
     private EditText article_edit_box;
     private Button save_btn;
     private ImageView back_btn, select_bg_btn;
+    private TextView article_length_txt;
     private String imgPath;
+    private String beforeStr;
     private int select_pos = 0;    //selectBG_Activity에서 선택한 아이템 position
 
     @Override
@@ -53,9 +58,11 @@ public class Upload_Article extends Activity {
         save_btn = (Button)findViewById(R.id.save_btb);
         back_btn = (ImageView)findViewById(R.id.back_btn);
         select_bg_btn = (ImageView)findViewById(R.id.select_bg_btn);
+        article_length_txt = (TextView)findViewById(R.id.article_length_txt);
         save_btn.setOnTouchListener(myOnTouchListener);
         back_btn.setOnTouchListener(myOnTouchListener);
         select_bg_btn.setOnTouchListener(myOnTouchListener);
+        article_edit_box.addTextChangedListener(this);
 
         imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_1.jpg";
         LoadBackground(imgPath);
@@ -111,6 +118,27 @@ public class Upload_Article extends Activity {
         imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/"+mPushEvent.getImgPath();
         select_pos = mPushEvent.getPos();
         LoadBackground(imgPath);
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if(s.length() >= 350)
+        {
+            Toast.makeText(getApplicationContext(), "350자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+            article_edit_box.setText(beforeStr);
+        }
+        article_length_txt.setText(s.length() + "/350자");
+        article_length_txt.setTextColor(getResources().getColor(R.color.colorSky));
+    }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count,
+                                  int after) {
+        beforeStr = s.toString();
+
+    }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
     }
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {

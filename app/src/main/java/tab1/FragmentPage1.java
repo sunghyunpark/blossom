@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.yssh1020.blossom.R;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 import adapter.CardsDataAdapter;
 import api.ApiClient;
 import api.ApiInterface;

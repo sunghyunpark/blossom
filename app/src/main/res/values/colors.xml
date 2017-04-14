@@ -10,4 +10,5 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorHalfBlack">#55000000</color>
     <color name="upload_page_color">#dbdbdb</color>
+    <color name="colorSky">#3BEBFF</color>
 </resources>

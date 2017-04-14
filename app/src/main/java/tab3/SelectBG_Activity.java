@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
@@ -58,7 +59,7 @@ public class SelectBG_Activity extends Activity {
 
     private void SetList(){
         ArticleBg item;
-        for(int i=1;i<=25;i++){
+        for(int i=1;i<=50;i++){
             item = new ArticleBg();
             item.setArticle_background_url("article_bg_"+i+".jpg");
             listItems.add(item);
@@ -107,14 +108,13 @@ public class SelectBG_Activity extends Activity {
                     }
                 });
 
-                Picasso.with(getApplicationContext())
+                Glide.clear(VHitem.article_bg_img);
+                Glide.with(getApplicationContext())
                         .load(AppController.getInstance().getServer_img_path()+"article_bg/"+currentItem.getArticle_background_url())
-                        //.transform(PicassoTransformations.resizeTransformation)
+                        //.override(display_width/3, display_width/3)
+                        .error(null)
                         .into(VHitem.article_bg_img);
 
-                if(position == select_pos){
-                    VHitem.checked_img.setVisibility(View.VISIBLE);
-                }
 
 
             }
@@ -122,13 +122,11 @@ public class SelectBG_Activity extends Activity {
         class ArticleBG_VHitem extends RecyclerView.ViewHolder{
             ViewGroup article_bg_img_layout;
             ImageView article_bg_img;
-            ImageView checked_img;
 
             public ArticleBG_VHitem(View itemView){
                 super(itemView);
                 article_bg_img = (ImageView) itemView.findViewById(R.id.article_bg_img);
                 article_bg_img_layout = (ViewGroup)itemView.findViewById(R.id.article_bg_img_layout);
-                checked_img = (ImageView)itemView.findViewById(R.id.checked_img);
             }
         }
         @Override
