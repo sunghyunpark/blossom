@@ -7,6 +7,7 @@ public class AppController {
     private int DISPLAY_WIDTH;    // 디스플레이 폭
     private int DISPLAY_HEIGHT;    // 디스플레이 높이
     private String server_base_ip;    // 서버 베이스 주소
+    private String server_img_path;    // 서버 이미지 경로
 
     public static  AppController getInstance(){
         if(appController == null)
@@ -41,6 +42,14 @@ public class AppController {
 
     public void setServer_base_ip(String server_base_ip) {
         this.server_base_ip = server_base_ip;
+    }
+
+    public String getServer_img_path() {
+        return server_img_path;
+    }
+
+    public void setServer_img_path(String server_img_path) {
+        this.server_img_path = server_img_path;
     }
 
 }

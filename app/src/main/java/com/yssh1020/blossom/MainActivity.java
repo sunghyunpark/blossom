@@ -59,6 +59,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         AppController.getInstance().setDISPLAY_WIDTH(display.getWidth());
         AppController.getInstance().setDISPLAY_HEIGHT(display.getHeight());
         AppController.getInstance().setServer_base_ip("http://sunghyun1020.cafe24.com/blossom/");
+        AppController.getInstance().setServer_img_path("http://sunghyun1020.cafe24.com/blossom/img/");
 
         session = new SessionManager(getApplicationContext());
         if(!session.isLoggedIn()){

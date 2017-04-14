@@ -1,6 +1,7 @@
 package tab3;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,7 +27,7 @@ public class Upload_Article extends Activity {
     private ImageView bg_img;    //백그라운드 배경
     private EditText article_edit_box;
     private Button save_btn;
-    private ImageView back_btn;
+    private ImageView back_btn, select_bg_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,10 @@ public class Upload_Article extends Activity {
         article_edit_box = (EditText)findViewById(R.id.article_text_edit_box);
         save_btn = (Button)findViewById(R.id.save_btb);
         back_btn = (ImageView)findViewById(R.id.back_btn);
+        select_bg_btn = (ImageView)findViewById(R.id.select_bg_btn);
         save_btn.setOnTouchListener(myOnTouchListener);
         back_btn.setOnTouchListener(myOnTouchListener);
+        select_bg_btn.setOnTouchListener(myOnTouchListener);
 
         LoadBackground();
     }
@@ -103,9 +106,12 @@ public class Upload_Article extends Activity {
                         Upload_Article(User.getInstance().getUid(), article_text_str, "img/img3.jpg" );
                         finish();
                         break;
-
                     case R.id.back_btn:
                         finish();
+                        break;
+
+                    case R.id.select_bg_btn:
+                        startActivity(new Intent(getApplicationContext(), SelectBG_Activity.class));
                         break;
 
                 }
