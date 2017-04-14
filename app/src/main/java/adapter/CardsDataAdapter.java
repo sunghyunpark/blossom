@@ -60,7 +60,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
             ImageView article_picture = (ImageView)(v.findViewById(R.id.background_img));
             Picasso.with(getContext())
-                    .load(AppController.getInstance().getServer_base_ip()+"img/img3.jpg")
+                    .load(getItem(position).getArticle_photo())
                     //.transform(PicassoTransformations.resizeTransformation)
                     .into(article_picture);
 

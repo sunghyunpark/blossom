@@ -55,7 +55,8 @@ public class Upload_Article extends Activity {
         back_btn.setOnTouchListener(myOnTouchListener);
         select_bg_btn.setOnTouchListener(myOnTouchListener);
 
-        LoadBackground(AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_1.jpg");
+        imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_1.jpg";
+        LoadBackground(imgPath);
     }
 
     /**
@@ -105,8 +106,8 @@ public class Upload_Article extends Activity {
     }
     @Subscribe
     public void FinishLoad(SelectArticleBGEvent mPushEvent) {
-        imgPath = mPushEvent.getImgPath();
-        LoadBackground(AppController.getInstance().getServer_img_path()+"/article_bg/"+imgPath);
+        imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/"+mPushEvent.getImgPath();
+        LoadBackground(imgPath);
     }
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
@@ -122,7 +123,7 @@ public class Upload_Article extends Activity {
                 switch(v.getId()){
                     case R.id.save_btb:
                         String article_text_str = article_edit_box.getText().toString();
-                        Upload_Article(User.getInstance().getUid(), article_text_str, "img/img3.jpg" );
+                        Upload_Article(User.getInstance().getUid(), article_text_str, imgPath);
                         finish();
                         break;
                     case R.id.back_btn:
