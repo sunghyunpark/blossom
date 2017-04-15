@@ -64,6 +64,12 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     //.transform(PicassoTransformations.resizeTransformation)
                     .into(article_picture);
 
+            //좋아요 갯수
+            TextView like_cnt_txt = (TextView)(v.findViewById(R.id.like_txt));
+            like_cnt_txt.setText(getItem(position).getLike_cnt());
+
+
+
         }
 
         return v;

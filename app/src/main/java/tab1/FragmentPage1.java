@@ -95,6 +95,7 @@ public class FragmentPage1 extends Fragment {
                         article.setUid(articleResponse.getArticle().get(i).getUid());
                         article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
                         article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
+                        article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
                         article.setArticle_created_at(articleResponse.getArticle().get(i).getArticle_created_at());
                         listItems.add(article);
                         mCardAdapter.add(listItems.get(i));

@@ -11,6 +11,7 @@ public class Article {
     private String uid;
     private String article_text;
     private String article_photo;
+    private String like_cnt;
     private String article_created_at;
 
     public String getArticle_id() {
@@ -43,6 +44,14 @@ public class Article {
 
     public void setArticle_photo(String article_photo) {
         this.article_photo = article_photo;
+    }
+
+    public String getLike_cnt() {
+        return like_cnt;
+    }
+
+    public void setLike_cnt(String like_cnt) {
+        this.like_cnt = like_cnt;
     }
 
     public String getArticle_created_at() {
