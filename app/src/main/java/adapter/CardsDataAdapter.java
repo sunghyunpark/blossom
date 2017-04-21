@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import common.CommonUtil;
 import common.PicassoTransformations;
 import model.Article;
+import model.User;
 
 public class CardsDataAdapter extends ArrayAdapter<Article> {
 
@@ -58,11 +59,27 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     .into(article_picture);
 
             //좋아요 버튼
-            ImageView like_btn = (ImageView)(v.findViewById(R.id.like_btn));
+            final ImageView like_btn = (ImageView)(v.findViewById(R.id.like_btn));
+            if(CurrentLikeState(position)){
+                //좋아요 일때
+                like_btn.setBackgroundResource(R.mipmap.like_btn);    //article_like_btn_img
+            }else{
+                like_btn.setBackgroundResource(R.mipmap.no_like_btn);    //article_not_like_btn_img
+            }
             like_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    commonUtil.LikeArticle(mContext, getItem(position).getUid(), getItem(position).getArticle_id());
+
+                    commonUtil.LikeArticle(mContext, User.getInstance().getUid(), getItem(position).getArticle_id(), getItem(position).getLike_state());
+
+                    if(getItem(position).getLike_state().equals("Y")){
+                        ChangeLikeState(true, position);
+                        like_btn.setBackgroundResource(R.mipmap.no_like_btn);
+                    }else{
+                        ChangeLikeState(false, position);
+                        like_btn.setBackgroundResource(R.mipmap.like_btn);
+                    }
+
 
                 }
             });
@@ -75,18 +92,32 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         return v;
     }
 
+
+    private boolean CurrentLikeState(int position){
+        boolean state = true;
+        String state_str = getItem(position).getLike_state();
+
+        if(state_str.equals("Y")){
+            state = true;
+        }else{
+            state = false;
+        }
+
+        return state;
+    }
+
     private boolean ChangeLikeState(boolean state, int position){
         int like_cnt = Integer.parseInt(getItem(position).getLike_cnt());
         if(state){
             state = false;
             like_cnt -= 1;
-            //getItem(position).setArticle_like_state("N");
+            getItem(position).setLike_state("N");
             getItem(position).setLike_cnt(""+like_cnt);
             return state;
         }else{
             like_cnt += 1;
             state = true;
-            //getItem(position).setArticle_like_state("Y");
+            getItem(position).setLike_state("Y");
             getItem(position).setLike_cnt(""+like_cnt);
             return state;
         }

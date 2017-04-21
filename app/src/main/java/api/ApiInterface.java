@@ -49,11 +49,11 @@ public interface ApiInterface {
      * @return
      */
     @GET("article/article.php")
-    Call<ArticleResponse> GetArticle(@Query("tag") String tag);
+    Call<ArticleResponse> GetArticle(@Query("tag") String tag, @Query("uid") String uid);
 
     @FormUrlEncoded
     @POST("article/like.php")
     Call<CommonResponse> PostArticleLike(@Field("tag") String tab, @Field("uid") String uid,
-                                         @Field("article_id") String article_id);
+                                         @Field("article_id") String article_id, @Field("like_state") String like_state);
 
 }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,6 +20,7 @@ import api.ApiInterface;
 import cardstack.CardStack;
 import model.Article;
 import model.ArticleResponse;
+import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,7 +81,7 @@ public class FragmentPage1 extends Fragment {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ArticleResponse> call = apiService.GetArticle("article");
+        Call<ArticleResponse> call = apiService.GetArticle("article", User.getInstance().getUid());
         call.enqueue(new Callback<ArticleResponse>() {
             @Override
             public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
@@ -96,6 +99,7 @@ public class FragmentPage1 extends Fragment {
                         article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
                         article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
                         article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
+                        article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
                         article.setArticle_created_at(articleResponse.getArticle().get(i).getArticle_created_at());
                         listItems.add(article);
                         mCardAdapter.add(listItems.get(i));

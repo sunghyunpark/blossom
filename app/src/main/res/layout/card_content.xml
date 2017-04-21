@@ -48,7 +48,7 @@
             android:layout_below="@+id/divider_layout"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp" />
         <ImageView
             android:id="@+id/comment_btn"
             android:layout_width="20dp"
@@ -76,7 +76,6 @@
             android:layout_below="@+id/divider_layout"
             android:layout_toLeftOf="@+id/like_txt"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="8dp"
-            android:src="@mipmap/no_like_btn"/>
+            android:layout_marginRight="8dp"/>
     </RelativeLayout>
 </RelativeLayout>

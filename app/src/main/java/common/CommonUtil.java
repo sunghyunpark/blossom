@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import api.ApiClient;
 import api.ApiInterface;
+import model.Article;
+import model.ArticleResponse;
 import model.CommonResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,11 +22,11 @@ public class CommonUtil {
     /**
      * article 좋아요
      */
-    public void LikeArticle(final Context context, String uid, String article_id){
+    public void LikeArticle(final Context context, String uid, String article_id, String like_state){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<CommonResponse> call = apiService.PostArticleLike("like", uid, article_id);
+        Call<CommonResponse> call = apiService.PostArticleLike("like", uid, article_id, like_state);
         call.enqueue(new Callback<CommonResponse>() {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
