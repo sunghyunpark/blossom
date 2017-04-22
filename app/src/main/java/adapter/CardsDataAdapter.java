@@ -46,8 +46,9 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         }
 
         Article article = items.get(position);
+        final TextView like_cnt_txt = (TextView)(v.findViewById(R.id.article_like_txt));
         if(article != null){
-            TextView article_text = (TextView)(v.findViewById(R.id.content));
+            TextView article_text = (TextView)(v.findViewById(R.id.article_text));
             article_text.setText(getItem(position).getArticle_text());
 
             //아티클 사진
@@ -59,7 +60,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     .into(article_picture);
 
             //좋아요 버튼
-            final ImageView like_btn = (ImageView)(v.findViewById(R.id.like_btn));
+            final ImageView like_btn = (ImageView)(v.findViewById(R.id.article_like_btn));
             if(CurrentLikeState(position)){
                 //좋아요 일때
                 like_btn.setBackgroundResource(R.mipmap.like_btn);    //article_like_btn_img
@@ -80,11 +81,11 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                         like_btn.setBackgroundResource(R.mipmap.like_btn);
                     }
 
+                    like_cnt_txt.setText(getItem(position).getLike_cnt());
 
                 }
             });
             //좋아요 갯수
-            TextView like_cnt_txt = (TextView)(v.findViewById(R.id.like_txt));
             like_cnt_txt.setText(getItem(position).getLike_cnt());
 
         }
