@@ -30,7 +30,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private SessionManager session;    // session
 
     ImageView tab1, tab2, tab3, tab4, tab5;    //하단 탭 버튼들
-    private ViewGroup bottom_tab_menu;
+    private ViewGroup bottom_tab_menu;    //하단 탭 메뉴
+    private ViewGroup app_title_bar;    //상단 타이틀 바
 
     //현재 페이지
     private int current_page;
@@ -80,6 +81,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             window.setStatusBarColor(getResources().getColor(R.color.colorGray));
         }
         bottom_tab_menu = (ViewGroup)findViewById(R.id.bottom_tab_menu);
+        app_title_bar = (ViewGroup)findViewById(R.id.app_title_bar);
         /**
          * 최초 화면 진입 시 랜딩되는 화면 및 버튼 초기화
          */
@@ -152,6 +154,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     fragment.setArguments(bundle);
                     current_page = 1;
                     is_current_page = false;
+                    app_title_bar.setVisibility(View.VISIBLE);
                 }
                 break ;
             case R.id.tab_2 :
@@ -165,11 +168,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     fragment.setArguments(bundle);
                     current_page = 2;
                     is_current_page = false;
+                    app_title_bar.setVisibility(View.VISIBLE);
                 }
                 break ;
             case R.id.tab_3 :
                 startActivity(new Intent(getApplicationContext(), Upload_Article.class));
-
+                app_title_bar.setVisibility(View.VISIBLE);
                 break ;
             case R.id.tab_4:
                 tab4.setImageResource(R.mipmap.tab4_click_img);
@@ -182,6 +186,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     fragment.setArguments(bundle);
                     current_page = 4;
                     is_current_page = false;
+                    app_title_bar.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.tab_5:
@@ -195,6 +200,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     fragment.setArguments(bundle);
                     current_page = 5;
                     is_current_page = false;
+                    app_title_bar.setVisibility(View.GONE);
                 }
                 break;
         }
