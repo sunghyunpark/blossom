@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 import tab5.viewpager.Page1;
@@ -26,6 +28,11 @@ public class FragmentPage5 extends Fragment {
     private pagerAdapter adapter;
     private static final int NUM_PAGES = 3;//페이지 수
     private int temp = 0; //현재 페이지
+
+    //상단 메뉴
+    private ViewGroup story_underbar, comment_underbar, favorite_underbar;
+    private Button story_btn, comment_btn, favorite_btn;
+
 
     View v;
 
@@ -66,6 +73,50 @@ public class FragmentPage5 extends Fragment {
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.BLACK);
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
 
+        story_underbar = (ViewGroup)v.findViewById(R.id.story_underbar);
+        comment_underbar = (ViewGroup)v.findViewById(R.id.comment_underbar);
+        favorite_underbar = (ViewGroup)v.findViewById(R.id.favorite_underbar);
+        story_btn = (Button)v.findViewById(R.id.my_story_btn);
+        comment_btn = (Button)v.findViewById(R.id.my_comment_btn);
+        favorite_btn = (Button)v.findViewById(R.id.my_favorite_btn);
+
+        story_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(0);
+                favorite_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                comment_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                story_btn.setTextColor(getResources().getColor(R.color.colorSky));
+                story_underbar.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                comment_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                favorite_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            }
+        });
+        comment_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(1);
+                favorite_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                story_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                comment_btn.setTextColor(getResources().getColor(R.color.colorSky));
+                comment_underbar.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                story_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                favorite_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            }
+        });
+        favorite_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(2);
+                story_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                comment_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                favorite_btn.setTextColor(getResources().getColor(R.color.colorSky));
+                favorite_underbar.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                comment_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                story_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            }
+        });
+
         InitViewPager();
     }
 
@@ -90,13 +141,28 @@ public class FragmentPage5 extends Fragment {
 
                 switch (temp) {
                     case 0:
-
+                        comment_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                        story_btn.setTextColor(getResources().getColor(R.color.colorSky));
+                        favorite_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                        story_underbar.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                        comment_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                        favorite_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                         break;
                     case 1:
-
+                        story_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                        comment_btn.setTextColor(getResources().getColor(R.color.colorSky));
+                        favorite_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                        comment_underbar.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                        story_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                        favorite_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                         break;
                     case 2:
-
+                        comment_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                        favorite_btn.setTextColor(getResources().getColor(R.color.colorSky));
+                        story_btn.setTextColor(getResources().getColor(R.color.colorGray));
+                        favorite_underbar.setBackgroundColor(getResources().getColor(R.color.colorSky));
+                        comment_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                        story_underbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                         break;
                 }
             }

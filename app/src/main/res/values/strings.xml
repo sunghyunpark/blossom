@@ -13,4 +13,9 @@
     <string name="article_edit_box_hint">생각을 자유롭게 적어보세요.</string>
     <string name="article_upload_save_txt">저장</string>
     <string name="no_exist_text">내용을 입력해주세요.</string>
+
+    <!--Tab5-->
+    <string name="tab5_viewpager_menu_title_1">이야기</string>
+    <string name="tab5_viewpager_menu_title_2">내 댓글</string>
+    <string name="tab5_viewpager_menu_title_3">북마크</string>
 </resources>
