@@ -23,4 +23,24 @@
         android:paddingRight="15dp"
         android:ellipsize="end"
         android:textSize="15dp"/>
+
+    <ImageView
+        android:id="@+id/more_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp"
+        android:src="@mipmap/more_btn_img"/>
+
+    <TextView
+        android:id="@+id/article_etc_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/tab5_my_public_article_etc_txt"
+        android:textColor="#dbdbdb"/>
 </RelativeLayout>

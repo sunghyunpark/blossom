@@ -13,7 +13,7 @@ public class Article {
     private String article_photo;
     private String like_cnt;
     private String like_state;
-    private String article_created_at;
+    private String created_at;
 
     public String getArticle_id() {
         return article_id;
@@ -63,12 +63,12 @@ public class Article {
         this.like_state = like_state;
     }
 
-    public String getArticle_created_at() {
-        return article_created_at;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setArticle_created_at(String article_created_at) {
-        this.article_created_at = article_created_at;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
 }
