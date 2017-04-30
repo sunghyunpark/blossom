@@ -51,9 +51,26 @@ public interface ApiInterface {
     @GET("article/article.php")
     Call<ArticleResponse> GetArticle(@Query("tag") String tag, @Query("uid") String uid);
 
+    /**
+     * article like
+     * @param tag -> like
+     * @param uid
+     * @param article_id
+     * @param like_state
+     * @return
+     */
     @FormUrlEncoded
     @POST("article/like.php")
-    Call<CommonResponse> PostArticleLike(@Field("tag") String tab, @Field("uid") String uid,
+    Call<CommonResponse> PostArticleLike(@Field("tag") String tag, @Field("uid") String uid,
                                          @Field("article_id") String article_id, @Field("like_state") String like_state);
+
+    /**
+     * my article
+     * @param tag -> my_article
+     * @param uid
+     * @return
+     */
+    @GET("article/article.php")
+    Call<ArticleResponse> GetMyArticle(@Query("tag") String tag, @Query("uid") String uid);
 
 }
