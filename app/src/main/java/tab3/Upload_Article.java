@@ -115,7 +115,7 @@ public class Upload_Article extends Activity implements TextWatcher {
     }
     @Subscribe
     public void FinishLoad(SelectArticleBGEvent mPushEvent) {
-        imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/"+mPushEvent.getImgPath();
+        imgPath = AppController.getInstance().getServer_img_path()+"article_bg/"+mPushEvent.getImgPath();
         select_pos = mPushEvent.getPos();
         LoadBackground(imgPath);
     }

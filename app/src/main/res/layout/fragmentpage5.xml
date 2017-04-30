@@ -31,13 +31,71 @@
                     app:layout_collapseParallaxMultiplier="0.7"/>
 
                 <TextView
+                    android:id="@+id/background_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:textSize="20dp"
-                    android:text="있는 그대로의 나"
+                    android:text="@string/tab5_background_title_txt"
                     android:textColor="@color/colorWhite"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/background_txt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/tab5_background_btn_shape">
+                        <TextView
+                            android:id="@+id/seed_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="#dbdbdb"
+                            android:layout_centerVertical="true"
+                            android:text="13"/>
+                        <ImageView
+                            android:id="@+id/seed_img"
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/seed_txt"
+                            android:src="@mipmap/seed_img"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:padding="7dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/tab5_background_btn_shape">
+                        <TextView
+                            android:id="@+id/my_story_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textColor="#dbdbdb"
+                            android:layout_centerHorizontal="true"
+                            android:text="4"/>
+                        <ImageView
+                            android:id="@+id/my_story_img"
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_toLeftOf="@+id/my_story_txt"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/my_story_img"/>
+                    </RelativeLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 

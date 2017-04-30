@@ -18,4 +18,5 @@
     <string name="tab5_viewpager_menu_title_1">이야기</string>
     <string name="tab5_viewpager_menu_title_2">내 댓글</string>
     <string name="tab5_viewpager_menu_title_3">북마크</string>
+    <string name="tab5_background_title_txt">나의 솔직한 이야기</string>
 </resources>
