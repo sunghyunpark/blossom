@@ -6,13 +6,26 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
+
+import api.ApiClient;
+import api.ApiInterface;
+import model.Article;
+import model.ArticleResponse;
+import model.MyPageResponse;
+import model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tab5.viewpager.Page1;
 import tab5.viewpager.Page2;
 import tab5.viewpager.Page3;
@@ -118,6 +131,7 @@ public class FragmentPage5 extends Fragment {
         });
 
         InitViewPager();
+        LoadData();
     }
 
     private void InitViewPager(){
@@ -127,11 +141,6 @@ public class FragmentPage5 extends Fragment {
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(temp);
         mViewPager.setOffscreenPageLimit(3);
-        //viewPager의 크기를 단말기 해상도에 맞게 맞춰줌
-        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) mViewPager.getLayoutParams();
-        params.width = AppController.getInstance().getDISPLAY_WIDTH();
-        params.height = AppController.getInstance().getDISPLAY_HEIGHT();
-        mViewPager.setLayoutParams(params);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
             @Override
@@ -175,6 +184,50 @@ public class FragmentPage5 extends Fragment {
             @Override
             public void onPageScrollStateChanged(int arg0) {
                 // TODO Auto-generated method stub
+            }
+        });
+    }
+
+    /**
+     * 상단 시드와 스토리 갯수
+     * @param seed
+     * @param story_cnt
+     */
+    private void seedAndstory(String seed, String story_cnt){
+        TextView seed_txt = (TextView)v.findViewById(R.id.seed_txt);
+        TextView story_cnt_txt = (TextView)v.findViewById(R.id.my_story_txt);
+
+        seed_txt.setText(seed);
+        story_cnt_txt.setText(story_cnt);
+    }
+
+    private void PixViewPagerSize(){
+        //viewPager의 크기를 단말기 해상도에 맞게 맞춰줌
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) mViewPager.getLayoutParams();
+        params.width = AppController.getInstance().getDISPLAY_WIDTH();
+        params.height = AppController.getInstance().getDISPLAY_HEIGHT();
+        mViewPager.setLayoutParams(params);
+    }
+
+    private void LoadData(){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<MyPageResponse> call = apiService.GetMyPageInfo("my_page_etc_info", User.getInstance().getUid());
+        call.enqueue(new Callback<MyPageResponse>() {
+            @Override
+            public void onResponse(Call<MyPageResponse> call, Response<MyPageResponse> response) {
+
+                MyPageResponse myPageResponse = response.body();
+
+                seedAndstory(myPageResponse.getSeed_cnt(), myPageResponse.getStory_cnt());
+                PixViewPagerSize();
+            }
+
+            @Override
+            public void onFailure(Call<MyPageResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
             }
         });
     }

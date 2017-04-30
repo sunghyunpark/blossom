@@ -110,13 +110,16 @@ public class Page1 extends Fragment {
                         article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
                         article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
                         listItems.add(article);
-                        Log.d("my_article", articleResponse.getArticle().get(i).getCreated_at());
                     }
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
 
+
                 }else{
+                    recyclerView.setNestedScrollingEnabled(false);
+                    TextView my_story_empty_txt = (TextView)v.findViewById(R.id.my_story_empty_txt);
+                    my_story_empty_txt.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }

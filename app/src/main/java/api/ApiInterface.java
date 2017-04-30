@@ -3,6 +3,7 @@ package api;
 import model.Article;
 import model.ArticleResponse;
 import model.CommonResponse;
+import model.MyPageResponse;
 import model.UserResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -72,5 +73,8 @@ public interface ApiInterface {
      */
     @GET("article/article.php")
     Call<ArticleResponse> GetMyArticle(@Query("tag") String tag, @Query("uid") String uid);
+
+    @GET("article/article.php")
+    Call<MyPageResponse> GetMyPageInfo(@Query("tag") String tag, @Query("uid") String uid);
 
 }

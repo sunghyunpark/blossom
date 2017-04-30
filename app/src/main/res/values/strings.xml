@@ -19,5 +19,6 @@
     <string name="tab5_viewpager_menu_title_2">내 댓글</string>
     <string name="tab5_viewpager_menu_title_3">북마크</string>
     <string name="tab5_background_title_txt">나의 솔직한 이야기</string>
+    <string name="tab5_my_story_empty_txt">작성한 이야기가 없습니다.\n자신의 솔직한 이야기를 작성해보세요.</string>
     <string name="tab5_my_public_article_etc_txt">%1$s | 공감 %2$s | 댓글 %3$s</string>
 </resources>
