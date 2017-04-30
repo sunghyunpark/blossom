@@ -5,20 +5,30 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.yssh1020.blossom.LoginPage;
+import com.bumptech.glide.Glide;
+import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import api.ApiClient;
+import api.ApiInterface;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
-import tab5.FragmentPage5;
+import model.ArticleResponse;
+import model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * created by sunghyun 2017-03-27
@@ -67,14 +77,48 @@ public class Page1 extends Fragment {
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        Article article;
+        GetMyArticleData(User.getInstance().getUid());
+    }
 
-        for(int i=0;i<20;i++){
-            article = new Article();
-            article.setArticle_text(i+"");
-            listItems.add(article);
-        }
-        recyclerView.setAdapter(adapter);
+    private void GetMyArticleData(String uid){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ArticleResponse> call = apiService.GetMyArticle("my_article", uid);
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+
+                ArticleResponse articleResponse = response.body();
+                if(!articleResponse.isError()){
+                    int dataSize = articleResponse.getArticle().size();
+                    Article article;
+                    for(int i=0;i<dataSize;i++){
+                        article = new Article();
+                        article.setArticle_id(articleResponse.getArticle().get(i).getArticle_id());
+                        article.setUid(articleResponse.getArticle().get(i).getUid());
+                        article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
+                        article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
+                        article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
+                        article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
+                        article.setArticle_created_at(articleResponse.getArticle().get(i).getArticle_created_at());
+                        listItems.add(article);
+                    }
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
     }
 
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -90,7 +134,7 @@ public class Page1 extends Fragment {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == TYPE_ITEM_USER_ATTICLE) {
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_tab5_my_article, parent, false);
-                return new RecyclerAdapter.MyArticle_VHitem(v);
+                return new MyArticle_VHitem(v);
             }
             throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
         }
@@ -102,9 +146,17 @@ public class Page1 extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-            if (holder instanceof RecyclerAdapter.MyArticle_VHitem) {
+            if (holder instanceof MyArticle_VHitem) {
                 final Article currentItem = getItem(position);
-                final RecyclerAdapter.MyArticle_VHitem VHitem = (RecyclerAdapter.MyArticle_VHitem)holder;
+                final MyArticle_VHitem VHitem = (MyArticle_VHitem)holder;
+
+                Glide.with(getActivity())
+                        .load(currentItem.getArticle_photo())
+                        .bitmapTransform(new BlurTransformation(getActivity(), 50))
+                        .error(null)
+                        .into(VHitem.article_background_img);
+
+                VHitem.article_text.setText(currentItem.getArticle_text());
 
 
             }
@@ -112,10 +164,12 @@ public class Page1 extends Fragment {
 
         public class MyArticle_VHitem extends RecyclerView.ViewHolder{
 
+            private ImageView article_background_img;
             private TextView article_text;
 
             public MyArticle_VHitem(View itemView){
                 super(itemView);
+                article_background_img = (ImageView)itemView.findViewById(R.id.article_background_img);
                 article_text = (TextView)itemView.findViewById(R.id.article_text);
 
             }
