@@ -8,6 +8,7 @@ package model;
 public class ArticleComment {
 
     private String comment_id;
+    private String article_id;
     private String uid;
     private String user_profile_img;
     private String comment_text;
@@ -22,6 +23,14 @@ public class ArticleComment {
 
     public void setComment_id(String comment_id) {
         this.comment_id = comment_id;
+    }
+
+    public String getArticle_id() {
+        return article_id;
+    }
+
+    public void setArticle_id(String article_id) {
+        this.article_id = article_id;
     }
 
     public String getUid() {

@@ -7,8 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import adapter.CardsDataAdapter;
 import api.ApiClient;
 import api.ApiInterface;
 import cardstack.CardStack;
+import common.CommonUtil;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleResponse;
@@ -42,19 +45,18 @@ public class FragmentPage1 extends Fragment {
     private CardsDataAdapter mCardAdapter;
     public static SlidingUpPanelLayout mLayout;
 
+    private EditText comment_edit_box;
+    private Button comment_send_btn;
+
     //리사이클러뷰
     RecyclerAdapter adapter;
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ArticleComment> comment_listItems;
 
-
     private ArrayList<Article> listItems;
     View v;
-
-    public FragmentPage1() {
-        // Required empty public constructor
-    }
+    CommonUtil commonUtil = new CommonUtil();
 
 
     @Override
@@ -85,6 +87,10 @@ public class FragmentPage1 extends Fragment {
 
     private void InitCommentPanel(){
         final ViewGroup comment_edit_layout = (ViewGroup) v.findViewById(R.id.comment_edit_layout);
+        comment_edit_box = (EditText)v.findViewById(R.id.comment_edit_box);
+        comment_send_btn = (Button)v.findViewById(R.id.comment_send_btn);
+        comment_send_btn.setOnTouchListener(myOnTouchListener);
+
         mLayout = (SlidingUpPanelLayout) v.findViewById(R.id.sliding_layout);
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -97,6 +103,7 @@ public class FragmentPage1 extends Fragment {
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 Log.i("panel", "onPanelStateChanged " + newState);
 
+                // panel이 노출되면 댓글 입력창도 노출되게...
                 if((newState == SlidingUpPanelLayout.PanelState.COLLAPSED) || (newState == SlidingUpPanelLayout.PanelState.EXPANDED)
                         || (newState == SlidingUpPanelLayout.PanelState.DRAGGING)){
                     comment_edit_layout.setVisibility(View.VISIBLE);
@@ -249,5 +256,36 @@ public class FragmentPage1 extends Fragment {
             return listItems.size();
         }
     }
+
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Resources res = getResources();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+                    case R.id.comment_send_btn:
+                        String comment_text_str = comment_edit_box.getText().toString();
+                        if(!comment_text_str.equals("")){
+                            commonUtil.InsertArticleComment(getActivity(), User.getInstance().getUid(),
+                                    mCardAdapter.CurrentArticleID(), comment_text_str);
+                            comment_edit_box.setText("");
+                            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                        }else{
+                            Toast.makeText(getActivity(),String.format(res.getString(R.string.article_comment_empty_toast_txt)),Toast.LENGTH_SHORT).show();
+                        }
+
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 
 }

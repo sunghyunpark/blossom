@@ -25,5 +25,6 @@
     <!--article-->
     <string name="article_comment_edit_hint_txt">공감한다면 댓글을 남겨보세요.</string>
     <string name="article_comment_send_btn_txt">보내기</string>
+    <string name="article_comment_empty_toast_txt">댓글을 입력해주세요.</string>
 
 </resources>

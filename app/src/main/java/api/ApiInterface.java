@@ -74,7 +74,26 @@ public interface ApiInterface {
     @GET("article/article.php")
     Call<ArticleResponse> GetMyArticle(@Query("tag") String tag, @Query("uid") String uid);
 
+    /**
+     * tab5화면에서 상단 시드/스토리 수
+     * @param tag
+     * @param uid
+     * @return
+     */
     @GET("article/article.php")
     Call<MyPageResponse> GetMyPageInfo(@Query("tag") String tag, @Query("uid") String uid);
+
+    /**
+     * article comment insert
+     * @param tag -> comment
+     * @param uid
+     * @param article_id
+     * @param comment_text
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/comment.php")
+    Call<CommonResponse> PostArticleComment(@Field("tag") String tag, @Field("uid") String uid,
+                                            @Field("article_id") String article_id, @Field("comment_text") String comment_text);
 
 }

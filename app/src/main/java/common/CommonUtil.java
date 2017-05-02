@@ -52,6 +52,40 @@ public class CommonUtil {
     }
 
     /**
+     * 아티클 댓글 전송
+     * @param context
+     * @param uid
+     * @param article_id
+     * @param comment_text
+     */
+    public void InsertArticleComment(final Context context, String uid, String article_id, String comment_text){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.PostArticleComment("comment", uid, article_id, comment_text);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+
+    }
+
+    /**
      * Date타입의 시간을 변환해줌
      */
     private static class TIME_MAXIMUM{

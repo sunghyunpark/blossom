@@ -28,6 +28,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private ArrayList<Article> items;
     private Context mContext;
     private SlidingUpPanelLayout mLayout;
+    private String currentArticleID = "";
     CommonUtil commonUtil = new CommonUtil();
 
 
@@ -74,7 +75,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                 public void onClick(View view) {
 
                     commonUtil.LikeArticle(mContext, User.getInstance().getUid(), getItem(position).getArticle_id(), getItem(position).getLike_state());
-
                     if(getItem(position).getLike_state().equals("Y")){
                         ChangeLikeState(true, position);
                         like_btn.setBackgroundResource(R.mipmap.no_like_btn);
@@ -90,6 +90,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             //좋아요 갯수
             like_cnt_txt.setText(getItem(position).getLike_cnt());
 
+            //댓글 버튼
             ImageView comment_btn = (ImageView)(v.findViewById(R.id.article_comment_btn));
             comment_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,6 +99,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.GONE);
                     CommonTopTitle.getInstance().getTop_title().setVisibility(View.GONE);
+                    currentArticleID = getItem(position).getArticle_id();
                 }
             });
 
@@ -117,6 +119,9 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         return v;
     }
 
+    public String CurrentArticleID(){
+        return currentArticleID;
+    }
 
     private boolean CurrentLikeState(int position){
         boolean state = true;
@@ -127,7 +132,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         }else{
             state = false;
         }
-
         return state;
     }
 
