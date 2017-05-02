@@ -18,9 +18,14 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
+
+import view.CommonTabMenu;
+import tab1.FragmentPage1;
+import view.CommonTopTitle;
 
 public class CardStack extends RelativeLayout {
 
@@ -315,6 +320,11 @@ public class CardStack extends RelativeLayout {
             @Override
             public boolean onTouch(View arg0, MotionEvent event) {
                 dd.onTouchEvent(event);
+                if (FragmentPage1.mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN){
+                    FragmentPage1.mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                    CommonTabMenu.getInstance().getBottom_menu().setVisibility(VISIBLE);
+                    CommonTopTitle.getInstance().getTop_title().setVisibility(VISIBLE);
+                }
                 return true;
             }
         };

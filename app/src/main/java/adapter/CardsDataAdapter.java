@@ -1,10 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +8,31 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
-import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
 
 import common.CommonUtil;
-import common.PicassoTransformations;
 import model.Article;
+import view.CommonTabMenu;
 import model.User;
+import view.CommonTopTitle;
 
 public class CardsDataAdapter extends ArrayAdapter<Article> {
 
     private ArrayList<Article> items;
     private Context mContext;
+    private SlidingUpPanelLayout mLayout;
     CommonUtil commonUtil = new CommonUtil();
 
 
-    public CardsDataAdapter(Context context, ArrayList<Article> items) {
+    public CardsDataAdapter(Context context, ArrayList<Article> items, SlidingUpPanelLayout mLayout) {
         super(context, R.layout.card_content);
         this.mContext = context;
         this.items = items;
+        this.mLayout = mLayout;
 
     }
 
@@ -87,6 +86,17 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             });
             //좋아요 갯수
             like_cnt_txt.setText(getItem(position).getLike_cnt());
+
+            ImageView comment_btn = (ImageView)(v.findViewById(R.id.article_comment_btn));
+            comment_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //댓글 버튼 탭했을 때 패널 노출시키면서 하단 공통 탭 미노출, 상단 타이틀 미노출
+                    mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                    CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.GONE);
+                    CommonTopTitle.getInstance().getTop_title().setVisibility(View.GONE);
+                }
+            });
 
         }
 

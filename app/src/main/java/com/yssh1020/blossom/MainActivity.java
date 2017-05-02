@@ -18,12 +18,14 @@ import android.widget.Toast;
 import db.RealmConfig;
 import db.model.UserData;
 import io.realm.Realm;
+import view.CommonTabMenu;
 import model.User;
 import tab1.FragmentPage1;
 import tab2.FragmentPage2;
 import tab3.Upload_Article;
 import tab4.FragmentPage4;
 import tab5.FragmentPage5;
+import view.CommonTopTitle;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -35,9 +37,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     //현재 페이지
     private int current_page;
-    //realm
-    private Realm mRealm;
-    private RealmConfig realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
 
         startActivity(new Intent(getApplicationContext(), SplashPage.class));
-
         InitData();
     }
 
@@ -81,7 +79,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             window.setStatusBarColor(getResources().getColor(R.color.colorGray));
         }
         bottom_tab_menu = (ViewGroup)findViewById(R.id.bottom_tab_menu);
+        CommonTabMenu.getInstance().setBottom_menu(bottom_tab_menu);
         app_title_bar = (ViewGroup)findViewById(R.id.app_title_bar);
+        CommonTopTitle.getInstance().setTop_title(app_title_bar);
         /**
          * 최초 화면 진입 시 랜딩되는 화면 및 버튼 초기화
          */
@@ -108,8 +108,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void SaveUserInfo(){
-        realmConfig = new RealmConfig();
-        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+        RealmConfig realmConfig = new RealmConfig();
+        Realm mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
         UserData user = mRealm.where(UserData.class).equalTo("no",1).findFirst();
 
         User.getInstance().setUid(user.getUid());
@@ -145,7 +145,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.tab_1 :
                 tab1.setImageResource(R.mipmap.tab1_click_img);
-                bottom_tab_menu.setBackgroundColor(Color.TRANSPARENT);
+                CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(Color.TRANSPARENT);
                 if(current_page == 1){
                     is_current_page = true;
                 }else{
@@ -158,7 +158,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 break ;
             case R.id.tab_2 :
-                bottom_tab_menu.setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
+                CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                 tab2.setImageResource(R.mipmap.ic_launcher);
                 if(current_page == 2){
                     is_current_page = true;
@@ -177,7 +177,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break ;
             case R.id.tab_4:
                 tab4.setImageResource(R.mipmap.tab4_click_img);
-                bottom_tab_menu.setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
+                CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                 if(current_page == 4){
                     is_current_page = true;
                 }else{
@@ -191,7 +191,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.tab_5:
                 tab5.setImageResource(R.mipmap.tab5_click_img);
-                bottom_tab_menu.setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
+                CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                 if(current_page == 5){
                     is_current_page = true;
                 }else{
