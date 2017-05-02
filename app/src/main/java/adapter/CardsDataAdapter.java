@@ -1,12 +1,15 @@
 package adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
@@ -17,8 +20,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import api.ApiClient;
+import api.ApiInterface;
 import common.CommonUtil;
 import model.Article;
+import model.ArticleComment;
+import model.ArticleCommentResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import tab1.FragmentPage1;
 import view.CommonTabMenu;
 import model.User;
 import view.CommonTopTitle;
@@ -28,15 +39,22 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private ArrayList<Article> items;
     private Context mContext;
     private SlidingUpPanelLayout mLayout;
+    private FragmentPage1.RecyclerAdapter adapter;
+    private RecyclerView recyclerView;
     private String currentArticleID = "";
     CommonUtil commonUtil = new CommonUtil();
+    private ArrayList<ArticleComment> comment_listItems;
 
 
-    public CardsDataAdapter(Context context, ArrayList<Article> items, SlidingUpPanelLayout mLayout) {
+    public CardsDataAdapter(Context context, ArrayList<Article> items, SlidingUpPanelLayout mLayout, RecyclerView recyclerView,
+                            FragmentPage1.RecyclerAdapter adapter, ArrayList<ArticleComment> comment_listItems) {
         super(context, R.layout.card_content);
         this.mContext = context;
         this.items = items;
         this.mLayout = mLayout;
+        this.adapter = adapter;
+        this.recyclerView = recyclerView;
+        this.comment_listItems = comment_listItems;
 
     }
 
@@ -101,6 +119,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.GONE);
                     CommonTopTitle.getInstance().getTop_title().setVisibility(View.GONE);
                     currentArticleID = getItem(position).getArticle_id();
+                    LoadArticleComment(currentArticleID);
                 }
             });
 
@@ -154,5 +173,53 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             getItem(position).setLike_cnt(""+like_cnt);
             return state;
         }
+    }
+    /**
+     * 해당 아티클 댓글 불러오기
+     * @param article_id -> 해당 아이클의 id
+     */
+    public void LoadArticleComment(String article_id) {
+        if(comment_listItems != null){
+            comment_listItems.clear();
+        }
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id);
+        call.enqueue(new Callback<ArticleCommentResponse>() {
+            @Override
+            public void onResponse(Call<ArticleCommentResponse> call, Response<ArticleCommentResponse> response) {
+
+                ArticleCommentResponse articleCommentResponse = response.body();
+                if (!articleCommentResponse.isError()) {
+                    //Toast.makeText(getActivity(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
+                    int dataSize = articleCommentResponse.getArticle_comment().size();
+                    ArticleComment articleComment;
+                    for (int i = 0; i < dataSize; i++) {
+                        articleComment = new ArticleComment();
+                        articleComment.setComment_id(articleCommentResponse.getArticle_comment().get(i).getComment_id());
+                        articleComment.setUid(articleCommentResponse.getArticle_comment().get(i).getUid());
+                        articleComment.setUser_profile_img(articleCommentResponse.getArticle_comment().get(i).getUser_profile_img());
+                        articleComment.setComment_text(articleCommentResponse.getArticle_comment().get(i).getComment_text());
+                        articleComment.setLike_state(articleCommentResponse.getArticle_comment().get(i).getLike_state());
+                        articleComment.setLike_cnt(articleCommentResponse.getArticle_comment().get(i).getLike_cnt());
+                        articleComment.setCreated_at(articleCommentResponse.getArticle_comment().get(i).getCreated_at());
+                        comment_listItems.add(articleComment);
+                    }
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    //Toast.makeText(getActivity(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ArticleCommentResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
     }
 }

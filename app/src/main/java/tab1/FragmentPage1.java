@@ -28,6 +28,7 @@ import cardstack.CardStack;
 import common.CommonUtil;
 import model.Article;
 import model.ArticleComment;
+import model.ArticleCommentResponse;
 import model.ArticleResponse;
 import model.User;
 import retrofit2.Call;
@@ -138,7 +139,7 @@ public class FragmentPage1 extends Fragment {
         //mCardStack.setStackMargin(20);
 
         listItems = new ArrayList<Article>();
-        mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout);
+        mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout, recyclerView, adapter, comment_listItems);
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
@@ -186,6 +187,7 @@ public class FragmentPage1 extends Fragment {
         });
     }
 
+
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private static final int TYPE_ITEM_ARTICLE_COMMENT = 0;
@@ -200,7 +202,7 @@ public class FragmentPage1 extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (viewType == TYPE_ITEM_ARTICLE_COMMENT) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_tab5_my_article, parent, false);
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_article_comment, parent, false);
                 return new ArticleComment_VHitem(v);
             }
             throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
@@ -217,21 +219,23 @@ public class FragmentPage1 extends Fragment {
                 final ArticleComment currentItem = getItem(position);
                 final ArticleComment_VHitem VHitem = (ArticleComment_VHitem)holder;
 
+                VHitem.comment_txt.setText(currentItem.getComment_text());
+
 
             }
         }
 
         public class ArticleComment_VHitem extends RecyclerView.ViewHolder{
 
-            private ImageView article_background_img;
-            private TextView article_text;
-            private TextView article_etc_text;
+            private ImageView user_profile_img;
+            private TextView comment_txt;
+            private ImageView comment_seed_btn;
 
             public ArticleComment_VHitem(View itemView){
                 super(itemView);
-                article_background_img = (ImageView)itemView.findViewById(R.id.article_background_img);
-                article_text = (TextView)itemView.findViewById(R.id.article_text);
-                article_etc_text = (TextView)itemView.findViewById(R.id.article_etc_txt);
+                user_profile_img = (ImageView)itemView.findViewById(R.id.user_profile_img);
+                comment_txt = (TextView)itemView.findViewById(R.id.comment_txt);
+                comment_seed_btn = (ImageView)itemView.findViewById(R.id.comment_seed_btn);
 
             }
 
@@ -277,6 +281,7 @@ public class FragmentPage1 extends Fragment {
                                     mCardAdapter.CurrentArticleID(), comment_text_str);
                             comment_edit_box.setText("");
                             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                            mCardAdapter.LoadArticleComment(mCardAdapter.CurrentArticleID());
                         }else{
                             Toast.makeText(getActivity(),String.format(res.getString(R.string.article_comment_empty_toast_txt)),Toast.LENGTH_SHORT).show();
                         }

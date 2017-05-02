@@ -1,6 +1,7 @@
 package api;
 
 import model.Article;
+import model.ArticleCommentResponse;
 import model.ArticleResponse;
 import model.CommonResponse;
 import model.MyPageResponse;
@@ -85,7 +86,7 @@ public interface ApiInterface {
 
     /**
      * article comment insert
-     * @param tag -> comment
+     * @param tag -> insert_comment
      * @param uid
      * @param article_id
      * @param comment_text
@@ -96,4 +97,12 @@ public interface ApiInterface {
     Call<CommonResponse> PostArticleComment(@Field("tag") String tag, @Field("uid") String uid,
                                             @Field("article_id") String article_id, @Field("comment_text") String comment_text);
 
+    /**
+     * article comment 불러오기
+     * @param tag -> comment
+     * @param article_id
+     * @return
+     */
+    @GET("article/comment.php")
+    Call<ArticleCommentResponse> GetArticleComment(@Query("tag") String tag, @Query("article_id") String article_id);
 }

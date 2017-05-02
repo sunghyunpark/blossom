@@ -62,7 +62,7 @@ public class CommonUtil {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<CommonResponse> call = apiService.PostArticleComment("comment", uid, article_id, comment_text);
+        Call<CommonResponse> call = apiService.PostArticleComment("insert_comment", uid, article_id, comment_text);
         call.enqueue(new Callback<CommonResponse>() {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
