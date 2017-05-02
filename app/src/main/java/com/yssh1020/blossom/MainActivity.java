@@ -15,6 +15,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import db.RealmConfig;
 import db.model.UserData;
 import io.realm.Realm;
@@ -26,6 +28,8 @@ import tab3.Upload_Article;
 import tab4.FragmentPage4;
 import tab5.FragmentPage5;
 import view.CommonTopTitle;
+
+import static tab1.FragmentPage1.mLayout;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -44,6 +48,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
 
         startActivity(new Intent(getApplicationContext(), SplashPage.class));
+
         InitData();
     }
 
@@ -210,6 +215,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.main_frame, fragment);
             fragmentTransaction.commit();
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if (mLayout != null &&
+                (mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED || mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED)) {
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else {
+            super.onBackPressed();
         }
     }
 }
