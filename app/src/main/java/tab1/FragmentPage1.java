@@ -1,22 +1,16 @@
 package tab1;
 
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -90,17 +84,26 @@ public class FragmentPage1 extends Fragment {
     }
 
     private void InitCommentPanel(){
+        final ViewGroup comment_edit_layout = (ViewGroup) v.findViewById(R.id.comment_edit_layout);
         mLayout = (SlidingUpPanelLayout) v.findViewById(R.id.sliding_layout);
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                //Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                Log.i("panel", "onPanelSlide, offset " + slideOffset);
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                // Log.i(TAG, "onPanelStateChanged " + newState);
+                Log.i("panel", "onPanelStateChanged " + newState);
+
+                if((newState == SlidingUpPanelLayout.PanelState.COLLAPSED) || (newState == SlidingUpPanelLayout.PanelState.EXPANDED)
+                        || (newState == SlidingUpPanelLayout.PanelState.DRAGGING)){
+                    comment_edit_layout.setVisibility(View.VISIBLE);
+                }else{
+                    comment_edit_layout.setVisibility(View.GONE);
+                }
+
             }
         });
         mLayout.setFadeOnClickListener(new View.OnClickListener() {
@@ -110,19 +113,6 @@ public class FragmentPage1 extends Fragment {
             }
         });
 
-        TextView t = (TextView) v.findViewById(R.id.name);
-        t.setText("text");
-        Button f = (Button) v.findViewById(R.id.follow);
-        f.setText("button");
-        f.setMovementMethod(LinkMovementMethod.getInstance());
-        f.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://www.twitter.com/umanoapp"));
-                startActivity(i);
-            }
-        });
     }
 
     private void InitCommentList(){
