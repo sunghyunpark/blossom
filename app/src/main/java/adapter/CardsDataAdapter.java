@@ -75,6 +75,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                 public void onClick(View view) {
 
                     commonUtil.LikeArticle(mContext, User.getInstance().getUid(), getItem(position).getArticle_id(), getItem(position).getLike_state());
+
                     if(getItem(position).getLike_state().equals("Y")){
                         ChangeLikeState(true, position);
                         like_btn.setBackgroundResource(R.mipmap.no_like_btn);
@@ -102,6 +103,9 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     currentArticleID = getItem(position).getArticle_id();
                 }
             });
+
+            TextView comment_txt = (TextView)(v.findViewById(R.id.article_comment_txt));
+            comment_txt.setText(getItem(position).getComment_cnt());
 
             //작성 날짜
             TextView created_at_txt = (TextView)(v.findViewById(R.id.created_at_txt));
