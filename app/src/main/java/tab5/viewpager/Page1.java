@@ -108,6 +108,7 @@ public class Page1 extends Fragment {
                         article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
                         article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
                         article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
+                        article.setComment_cnt(articleResponse.getArticle().get(i).getComment_cnt());
                         article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
                         listItems.add(article);
                     }
@@ -183,7 +184,7 @@ public class Page1 extends Fragment {
                 }
 
                 VHitem.article_etc_text.setText(String.format(res.getString(R.string.tab5_my_public_article_etc_txt),
-                        commonUtil.formatTimeString(to), currentItem.getLike_cnt(), "13"));
+                        commonUtil.formatTimeString(to), currentItem.getLike_cnt(), currentItem.getComment_cnt()));
             }
         }
 
