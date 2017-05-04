@@ -34,6 +34,7 @@ import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tab5.ArticleActivity;
 
 /**
  * created by sunghyun 2017-03-27
@@ -164,6 +165,14 @@ public class Page1 extends Fragment {
                 final Article currentItem = getItem(position);
                 final MyArticle_VHitem VHitem = (MyArticle_VHitem)holder;
 
+                VHitem.my_article_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ArticleActivity.class);
+                        intent.putExtra("article_id", currentItem.getArticle_id());
+                        startActivity(intent);
+                    }
+                });
                 Glide.with(getActivity())
                         .load(currentItem.getArticle_photo())
                         .bitmapTransform(new BlurTransformation(getActivity(), 50))
@@ -190,12 +199,14 @@ public class Page1 extends Fragment {
 
         public class MyArticle_VHitem extends RecyclerView.ViewHolder{
 
+            private ViewGroup my_article_layout;
             private ImageView article_background_img;
             private TextView article_text;
             private TextView article_etc_text;
 
             public MyArticle_VHitem(View itemView){
                 super(itemView);
+                my_article_layout = (ViewGroup)itemView.findViewById(R.id.my_article_layout);
                 article_background_img = (ImageView)itemView.findViewById(R.id.article_background_img);
                 article_text = (TextView)itemView.findViewById(R.id.article_text);
                 article_etc_text = (TextView)itemView.findViewById(R.id.article_etc_txt);

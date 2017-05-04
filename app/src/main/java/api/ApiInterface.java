@@ -2,6 +2,7 @@ package api;
 
 import model.Article;
 import model.ArticleCommentResponse;
+import model.ArticleDetailResponse;
 import model.ArticleResponse;
 import model.CommonResponse;
 import model.MyPageResponse;
@@ -105,4 +106,15 @@ public interface ApiInterface {
      */
     @GET("article/comment.php")
     Call<ArticleCommentResponse> GetArticleComment(@Query("tag") String tag, @Query("article_id") String article_id);
+
+    /**
+     * article detail
+     * @param tag -> article_detail
+     * @param uid
+     * @param article_id
+     * @return
+     */
+    @GET("article/article.php")
+    Call<ArticleDetailResponse> GetArticleDetailData(@Query("tag") String tag, @Query("uid") String uid,
+                                                     @Query("article_id") String article_id);
 }
