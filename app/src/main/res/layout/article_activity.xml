@@ -18,89 +18,89 @@
         sothree:umanoOverlay="true"
         sothree:umanoScrollableView="@+id/recyclerView">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/background_img"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/article_text"
-            android:layout_width="match_parent"
-            android:layout_height="390dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal|center_vertical"
-            android:textColor="#ffffff"
-            android:layout_marginTop="50dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:ellipsize="end"
-            android:textSize="18dp"
-            android:textStyle="bold"/>
-        <!--구분선-->
-        <LinearLayout
-            android:id="@+id/divider_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal"
-            android:layout_below="@+id/article_text"
-            android:layout_marginTop="40dp"
-            android:background="@color/colorWhite"></LinearLayout>
+            <ImageView
+                android:id="@+id/background_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
 
-        <TextView
-            android:id="@+id/created_at_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/divider_layout"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/colorWhite"/>
-        <TextView
-            android:id="@+id/article_comment_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorWhite"
-            android:layout_below="@+id/divider_layout"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp" />
-        <ImageView
-            android:id="@+id/article_comment_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_below="@+id/divider_layout"
-            android:layout_toLeftOf="@+id/article_comment_txt"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="8dp"
-            android:src="@mipmap/comment_btn"/>
+            <TextView
+                android:id="@+id/article_text"
+                android:layout_width="match_parent"
+                android:layout_height="390dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="#ffffff"
+                android:layout_marginTop="50dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:ellipsize="end"
+                android:textSize="18dp"
+                android:textStyle="bold"/>
+            <!--구분선-->
+            <LinearLayout
+                android:id="@+id/divider_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:layout_below="@+id/article_text"
+                android:layout_marginTop="40dp"
+                android:background="@color/colorWhite"></LinearLayout>
 
-        <TextView
-            android:id="@+id/article_like_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/article_comment_btn"
-            android:layout_below="@+id/divider_layout"
-            android:textColor="@color/colorWhite"/>
+            <TextView
+                android:id="@+id/created_at_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider_layout"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/colorWhite"/>
+            <TextView
+                android:id="@+id/article_comment_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_below="@+id/divider_layout"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp" />
+            <ImageView
+                android:id="@+id/article_comment_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/divider_layout"
+                android:layout_toLeftOf="@+id/article_comment_txt"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/comment_btn"/>
 
-        <ImageView
-            android:id="@+id/article_like_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_below="@+id/divider_layout"
-            android:layout_toLeftOf="@+id/article_like_txt"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="8dp"/>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/article_like_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/article_comment_btn"
+                android:layout_below="@+id/divider_layout"
+                android:textColor="@color/colorWhite"/>
+
+            <ImageView
+                android:id="@+id/article_like_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/divider_layout"
+                android:layout_toLeftOf="@+id/article_like_txt"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"/>
+        </RelativeLayout>
 
         <!-- SLIDING LAYOUT -->
         <LinearLayout
@@ -119,9 +119,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:orientation="horizontal"
                     android:layout_alignParentLeft="true">
+
                     <ImageView
                         android:id="@+id/share_btn_img"
                         android:layout_width="20dp"
@@ -136,6 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="3dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@null"
                         android:text="공유하기" />
                 </LinearLayout>
@@ -167,6 +169,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
         android:visibility="gone">
         <EditText
             android:id="@+id/comment_edit_box"
@@ -188,5 +191,31 @@
             android:text="@string/article_comment_send_btn_txt"
             android:textSize="14dp"
             android:background="@drawable/comment_edit_box_shape"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/app_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:id="@+id/top_title_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BLOSSOM"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="20dp"/>
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/close_btn"/>
     </RelativeLayout>
 </RelativeLayout>

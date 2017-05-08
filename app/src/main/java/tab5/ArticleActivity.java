@@ -1,6 +1,7 @@
 package tab5;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import view.CommonTabMenu;
+import view.CommonTopTitle;
 
 
 public class ArticleActivity extends Activity {
@@ -54,8 +57,8 @@ public class ArticleActivity extends Activity {
 
     private Article article = new Article();
     private String articleID;
-    private ImageView background_img, article_comment_btn, article_like_btn;
-    private TextView article_text, created_at_txt, article_comment_txt, article_like_txt;
+    private ImageView background_img, article_comment_btn, article_like_btn, back_btn;
+    private TextView article_text, created_at_txt, article_comment_txt, article_like_txt, top_title_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class ArticleActivity extends Activity {
         created_at_txt = (TextView)findViewById(R.id.created_at_txt);
         article_comment_txt = (TextView)findViewById(R.id.article_comment_txt);
         article_like_txt = (TextView)findViewById(R.id.article_like_txt);
+        top_title_txt = (TextView)findViewById(R.id.top_title_txt);
+        back_btn = (ImageView)findViewById(R.id.back_btn);
+        back_btn.setOnTouchListener(myOnTouchListener);
     }
 
     private void InitCommentPanel(){
@@ -104,7 +110,11 @@ public class ArticleActivity extends Activity {
                 if((newState == SlidingUpPanelLayout.PanelState.COLLAPSED) || (newState == SlidingUpPanelLayout.PanelState.EXPANDED)
                         || (newState == SlidingUpPanelLayout.PanelState.DRAGGING)){
                     comment_edit_layout.setVisibility(View.VISIBLE);
+                    top_title_txt.setVisibility(View.GONE);
+                    back_btn.setVisibility(View.GONE);
                 }else{
+                    top_title_txt.setVisibility(View.VISIBLE);
+                    back_btn.setVisibility(View.VISIBLE);
                     comment_edit_layout.setVisibility(View.GONE);
                 }
 
@@ -138,7 +148,6 @@ public class ArticleActivity extends Activity {
 
                 ArticleDetailResponse articleDetailResponse = response.body();
                 if(!articleDetailResponse.isError()){
-                    Toast.makeText(getApplicationContext().getApplicationContext(), articleDetailResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                     article.setUid(articleDetailResponse.getArticle_detail().getUid());
                     article.setArticle_text(articleDetailResponse.getArticle_detail().getArticle_text());
                     article.setArticle_photo(articleDetailResponse.getArticle_detail().getArticle_photo());
@@ -146,10 +155,18 @@ public class ArticleActivity extends Activity {
                     article.setLike_cnt(articleDetailResponse.getArticle_detail().getLike_cnt());
                     article.setLike_state(articleDetailResponse.getArticle_detail().getLike_state());
                     article.setCreated_at(articleDetailResponse.getArticle_detail().getCreated_at());
+
                     Picasso.with(getApplicationContext())
                             .load(article.getArticle_photo())
-                            //.transform(PicassoTransformations.resizeTransformation)
                             .into(background_img);
+                    background_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN){
+                                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                            }
+                        }
+                    });
 
                     article_text.setText(article.getArticle_text());
 
@@ -182,7 +199,7 @@ public class ArticleActivity extends Activity {
                     article_comment_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //댓글 버튼 탭했을 때 패널 노출시키면서 하단 공통 탭 미노출, 상단 타이틀 미노출
+                            //댓글 버튼 탭했을 때 패널
                             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                             LoadArticleComment(articleID);
                         }
@@ -385,6 +402,10 @@ public class ArticleActivity extends Activity {
                             Toast.makeText(getApplicationContext(),String.format(res.getString(R.string.article_comment_empty_toast_txt)),Toast.LENGTH_SHORT).show();
                         }
 
+                        break;
+
+                    case R.id.back_btn:
+                        finish();
                         break;
 
                 }
