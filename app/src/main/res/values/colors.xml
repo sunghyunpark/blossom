@@ -9,6 +9,7 @@
     <color name="gender_not_selected">#77929292</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorHalfBlack">#55000000</color>
+    <color name="colorBlack_25">#25000000</color>
     <color name="upload_page_color">#dbdbdb</color>
     <color name="colorSky">#3babe1</color>
 </resources>

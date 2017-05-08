@@ -402,6 +402,7 @@ public class CardStack extends RelativeLayout {
                         "mAdapter.getCount : "+mAdapter.getCount());
         if(lastIndex == mAdapter.getCount()){
             FragmentPage1.LoadMoreArticle(FragmentPage1.LastArticleID);
+            return;
         }
         // 超出索引
         if (lastIndex > mAdapter.getCount() - 1) {
