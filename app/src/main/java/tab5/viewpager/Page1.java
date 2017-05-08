@@ -27,6 +27,7 @@ import java.util.List;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import dialog.PublicMyArticleSettingDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
 import model.ArticleResponse;
@@ -194,6 +195,14 @@ public class Page1 extends Fragment {
 
                 VHitem.article_etc_text.setText(String.format(res.getString(R.string.tab5_my_public_article_etc_txt),
                         commonUtil.formatTimeString(to), currentItem.getLike_cnt(), currentItem.getComment_cnt()));
+
+                VHitem.more_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), PublicMyArticleSettingDialog.class);
+                        startActivity(intent);
+                    }
+                });
             }
         }
 
@@ -203,6 +212,7 @@ public class Page1 extends Fragment {
             private ImageView article_background_img;
             private TextView article_text;
             private TextView article_etc_text;
+            private ImageView more_btn;
 
             public MyArticle_VHitem(View itemView){
                 super(itemView);
@@ -210,6 +220,7 @@ public class Page1 extends Fragment {
                 article_background_img = (ImageView)itemView.findViewById(R.id.article_background_img);
                 article_text = (TextView)itemView.findViewById(R.id.article_text);
                 article_etc_text = (TextView)itemView.findViewById(R.id.article_etc_txt);
+                more_btn = (ImageView)itemView.findViewById(R.id.more_btn);
 
             }
 

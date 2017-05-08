@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +45,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private String currentArticleID = "";
     CommonUtil commonUtil = new CommonUtil();
     private ArrayList<ArticleComment> comment_listItems;
-
 
     public CardsDataAdapter(Context context, ArrayList<Article> items, SlidingUpPanelLayout mLayout, RecyclerView recyclerView,
                             FragmentPage1.RecyclerAdapter adapter, ArrayList<ArticleComment> comment_listItems) {
@@ -119,11 +119,12 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.GONE);
                     CommonTopTitle.getInstance().getTop_title().setVisibility(View.GONE);
                     currentArticleID = getItem(position).getArticle_id();
-                    LoadArticleComment(currentArticleID);
+                    LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
                     Toast.makeText(mContext,currentArticleID, Toast.LENGTH_SHORT).show();
                 }
             });
+
 
             TextView comment_txt = (TextView)(v.findViewById(R.id.article_comment_txt));
             comment_txt.setText(getItem(position).getComment_cnt());
@@ -180,14 +181,14 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
      * 해당 아티클 댓글 불러오기
      * @param article_id -> 해당 아이클의 id
      */
-    public void LoadArticleComment(String article_id) {
+    public void LoadArticleComment(String article_id, String last_comment_id) {
         if(comment_listItems != null){
             comment_listItems.clear();
         }
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id);
+        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id, last_comment_id);
         call.enqueue(new Callback<ArticleCommentResponse>() {
             @Override
             public void onResponse(Call<ArticleCommentResponse> call, Response<ArticleCommentResponse> response) {

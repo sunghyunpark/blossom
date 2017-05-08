@@ -105,7 +105,8 @@ public interface ApiInterface {
      * @return
      */
     @GET("article/comment.php")
-    Call<ArticleCommentResponse> GetArticleComment(@Query("tag") String tag, @Query("article_id") String article_id);
+    Call<ArticleCommentResponse> GetArticleComment(@Query("tag") String tag, @Query("article_id") String article_id,
+                                                   @Query("last_comment_id") String last_comment_id);
 
     /**
      * article detail

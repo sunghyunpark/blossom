@@ -340,7 +340,7 @@ public class ArticleActivity extends Activity {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id);
+        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id, "0");
         call.enqueue(new Callback<ArticleCommentResponse>() {
             @Override
             public void onResponse(Call<ArticleCommentResponse> call, Response<ArticleCommentResponse> response) {

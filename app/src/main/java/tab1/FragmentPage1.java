@@ -57,6 +57,7 @@ public class FragmentPage1 extends Fragment {
 
     public static ArrayList<Article> listItems;
     public static String LastArticleID = "";
+    private static final int LOAD_COMMENT_DATA_COUNT = 10;
     View v;
     CommonUtil commonUtil = new CommonUtil();
 
@@ -328,7 +329,51 @@ public class FragmentPage1 extends Fragment {
             return listItems.size();
         }
     }
+    private abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
 
+
+        private int previousTotal = 0; // The total number of items in the dataset after the last load
+        private boolean loading = true; // True if we are still waiting for the last set of data to load.
+        private int visibleThreshold = LOAD_COMMENT_DATA_COUNT; // The minimum amount of items to have below your current scroll position before loading more.
+        int firstVisibleItem, visibleItemCount, totalItemCount;
+
+        private int current_page = 1;
+
+        private LinearLayoutManager mLinearLayoutManager;
+
+        public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
+            this.mLinearLayoutManager = linearLayoutManager;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            visibleItemCount = recyclerView.getChildCount();
+            totalItemCount = mLinearLayoutManager.getItemCount();
+            firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount)
+                    <= (firstVisibleItem + visibleThreshold)) {
+                // End has been reached
+
+                // Do something
+                current_page++;
+
+                onLoadMore(current_page);
+
+                loading = true;
+            }
+        }
+
+        public abstract void onLoadMore(int current_page);
+    }
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
         @Override
@@ -348,7 +393,7 @@ public class FragmentPage1 extends Fragment {
                                     mCardAdapter.CurrentArticleID(), comment_text_str);
                             comment_edit_box.setText("");
                             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                            mCardAdapter.LoadArticleComment(mCardAdapter.CurrentArticleID());
+                            mCardAdapter.LoadArticleComment(mCardAdapter.CurrentArticleID(),"0");
                         }else{
                             Toast.makeText(getActivity(),String.format(res.getString(R.string.article_comment_empty_toast_txt)),Toast.LENGTH_SHORT).show();
                         }
