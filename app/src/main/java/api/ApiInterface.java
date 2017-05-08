@@ -1,6 +1,5 @@
 package api;
 
-import model.Article;
 import model.ArticleCommentResponse;
 import model.ArticleDetailResponse;
 import model.ArticleResponse;
@@ -52,7 +51,8 @@ public interface ApiInterface {
      * @return
      */
     @GET("article/article.php")
-    Call<ArticleResponse> GetArticle(@Query("tag") String tag, @Query("uid") String uid);
+    Call<ArticleResponse> GetArticle(@Query("tag") String tag, @Query("uid") String uid,
+                                     @Query("last_article_id") String last_article_id);
 
     /**
      * article like

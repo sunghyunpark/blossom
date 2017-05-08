@@ -15,11 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import adapter.CardsDataAdapter;
@@ -29,7 +29,6 @@ import cardstack.CardStack;
 import common.CommonUtil;
 import model.Article;
 import model.ArticleComment;
-import model.ArticleCommentResponse;
 import model.ArticleResponse;
 import model.User;
 import retrofit2.Call;
@@ -43,8 +42,8 @@ import retrofit2.Response;
  */
 public class FragmentPage1 extends Fragment {
 
-    private CardStack mCardStack;
-    private CardsDataAdapter mCardAdapter;
+    public static CardStack mCardStack;
+    public static CardsDataAdapter mCardAdapter;
     public static SlidingUpPanelLayout mLayout;
 
     private EditText comment_edit_box;
@@ -56,7 +55,8 @@ public class FragmentPage1 extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ArticleComment> comment_listItems;
 
-    private ArrayList<Article> listItems;
+    public static ArrayList<Article> listItems;
+    public static String LastArticleID = "";
     View v;
     CommonUtil commonUtil = new CommonUtil();
 
@@ -83,7 +83,8 @@ public class FragmentPage1 extends Fragment {
         InitCommentPanel();
         InitCommentList();
 
-        LoadArticle();
+        InitArticleView();
+        LoadArticle("0");
         return v;
     }
 
@@ -132,7 +133,7 @@ public class FragmentPage1 extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
-    private void LoadArticle() {
+    private void InitArticleView(){
         mCardStack = (CardStack) v.findViewById(R.id.container);
         mCardStack.setContentResource(R.layout.card_content);
         //mCardStack.setEnableLoop(true);
@@ -141,11 +142,13 @@ public class FragmentPage1 extends Fragment {
 
         listItems = new ArrayList<Article>();
         mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout, recyclerView, adapter, comment_listItems);
+    }
 
+    private void LoadArticle(String last_article_id) {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ArticleResponse> call = apiService.GetArticle("article", User.getInstance().getUid());
+        Call<ArticleResponse> call = apiService.GetArticle("article", User.getInstance().getUid(),last_article_id);
         call.enqueue(new Callback<ArticleResponse>() {
             @Override
             public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
@@ -156,7 +159,7 @@ public class FragmentPage1 extends Fragment {
 
                     int dataSize = articleResponse.getArticle().size();
                     Article article;
-                    Collections.shuffle(articleResponse.getArticle());
+                    //Collections.shuffle(articleResponse.getArticle());
                     for (int i = 0; i < dataSize; i++) {
                         article = new Article();
                         article.setArticle_id(articleResponse.getArticle().get(i).getArticle_id());
@@ -170,14 +173,76 @@ public class FragmentPage1 extends Fragment {
                         listItems.add(article);
                         mCardAdapter.add(listItems.get(i));
                     }
+                    for(int j=0;j<listItems.size();j++){
+                        Log.d("load_article", FragmentPage1.listItems.get(j).getArticle_text());
+                    }
+                    LastArticleID = articleResponse.getLast_article_id();
+                    mCardAdapter.notifyDataSetChanged();
                     mCardStack.setAdapter(mCardAdapter);
-                    mCardStack.setVisibleCardNum(2);
+                    //mCardStack.setVisibleCardNum(2);
                     if (mCardStack.getAdapter() != null) {
                         Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
                     }
 
                 } else {
                     Toast.makeText(getActivity(), articleResponse.getError_msg(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
+
+    public static void LoadMoreArticle(final String last_article_id) {
+        Log.d("LoadMoreArticleData", "Load More Data Start");
+        Log.d("LoadMoreArticleData", "last_article_id : "+last_article_id);
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ArticleResponse> call = apiService.GetArticle("article", User.getInstance().getUid(),last_article_id);
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+
+                ArticleResponse articleResponse = response.body();
+                if (!articleResponse.isError()) {
+                    Log.d("LoadMoreArticleData", "success");
+                    int dataSize = articleResponse.getArticle().size();
+                    int before_pos = FragmentPage1.listItems.size();
+                    Article article;
+                    //Collections.shuffle(articleResponse.getArticle());
+                    for (int i = 0; i < dataSize; i++) {
+                        article = new Article();
+                        article.setArticle_id(articleResponse.getArticle().get(i).getArticle_id());
+                        article.setUid(articleResponse.getArticle().get(i).getUid());
+                        article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
+                        article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
+                        article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
+                        article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
+                        article.setComment_cnt(articleResponse.getArticle().get(i).getComment_cnt());
+                        article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
+                        FragmentPage1.listItems.add(article);
+                        FragmentPage1.mCardAdapter.add(FragmentPage1.listItems.get(before_pos));
+                        before_pos++;
+                    }
+                    for(int j=0;j<listItems.size();j++){
+                        Log.d("load_article_more", FragmentPage1.listItems.get(j).getArticle_text());
+                    }
+                    Log.d("LoadMoreArticleData", "listSize : "+FragmentPage1.listItems.size());
+                    FragmentPage1.LastArticleID = articleResponse.getLast_article_id();
+                    FragmentPage1.mCardAdapter.notifyDataSetChanged();
+                    FragmentPage1.mCardStack.setAdapter(mCardAdapter);
+                    //mCardStack.setVisibleCardNum(2);
+                    if (FragmentPage1.mCardStack.getAdapter() != null) {
+                        Log.i("MyActivity", "Card Stack size: " + FragmentPage1.mCardStack.getAdapter().getCount());
+                    }
+
+                } else {
+                    Log.d("LoadMoreArticleData", "not exist");
                 }
             }
 

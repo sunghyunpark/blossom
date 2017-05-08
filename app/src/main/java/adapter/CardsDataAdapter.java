@@ -26,12 +26,12 @@ import common.CommonUtil;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
+import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tab1.FragmentPage1;
 import view.CommonTabMenu;
-import model.User;
 import view.CommonTopTitle;
 
 public class CardsDataAdapter extends ArrayAdapter<Article> {
@@ -120,6 +120,8 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     CommonTopTitle.getInstance().getTop_title().setVisibility(View.GONE);
                     currentArticleID = getItem(position).getArticle_id();
                     LoadArticleComment(currentArticleID);
+                    recyclerView.setAdapter(adapter);
+                    Toast.makeText(mContext,currentArticleID, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -207,7 +209,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                         articleComment.setCreated_at(articleCommentResponse.getArticle_comment().get(i).getCreated_at());
                         comment_listItems.add(articleComment);
                     }
-                    recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
                     //Toast.makeText(getActivity(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();

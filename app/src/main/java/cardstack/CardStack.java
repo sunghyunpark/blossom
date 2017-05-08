@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,8 +24,8 @@ import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
 
-import view.CommonTabMenu;
 import tab1.FragmentPage1;
+import view.CommonTabMenu;
 import view.CommonTopTitle;
 
 public class CardStack extends RelativeLayout {
@@ -394,7 +395,14 @@ public class CardStack extends RelativeLayout {
     private void loadLast() {
         ViewGroup parent = (ViewGroup) viewCollection.get(0);
         int lastIndex = ((mNumVisible - 1) + mIndex);
-
+        Log.d("loadLast",
+                "lastIndex : "+lastIndex +"\n"+
+                        "mNumVisible : "+mNumVisible+"\n"+
+                        "mIndex : "+mIndex+"\n"+
+                        "mAdapter.getCount : "+mAdapter.getCount());
+        if(lastIndex == mAdapter.getCount()){
+            FragmentPage1.LoadMoreArticle(FragmentPage1.LastArticleID);
+        }
         // 超出索引
         if (lastIndex > mAdapter.getCount() - 1) {
             if (mEnableLoop) {
