@@ -20,6 +20,24 @@
             android:layout_height="match_parent"
             android:background="@color/colorBlack_25"></LinearLayout>
 
+        <ImageView
+            android:id="@+id/more_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/more_btn_img_white"/>
+
+        <ImageView
+            android:id="@+id/bookmark_btn"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/bookmark_btn_img"/>
+
         <TextView
             android:id="@+id/article_text"
             android:layout_width="match_parent"
@@ -65,8 +83,8 @@
             android:layout_marginRight="15dp" />
         <ImageView
             android:id="@+id/article_comment_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_below="@+id/divider_layout"
             android:layout_toLeftOf="@+id/article_comment_txt"
             android:layout_marginTop="10dp"
@@ -85,11 +103,12 @@
 
         <ImageView
             android:id="@+id/article_like_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_below="@+id/divider_layout"
             android:layout_toLeftOf="@+id/article_like_txt"
             android:layout_marginTop="10dp"
             android:layout_marginRight="8dp"/>
+
     </RelativeLayout>
 </RelativeLayout>
