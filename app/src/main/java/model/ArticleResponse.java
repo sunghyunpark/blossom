@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class ArticleResponse {
 
     private ArrayList<Article> article;
+    private String last_article_id;
     private boolean error;
     private String error_msg;
 
@@ -19,6 +20,14 @@ public class ArticleResponse {
 
     public void setArticle(ArrayList<Article> article) {
         this.article = article;
+    }
+
+    public String getLast_article_id() {
+        return last_article_id;
+    }
+
+    public void setLast_article_id(String last_article_id) {
+        this.last_article_id = last_article_id;
     }
 
     public boolean isError() {
