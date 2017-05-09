@@ -22,6 +22,7 @@
     <string name="tab5_my_story_empty_txt">작성한 이야기가 없습니다.\n자신의 솔직한 이야기를 작성해보세요.</string>
     <string name="tab5_my_public_article_etc_txt">%1$s | 공감 %2$s | 댓글 %3$s</string>
     <string name="tab5_my_comment_empty_txt">작성한 댓글이 없습니다.</string>
+    <string name="tab5_my_bookmark_empty_txt">북마크한 이야기가 없습니다.\n간직하고 싶은 이야기를 북마크해보세요.</string>
 
     <!--article-->
     <string name="article_comment_edit_hint_txt">공감한다면 댓글을 남겨보세요.</string>

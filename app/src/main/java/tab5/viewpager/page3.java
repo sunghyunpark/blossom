@@ -30,7 +30,7 @@ public class Page3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragmentpage2, container, false);
+        v = inflater.inflate(R.layout.tab5_viewpager_page3, container, false);
 
         Bundle bundle = getArguments();
         if(bundle != null){
