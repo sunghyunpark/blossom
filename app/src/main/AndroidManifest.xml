@@ -50,7 +50,7 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="dialog.PublicMyArticleSettingDialog"
+            android:name="dialog.Public_Me_Article_More_Dialog"
             android:screenOrientation="portrait"
             android:theme="@style/CustomDialog" >
         </activity>

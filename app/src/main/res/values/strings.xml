@@ -27,4 +27,9 @@
     <string name="article_comment_send_btn_txt">보내기</string>
     <string name="article_comment_empty_toast_txt">댓글을 입력해주세요.</string>
 
+    <!--public_me_article_more_dialog-->
+    <string name="public_me_article_more_dialog_change_to_private_btn_txt">나만 보기</string>
+    <string name="public_me_article_more_dialog_delete_btn_txt">삭제하기</string>
+
+
 </resources>

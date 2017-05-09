@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
 import java.text.ParseException;
@@ -27,7 +26,7 @@ import java.util.List;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
-import dialog.PublicMyArticleSettingDialog;
+import dialog.Public_Me_Article_More_Dialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
 import model.ArticleResponse;
@@ -199,7 +198,7 @@ public class Page1 extends Fragment {
                 VHitem.more_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), PublicMyArticleSettingDialog.class);
+                        Intent intent = new Intent(getActivity(), Public_Me_Article_More_Dialog.class);
                         startActivity(intent);
                     }
                 });
