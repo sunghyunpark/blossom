@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +25,8 @@ import java.util.Date;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import dialog.Me_ArticleMoreDialog;
+import dialog.Other_ArticleMoreDialog;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
@@ -129,6 +132,32 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             TextView comment_txt = (TextView)(v.findViewById(R.id.article_comment_txt));
             comment_txt.setText(getItem(position).getComment_cnt());
 
+            //북마크 버튼
+            ImageView bookmark_btn = (ImageView)(v.findViewById(R.id.bookmark_btn));
+            bookmark_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            //더보기 버튼
+            ImageView more_btn = (ImageView)(v.findViewById(R.id.more_btn));
+            more_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(IsMyArticle(position)){
+                        //내 아티클인 경우
+                        Intent intent_me = new Intent(getContext(), Me_ArticleMoreDialog.class);
+                        getContext().startActivity(intent_me);
+                    }else{
+                        //내 아티클이 아닌 경우
+                        Intent intent_other = new Intent(getContext(), Other_ArticleMoreDialog.class);
+                        getContext().startActivity(intent_other);
+                    }
+                }
+            });
+
             //작성 날짜
             TextView created_at_txt = (TextView)(v.findViewById(R.id.created_at_txt));
             Date to = null;
@@ -147,6 +176,24 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
     public String CurrentArticleID(){
         return currentArticleID;
+    }
+
+    /**
+     * 현재 아티클이 내가 작성한 아티클인지 판별
+     * @param position
+     * @return
+     */
+    private boolean IsMyArticle(int position){
+        boolean flag = true;
+        String article_writer_uid = getItem(position).getUid();
+
+        if(article_writer_uid.equals(User.getInstance().getUid())){
+            //아티클 작성자가 나 인경우
+            flag = true;
+        }else{
+            flag = false;
+        }
+        return flag;
     }
 
     private boolean CurrentLikeState(int position){

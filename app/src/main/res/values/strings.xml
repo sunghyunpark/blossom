@@ -31,5 +31,14 @@
     <string name="public_me_article_more_dialog_change_to_private_btn_txt">나만 보기</string>
     <string name="public_me_article_more_dialog_delete_btn_txt">삭제하기</string>
 
+    <!--other_article_more_dialog-->
+    <string name="other_article_more_dialog_bookmark_btn_txt">북마크 하기</string>
+    <string name="other_article_more_dialog_send_seed_btn_txt">시드 선물하기</string>
+    <string name="other_article_more_dialog_report_btn_txt">이 이야기가 불편해요</string>
+
+    <!--me_article_more_dialog-->
+    <string name="me_article_more_dialog_change_private_btn">나만 보기</string>
+    <string name="me_article_more_dialog_delete_btn">삭제하기</string>
+
 
 </resources>

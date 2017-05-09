@@ -54,6 +54,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomDialog" >
         </activity>
+        <activity
+            android:name="dialog.Me_ArticleMoreDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDialog" >
+        </activity>
+        <activity
+            android:name="dialog.Other_ArticleMoreDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDialog" >
+        </activity>
     </application>
 
 </manifest>
