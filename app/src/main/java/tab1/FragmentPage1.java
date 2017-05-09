@@ -20,6 +20,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.yssh1020.blossom.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import adapter.CardsDataAdapter;
@@ -160,7 +161,7 @@ public class FragmentPage1 extends Fragment {
 
                     int dataSize = articleResponse.getArticle().size();
                     Article article;
-                    //Collections.shuffle(articleResponse.getArticle());
+                    Collections.shuffle(articleResponse.getArticle());
                     for (int i = 0; i < dataSize; i++) {
                         article = new Article();
                         article.setArticle_id(articleResponse.getArticle().get(i).getArticle_id());
@@ -215,7 +216,7 @@ public class FragmentPage1 extends Fragment {
                     int dataSize = articleResponse.getArticle().size();
                     int before_pos = FragmentPage1.listItems.size();
                     Article article;
-                    //Collections.shuffle(articleResponse.getArticle());
+                    Collections.shuffle(articleResponse.getArticle());
                     for (int i = 0; i < dataSize; i++) {
                         article = new Article();
                         article.setArticle_id(articleResponse.getArticle().get(i).getArticle_id());
