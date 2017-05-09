@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.squareup.otto.Subscribe;
 import com.yssh1020.blossom.R;
 
 import java.text.ParseException;
@@ -27,6 +28,8 @@ import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
 import dialog.Public_Me_Article_More_Dialog;
+import event.BusProvider;
+import event.MyArticleDeleteEvent;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
 import model.ArticleResponse;
@@ -49,17 +52,26 @@ public class Page1 extends Fragment {
     View v;
 
     CommonUtil commonUtil = new CommonUtil();
+    ViewGroup my_story_empty_layout;
+    //otto
+    private String delete_article_id;
+    private int list_pos;
+
+    public Page1() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        BusProvider.getInstance().register(this);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        InitView();
     }
 
     @Override
@@ -75,6 +87,7 @@ public class Page1 extends Fragment {
 
             }
         }
+        InitView();
         return v;
     }
 
@@ -84,6 +97,8 @@ public class Page1 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        my_story_empty_layout = (ViewGroup)v.findViewById(R.id.my_story_empty_layout);
 
         GetMyArticleData(User.getInstance().getUid());
     }
@@ -120,8 +135,7 @@ public class Page1 extends Fragment {
 
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
-                    TextView my_story_empty_txt = (TextView)v.findViewById(R.id.my_story_empty_txt);
-                    my_story_empty_txt.setVisibility(View.VISIBLE);
+                    my_story_empty_layout.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -134,7 +148,7 @@ public class Page1 extends Fragment {
         });
     }
 
-    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private static final int TYPE_ITEM_USER_ARTICLE = 0;
         private Resources res = getResources();
@@ -199,6 +213,8 @@ public class Page1 extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), Public_Me_Article_More_Dialog.class);
+                        intent.putExtra("article_id", currentItem.getArticle_id());
+                        intent.putExtra("pos", position);
                         startActivity(intent);
                     }
                 });
@@ -224,17 +240,16 @@ public class Page1 extends Fragment {
             }
 
         }
-        /*
+
         private void removeItem(int position){
-            common.DeleteMyArticle(getActivity(), user_uid, getItem(position).getArticle_id());
             listItems.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, listItems.size());
             if(listItems.size() == 0){
-                empty_layout.setVisibility(View.VISIBLE);
+                my_story_empty_layout.setVisibility(View.VISIBLE);
             }
 
-        }*/
+        }
         @Override
         public int getItemViewType(int position) {
             return TYPE_ITEM_USER_ARTICLE;
@@ -244,5 +259,21 @@ public class Page1 extends Fragment {
         public int getItemCount() {
             return listItems.size();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        // Always unregister when an object no longer should be on the bus.
+        BusProvider.getInstance().unregister(this);
+        super.onDestroy();
+    }
+    @Subscribe
+    public void FinishLoad(MyArticleDeleteEvent mPushEvent) {
+        delete_article_id = mPushEvent.getArticle_id();
+        list_pos = mPushEvent.getList_pos();
+        Log.d("delete", delete_article_id);
+        Log.d("delete", list_pos+"");
+        adapter.removeItem(list_pos);
+
     }
 }

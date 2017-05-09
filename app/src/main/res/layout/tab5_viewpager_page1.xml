@@ -4,16 +4,32 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/my_story_empty_txt"
+    <RelativeLayout
+        android:id="@+id/my_story_empty_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/colorGray"
-        android:text="@string/tab5_my_story_empty_txt"
-        android:gravity="center_horizontal"
-        android:visibility="gone"/>
+        android:layout_marginTop="50dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/my_story_empty_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/tab5_article_empty_logo"/>
+        <TextView
+            android:id="@+id/my_story_empty_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorGray"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/my_story_empty_logo"
+            android:text="@string/tab5_my_story_empty_txt"
+            android:gravity="center_horizontal" />
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

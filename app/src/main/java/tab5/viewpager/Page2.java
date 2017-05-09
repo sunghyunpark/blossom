@@ -1,5 +1,6 @@
 package tab5.viewpager;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tab5.ArticleActivity;
 
 /**
  * created by sunghyun 2017-05-9
@@ -35,6 +37,7 @@ public class Page2 extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ArticleComment> listItems;
     View v;
+    ViewGroup my_comment_empty_layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,8 @@ public class Page2 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        my_comment_empty_layout = (ViewGroup) v.findViewById(R.id.my_comment_empty_layout);
 
         LoadMyCommentData(User.getInstance().getUid());
     }
@@ -101,8 +106,7 @@ public class Page2 extends Fragment {
 
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
-                    TextView my_comment_empty_txt = (TextView)v.findViewById(R.id.my_comment_empty_txt);
-                    my_comment_empty_txt.setVisibility(View.VISIBLE);
+                    my_comment_empty_layout.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity().getApplicationContext(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
@@ -145,6 +149,15 @@ public class Page2 extends Fragment {
             if (holder instanceof MyComment_VHitem) {
                 final ArticleComment currentItem = getItem(position);
                 final MyComment_VHitem VHitem = (MyComment_VHitem)holder;
+
+                VHitem.comment_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                        intent.putExtra("article_id", currentItem.getArticle_id());
+                        startActivity(intent);
+                    }
+                });
 
                 VHitem.article_text.setText(currentItem.getArticle_text());
 

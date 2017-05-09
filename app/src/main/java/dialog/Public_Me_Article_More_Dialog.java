@@ -8,15 +8,24 @@ import android.view.Window;
 
 import com.yssh1020.blossom.R;
 
+import model.ArticleDetailResponse;
+
 
 public class Public_Me_Article_More_Dialog extends Activity {
 
+
+    private String article_id;
+    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);//위의 타이틀바 제거인데 setContentView 전에 넣어줘야함 뷰가 생성되기전에 제거되어야하므로...
         setContentView(R.layout.public_me_article_more_dialog);
+
+        Intent intent = getIntent();
+        article_id = intent.getExtras().getString("article_id");
+        pos = intent.getExtras().getInt("pos");
 
 
     }
@@ -28,8 +37,11 @@ public class Public_Me_Article_More_Dialog extends Activity {
                 finish();
                 break;
             case R.id.delete_btn:
+                Intent intent = new Intent(getApplicationContext(), Article_Delete_Cancel_Dialog.class);
+                intent.putExtra("article_id", article_id);
+                intent.putExtra("pos", pos);
+                startActivity(intent);
                 finish();
-                startActivity(new Intent(getApplicationContext(), Article_Delete_Cancel_Dialog.class));
                 break;
 
         }
