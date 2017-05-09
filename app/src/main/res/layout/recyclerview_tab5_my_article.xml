@@ -36,7 +36,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="8dp"
-        android:src="@mipmap/more_btn_img"/>
+        android:src="@mipmap/more_btn_img_white"/>
 
     <TextView
         android:id="@+id/article_etc_txt"
