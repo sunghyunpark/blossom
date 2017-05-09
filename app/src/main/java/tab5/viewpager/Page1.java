@@ -51,15 +51,16 @@ public class Page1 extends Fragment {
 
     CommonUtil commonUtil = new CommonUtil();
 
-    public Page1() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        InitView();
     }
 
     @Override
@@ -75,7 +76,6 @@ public class Page1 extends Fragment {
 
             }
         }
-        InitView();
         return v;
     }
 
