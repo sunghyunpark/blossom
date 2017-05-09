@@ -11,6 +11,7 @@ public class ArticleComment {
     private String article_id;
     private String uid;
     private String user_profile_img;
+    private String article_text;    //댓글을 작성한 아티클 내용
     private String comment_text;
     private String like_state;
     private String like_cnt;
@@ -47,6 +48,14 @@ public class ArticleComment {
 
     public void setUser_profile_img(String user_profile_img) {
         this.user_profile_img = user_profile_img;
+    }
+
+    public String getArticle_text() {
+        return article_text;
+    }
+
+    public void setArticle_text(String article_text) {
+        this.article_text = article_text;
     }
 
     public String getComment_text() {

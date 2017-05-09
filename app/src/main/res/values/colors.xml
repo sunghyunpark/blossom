@@ -12,4 +12,5 @@
     <color name="colorBlack_25">#25000000</color>
     <color name="upload_page_color">#dbdbdb</color>
     <color name="colorSky">#3babe1</color>
+    <color name="colorTextGray">#9E9E9E</color>
 </resources>

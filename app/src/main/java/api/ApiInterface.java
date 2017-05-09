@@ -118,4 +118,15 @@ public interface ApiInterface {
     @GET("article/article.php")
     Call<ArticleDetailResponse> GetArticleDetailData(@Query("tag") String tag, @Query("uid") String uid,
                                                      @Query("article_id") String article_id);
+
+    /**
+     * my comment
+     * @param tag -> my_comment
+     * @param uid
+     * @param last_comment_id
+     * @return
+     */
+    @GET("article/comment.php")
+    Call<ArticleCommentResponse> GetMyCommentData(@Query("tag") String tag, @Query("uid") String uid,
+                                                  @Query("last_comment_id") String last_comment_id);
 }
