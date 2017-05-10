@@ -26,6 +26,7 @@ import java.util.List;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import dialog.BookMark_More_Dialog;
 import dialog.Public_Me_Article_More_Dialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
@@ -199,6 +200,8 @@ public class Page3 extends Fragment {
                 VHitem.more_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), BookMark_More_Dialog.class);
+                        startActivity(intent);
 
                     }
                 });

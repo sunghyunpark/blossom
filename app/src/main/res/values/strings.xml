@@ -47,4 +47,8 @@
     <string name="article_delete_cancel_dialog_ok_btn_txt">예</string>
     <string name="article_delete_cancel_dialog_cancel_btn_txt">아니오</string>
 
+    <!--bookmark_more_dialog-->
+    <string name="bookmark_more_dialog_cancel_bookmark_btn_txt">북마크 해제하기</string>
+    <string name="bookmark_more_dialog_share_sns_btn_txtx">공유하기</string>
+
 </resources>
