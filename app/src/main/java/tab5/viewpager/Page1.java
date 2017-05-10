@@ -130,8 +130,6 @@ public class Page1 extends Fragment {
                     }
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
-
 
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);

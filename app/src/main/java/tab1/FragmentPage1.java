@@ -157,7 +157,6 @@ public class FragmentPage1 extends Fragment {
 
                 ArticleResponse articleResponse = response.body();
                 if (!articleResponse.isError()) {
-                    Toast.makeText(getActivity(), articleResponse.getError_msg(), Toast.LENGTH_SHORT).show();
 
                     int dataSize = articleResponse.getArticle().size();
                     Article article;
@@ -175,9 +174,6 @@ public class FragmentPage1 extends Fragment {
                         article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
                         listItems.add(article);
                         mCardAdapter.add(listItems.get(i));
-                    }
-                    for(int j=0;j<listItems.size();j++){
-                        Log.d("load_article", FragmentPage1.listItems.get(j).getArticle_text());
                     }
                     LastArticleID = articleResponse.getLast_article_id();
                     mCardAdapter.notifyDataSetChanged();
@@ -232,9 +228,6 @@ public class FragmentPage1 extends Fragment {
                         FragmentPage1.listItems.add(article);
                         FragmentPage1.mCardAdapter.add(FragmentPage1.listItems.get(before_pos));
                         before_pos++;
-                    }
-                    for(int j=0;j<listItems.size();j++){
-                        Log.d("load_article_more", FragmentPage1.listItems.get(j).getArticle_text());
                     }
                     Log.d("LoadMoreArticleData", "listSize : "+FragmentPage1.listItems.size());
                     FragmentPage1.LastArticleID = articleResponse.getLast_article_id();
