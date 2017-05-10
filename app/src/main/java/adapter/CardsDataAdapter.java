@@ -83,6 +83,28 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     //.transform(PicassoTransformations.resizeTransformation)
                     .into(article_picture);
 
+            final ImageView bookmark_btn = (ImageView)(v.findViewById(R.id.bookmark_btn));
+            if(CurrentBookMarkState(position)){
+                //북마크 상태
+                bookmark_btn.setBackgroundResource(R.mipmap.bookmark_click_btn);
+            }else{
+                bookmark_btn.setBackgroundResource(R.mipmap.bookmark_no_click_btn_img);
+            }
+            bookmark_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    commonUtil.BookMarkArticle(mContext, User.getInstance().getUid(), getItem(position).getArticle_id(), getItem(position).getBookmark_state());
+
+                    if(getItem(position).getBookmark_state().equals("Y")){
+                        ChangeBookMarkState(true, position);
+                        bookmark_btn.setBackgroundResource(R.mipmap.bookmark_no_click_btn_img);
+                    }else{
+                        ChangeBookMarkState(false, position);
+                        bookmark_btn.setBackgroundResource(R.mipmap.bookmark_click_btn);
+                    }
+                }
+            });
+
             //좋아요 버튼
             final ImageView like_btn = (ImageView)(v.findViewById(R.id.article_like_btn));
             if(CurrentLikeState(position)){
@@ -120,7 +142,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     //댓글 버튼 탭했을 때 패널 노출시키면서 하단 공통 탭 미노출, 상단 타이틀 미노출
                     mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.GONE);
-                    CommonTopTitle.getInstance().getTop_title().setVisibility(View.GONE);
                     currentArticleID = getItem(position).getArticle_id();
                     LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
@@ -131,15 +152,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
             TextView comment_txt = (TextView)(v.findViewById(R.id.article_comment_txt));
             comment_txt.setText(getItem(position).getComment_cnt());
-
-            //북마크 버튼
-            ImageView bookmark_btn = (ImageView)(v.findViewById(R.id.bookmark_btn));
-            bookmark_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
 
             //더보기 버튼
             ImageView more_btn = (ImageView)(v.findViewById(R.id.more_btn));
@@ -208,6 +220,18 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         return state;
     }
 
+    private boolean CurrentBookMarkState(int position){
+        boolean state = true;
+        String state_str = getItem(position).getBookmark_state();
+
+        if(state_str.equals("Y")){
+            state = true;
+        }else{
+            state = false;
+        }
+        return state;
+    }
+
     private boolean ChangeLikeState(boolean state, int position){
         int like_cnt = Integer.parseInt(getItem(position).getLike_cnt());
         if(state){
@@ -221,6 +245,18 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             state = true;
             getItem(position).setLike_state("Y");
             getItem(position).setLike_cnt(""+like_cnt);
+            return state;
+        }
+    }
+
+    private boolean ChangeBookMarkState(boolean state, int position){
+        if(state){
+            state = false;
+            getItem(position).setBookmark_state("N");
+            return state;
+        }else{
+            state = true;
+            getItem(position).setBookmark_state("Y");
             return state;
         }
     }

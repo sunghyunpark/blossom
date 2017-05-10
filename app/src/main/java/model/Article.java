@@ -14,6 +14,7 @@ public class Article {
     private String like_cnt;
     private String like_state;
     private String comment_cnt;
+    private String bookmark_state;
     private String created_at;
 
     public String getArticle_id() {
@@ -71,6 +72,15 @@ public class Article {
     public void setComment_cnt(String comment_cnt) {
         this.comment_cnt = comment_cnt;
     }
+
+    public String getBookmark_state() {
+        return bookmark_state;
+    }
+
+    public void setBookmark_state(String bookmark_state) {
+        this.bookmark_state = bookmark_state;
+    }
+
 
     public String getCreated_at() {
         return created_at;

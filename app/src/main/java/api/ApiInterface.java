@@ -129,4 +129,16 @@ public interface ApiInterface {
     @GET("article/comment.php")
     Call<ArticleCommentResponse> GetMyCommentData(@Query("tag") String tag, @Query("uid") String uid,
                                                   @Query("last_comment_id") String last_comment_id);
+
+    /**
+     * insert bookmark
+     * @param tag -> bookmark_article
+     * @param uid
+     * @param article_id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/bookmark.php")
+    Call<CommonResponse> PostBookMark(@Field("tag") String tag, @Field("uid") String uid,
+                                      @Field("article_id") String article_id, @Field("bookmark_state") String bookmark_state);
 }

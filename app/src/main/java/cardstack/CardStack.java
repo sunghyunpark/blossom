@@ -324,7 +324,6 @@ public class CardStack extends RelativeLayout {
                 if (FragmentPage1.mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN){
                     FragmentPage1.mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                     CommonTabMenu.getInstance().getBottom_menu().setVisibility(VISIBLE);
-                    CommonTopTitle.getInstance().getTop_title().setVisibility(VISIBLE);
                 }
                 return true;
             }

@@ -170,6 +170,7 @@ public class FragmentPage1 extends Fragment {
                         article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
                         article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
                         article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
+                        article.setBookmark_state(articleResponse.getArticle().get(i).getBookmark_state());
                         article.setComment_cnt(articleResponse.getArticle().get(i).getComment_cnt());
                         article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
                         listItems.add(article);

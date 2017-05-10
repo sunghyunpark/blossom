@@ -35,8 +35,7 @@
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/bookmark_btn_img"/>
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:id="@+id/article_text"

@@ -8,8 +8,6 @@ import java.util.Date;
 
 import api.ApiClient;
 import api.ApiInterface;
-import model.Article;
-import model.ArticleResponse;
 import model.CommonResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +18,40 @@ import retrofit2.Response;
  */
 
 public class CommonUtil {
+
+
+    /**
+     * 아티클 북마크
+     * @param context
+     * @param uid
+     * @param article_id
+     * @param bookmark_state
+     */
+    public void BookMarkArticle(final Context context, String uid, String article_id, String bookmark_state){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.PostBookMark("bookmark_article", uid, article_id, bookmark_state);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
 
     /**
      * article 좋아요
