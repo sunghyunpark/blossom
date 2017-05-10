@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.squareup.otto.Subscribe;
 import com.yssh1020.blossom.R;
 
 import java.text.ParseException;
@@ -28,6 +29,8 @@ import api.ApiInterface;
 import common.CommonUtil;
 import dialog.BookMark_More_Dialog;
 import dialog.Public_Me_Article_More_Dialog;
+import event.BusProvider;
+import event.MyBookMarkCancelEvent;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
 import model.ArticleResponse;
@@ -51,6 +54,9 @@ public class Page3 extends Fragment {
     ViewGroup my_bookmark_empty_layout;
     CommonUtil commonUtil = new CommonUtil();
 
+    private String bookmark_cancel_article_id;
+    private int list_pos;
+
     public Page3() {
         // Required empty public constructor
     }
@@ -60,6 +66,7 @@ public class Page3 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        BusProvider.getInstance().register(this);
     }
 
     @Override
@@ -118,6 +125,8 @@ public class Page3 extends Fragment {
                     }
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
 
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
@@ -199,6 +208,8 @@ public class Page3 extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), BookMark_More_Dialog.class);
+                        intent.putExtra("article_id", currentItem.getArticle_id());
+                        intent.putExtra("pos", position);
                         startActivity(intent);
 
                     }
@@ -226,10 +237,11 @@ public class Page3 extends Fragment {
 
         }
 
-        private void removeItem(int position){
+        private void removeItem(int position, String article_id){
             listItems.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, listItems.size());
+            commonUtil.BookMarkArticle(getActivity(), User.getInstance().getUid(), article_id, "Y");
             if(listItems.size() == 0){
                 my_bookmark_empty_layout.setVisibility(View.VISIBLE);
             }
@@ -246,4 +258,17 @@ public class Page3 extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        // Always unregister when an object no longer should be on the bus.
+        BusProvider.getInstance().unregister(this);
+        super.onDestroy();
+    }
+    @Subscribe
+    public void FinishLoad(MyBookMarkCancelEvent mPushEvent) {
+        bookmark_cancel_article_id = mPushEvent.getArticle_id();
+        list_pos = mPushEvent.getList_pos();
+
+        adapter.removeItem(list_pos, bookmark_cancel_article_id);
+    }
 }
