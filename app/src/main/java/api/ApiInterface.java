@@ -141,4 +141,15 @@ public interface ApiInterface {
     @POST("article/bookmark.php")
     Call<CommonResponse> PostBookMark(@Field("tag") String tag, @Field("uid") String uid,
                                       @Field("article_id") String article_id, @Field("bookmark_state") String bookmark_state);
+
+    /**
+     * bookmark article
+     * @param tag -> get_bookmark_data
+     * @param uid
+     * @param last_article_id
+     * @return
+     */
+    @GET("article/bookmark.php")
+    Call<ArticleResponse> GetBookMarkData(@Query("tag") String tag, @Query("uid") String uid,
+                                          @Query("last_article_id") String last_article_id);
 }

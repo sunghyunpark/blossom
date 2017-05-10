@@ -3,63 +3,58 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/tab5_my_comment_shape"
-    android:layout_margin="5dp"
-    android:padding="5dp"
-    android:id="@+id/my_comment_layout">
+    android:layout_height="150dp"
+    android:id="@+id/my_article_layout">
 
-    <RelativeLayout
-        android:id="@+id/article_txt_layout"
+    <ImageView
+        android:id="@+id/article_background_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 
-        <ImageView
-            android:id="@+id/comment_img"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/comment_img_sky"/>
-
-        <TextView
-            android:id="@+id/article_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/comment_img"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:paddingRight="20dp"
-            android:layout_centerVertical="true"
-            android:textSize="15dp"
-            android:textColor="@color/colorTextGray"/>
-    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorHalfBlack"></LinearLayout>
 
     <TextView
-        android:id="@+id/my_comment_txt"
+        android:id="@+id/article_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:textSize="18dp"
-        android:maxLines="2"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/colorWhite"
+        android:maxLines="3"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:ellipsize="end"
+        android:textSize="15dp"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/article_txt_layout"
-        android:textColor="#000000"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/bookmark_click_btn"/>
+
+    <ImageView
+        android:id="@+id/more_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp"
+        android:src="@mipmap/more_btn_img_white"/>
 
     <TextView
-        android:id="@+id/my_comment_etc_txt"
+        android:id="@+id/article_etc_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/my_comment_txt"
-        android:layout_marginTop="5dp"
-        android:textSize="13dp"
-        android:paddingLeft="20dp"
-        android:textColor="@color/colorTextGray"/>
-
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/tab5_my_public_article_etc_txt"
+        android:textColor="#dbdbdb"/>
 </RelativeLayout>
