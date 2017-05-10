@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_layout"
@@ -32,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorBlack_25"></LinearLayout>
+
 
             <TextView
                 android:id="@+id/article_text"
@@ -122,6 +124,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/share_layout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
@@ -145,6 +148,13 @@
                         android:background="@null"
                         android:text="공유하기" />
                 </LinearLayout>
+                <!--구분선-->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/share_layout"
+                    android:background="#ffe0e0e0"></LinearLayout>
 
             </RelativeLayout>
 
