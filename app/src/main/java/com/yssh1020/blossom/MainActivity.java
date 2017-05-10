@@ -139,7 +139,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
          */
         if(view.getId() != R.id.tab_3){
             tab1.setImageResource(R.mipmap.tab1_no_click_img);
-            tab2.setImageResource(R.mipmap.ic_launcher);
+            tab2.setImageResource(R.mipmap.tab2_no_click_img);
             tab3.setImageResource(R.mipmap.tab3_img);
             tab4.setImageResource(R.mipmap.tab4_no_click_img);
             tab5.setImageResource(R.mipmap.tab5_no_click_img);
@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break ;
             case R.id.tab_2 :
                 CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
-                tab2.setImageResource(R.mipmap.ic_launcher);
+                tab2.setImageResource(R.mipmap.tab2_click_img);
                 if(current_page == 2){
                     is_current_page = true;
                 }else{
