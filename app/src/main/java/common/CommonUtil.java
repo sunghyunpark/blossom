@@ -148,6 +148,15 @@ public class CommonUtil {
     }
 
     /**
+     * user profile 이미지 랜덤
+     * @return
+     */
+    public String GetUserProfileName(){
+        int randomNum = (int)(Math.random() * 10)+1;
+        String ImgName = "user_profile_img"+randomNum;
+        return ImgName;
+    }
+    /**
      * Date타입의 시간을 변환해줌
      */
     private static class TIME_MAXIMUM{

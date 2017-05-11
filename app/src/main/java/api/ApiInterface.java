@@ -30,7 +30,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("login/login.php")
     Call<UserResponse> PostUser(@Field("tag") String tag, @Field("email") String email,
-                                @Field("birth") String birth, @Field("gender") String gender);
+                                @Field("birth") String birth, @Field("gender") String gender,
+                                @Field("profile_img") String profile_img);
 
     /**
      * article upload

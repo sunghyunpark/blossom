@@ -10,6 +10,7 @@ public class User {
 
     private String uid;
     private String email;
+    private String profile_img;
     private String birth;
     private String gender;
     private String created_at;
@@ -40,6 +41,15 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getProfile_img() {
+        return profile_img;
+    }
+
+    public void setProfile_img(String profile_img) {
+        this.profile_img = profile_img;
+    }
+
 
     public String getBirth() {
         return birth;

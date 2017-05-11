@@ -20,6 +20,7 @@ import com.squareup.otto.Subscribe;
 
 import api.ApiClient;
 import api.ApiInterface;
+import common.CommonUtil;
 import db.RealmConfig;
 import db.model.UserData;
 import dialog.SelectBirthDialog;
@@ -47,6 +48,9 @@ public class LoginPage extends FragmentActivity {
     private ImageView male_check_img, female_check_img;
     private Button birth_btn;
     private String gender = "male";
+    private String profile_img;
+
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,12 +128,13 @@ public class LoginPage extends FragmentActivity {
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
     }
 
-    private void InsertDB(String uid, String email, String birth, String gender, String created_at){
+    private void InsertDB(String uid, String email, String profile_img, String birth, String gender, String created_at){
         mRealm.beginTransaction();
         UserData userData = new UserData();
         userData.setNo(1);
         userData.setUid(uid);
         userData.setEmail(email);
+        userData.setProfile_img(profile_img);
         userData.setBirth(birth);
         userData.setGender(gender);
         userData.setCreated_at(created_at);
@@ -159,14 +164,14 @@ public class LoginPage extends FragmentActivity {
         }
     }
 
-    private void RegisterUser(String birth, String gender){
+    private void RegisterUser(String birth, String gender, String profile_img){
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         /*
         최초 가입이므로 이메일 주소는 빈값
          */
-        Call<UserResponse> call = apiService.PostUser("register","",birth,gender);
+        Call<UserResponse> call = apiService.PostUser("register","",birth,gender,profile_img);
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
@@ -177,7 +182,7 @@ public class LoginPage extends FragmentActivity {
 
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
                     //realm에 저장
-                    InsertDB(userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getBirth(),
+                    InsertDB(userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
                             userdata.getUser().getGender(), userdata.getUser().getCreated_at());
 
                     //로그인 성공 후 메인화면으로 이동
@@ -272,7 +277,8 @@ public class LoginPage extends FragmentActivity {
                         if(birth_btn.getText().toString().equals(String.format(res.getString(R.string.login_birth_btn_txt)))){
                             Toast.makeText(getApplicationContext(),String.format(res.getString(R.string.no_selected_birth_alert_txt)), Toast.LENGTH_SHORT).show();
                         }else{
-                            RegisterUser(birth_btn.getText().toString(), gender);
+                            profile_img = commonUtil.GetUserProfileName();
+                            RegisterUser(birth_btn.getText().toString(), gender, profile_img);
                         }
                         break;
 

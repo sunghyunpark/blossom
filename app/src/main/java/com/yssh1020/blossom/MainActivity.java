@@ -122,11 +122,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         User.getInstance().setBirth(user.getBirth());
         User.getInstance().setGender(user.getGender());
         User.getInstance().setCreated_at(user.getCreated_at());
+        User.getInstance().setProfile_img(user.getProfile_img());
         Log.d("UserInfo", "UserUid : "+user.getUid()+"");
         Log.d("UserInfo", "UserEmail : "+user.getEmail());
         Log.d("UserInfo", "UserBirth : "+user.getBirth());
         Log.d("UserInfo", "UserGender : "+user.getGender());
         Log.d("UserInfo", "Created_at : "+user.getCreated_at());
+        Log.d("UserInfo", "Profile_img : "+user.getProfile_img());
         Toast.makeText(getApplicationContext(),User.getInstance().getUid(),Toast.LENGTH_SHORT).show();
     }
 

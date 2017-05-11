@@ -16,11 +16,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.squareup.otto.Subscribe;
+import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import adapter.CardsDataAdapter;
@@ -28,6 +34,8 @@ import api.ApiClient;
 import api.ApiInterface;
 import cardstack.CardStack;
 import common.CommonUtil;
+import event.BusProvider;
+import event.MyArticleDeleteEvent;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleResponse;
@@ -283,9 +291,23 @@ public class FragmentPage1 extends Fragment {
                 final ArticleComment currentItem = getItem(position);
                 final ArticleComment_VHitem VHitem = (ArticleComment_VHitem)holder;
 
+                Glide.clear(VHitem.user_profile_img);
+                Glide.with(getActivity())
+                        .load(res.getIdentifier(User.getInstance().getProfile_img(), "mipmap", "com.yssh1020.blossom"))
+                        .error(null)
+                        .into(VHitem.user_profile_img);
+
                 VHitem.comment_txt.setText(currentItem.getComment_text());
 
 
+                Date to = null;
+                try{
+                    SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    to = transFormat.parse(currentItem.getCreated_at());
+                }catch (ParseException p){
+                    p.printStackTrace();
+                }
+                VHitem.created_at_txt.setText(commonUtil.formatTimeString(to));
             }
         }
 
@@ -293,12 +315,14 @@ public class FragmentPage1 extends Fragment {
 
             private ImageView user_profile_img;
             private TextView comment_txt;
+            private TextView created_at_txt;
             private ImageView comment_seed_btn;
 
             public ArticleComment_VHitem(View itemView){
                 super(itemView);
                 user_profile_img = (ImageView)itemView.findViewById(R.id.user_profile_img);
                 comment_txt = (TextView)itemView.findViewById(R.id.comment_txt);
+                created_at_txt = (TextView)itemView.findViewById(R.id.created_at_txt);
                 comment_seed_btn = (ImageView)itemView.findViewById(R.id.comment_seed_btn);
 
             }

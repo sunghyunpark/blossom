@@ -15,6 +15,8 @@ public class UserData extends RealmObject{
     @Required
     private String email;
     @Required
+    private String profile_img;
+    @Required
     private String birth;
     @Required
     private String gender;
@@ -44,6 +46,14 @@ public class UserData extends RealmObject{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfile_img() {
+        return profile_img;
+    }
+
+    public void setProfile_img(String profile_img) {
+        this.profile_img = profile_img;
     }
 
     public String getBirth() {
