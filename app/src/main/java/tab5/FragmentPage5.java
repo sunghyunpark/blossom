@@ -1,5 +1,7 @@
 package tab5;
 
+import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,9 +10,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,13 +23,12 @@ import com.yssh1020.blossom.R;
 
 import api.ApiClient;
 import api.ApiInterface;
-import model.Article;
-import model.ArticleResponse;
 import model.MyPageResponse;
 import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tab3.SelectBG_Activity;
 import tab5.viewpager.Page1;
 import tab5.viewpager.Page2;
 import tab5.viewpager.Page3;
@@ -48,11 +51,6 @@ public class FragmentPage5 extends Fragment {
 
 
     View v;
-
-    public FragmentPage5() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +90,9 @@ public class FragmentPage5 extends Fragment {
         story_btn = (Button)v.findViewById(R.id.my_story_btn);
         comment_btn = (Button)v.findViewById(R.id.my_comment_btn);
         favorite_btn = (Button)v.findViewById(R.id.my_favorite_btn);
+
+        ImageView setting_btn = (ImageView)v.findViewById(R.id.setting_btn);
+        setting_btn.setOnTouchListener(myOnTouchListener);
 
         story_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,8 +289,29 @@ public class FragmentPage5 extends Fragment {
             // TODO Auto-generated method stub
             return NUM_PAGES;
         }
-
-
     }
+
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Resources res = getResources();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+                    case R.id.setting_btn:
+                        Intent intent = new Intent(getActivity(), Setting_Activity.class);
+                        startActivity(intent);
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 
 }

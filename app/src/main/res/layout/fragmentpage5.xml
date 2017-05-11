@@ -97,37 +97,36 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/app_title_bar"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_alignParentTop="true">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BLOSSOM"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
-
-                <ImageView
-                    android:id="@+id/setting_btn"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@mipmap/setting_btn_img"/>
-            </RelativeLayout>
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin" >
+                <RelativeLayout
+                    android:id="@+id/app_title_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BLOSSOM"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:textSize="20dp"/>
+
+                    <ImageView
+                        android:id="@+id/setting_btn"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@mipmap/setting_btn_img"/>
+                </RelativeLayout>
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
