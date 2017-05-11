@@ -152,4 +152,14 @@ public interface ApiInterface {
     @GET("article/bookmark.php")
     Call<ArticleResponse> GetBookMarkData(@Query("tag") String tag, @Query("uid") String uid,
                                           @Query("last_article_id") String last_article_id);
+
+    /**
+     * delete article
+     * @param tag -> delete_article
+     * @param article_id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/article.php")
+    Call<CommonResponse> DeleteArticle(@Field("tag") String tag, @Field("article_id") String article_id);
 }

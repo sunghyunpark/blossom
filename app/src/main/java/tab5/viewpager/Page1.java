@@ -239,10 +239,11 @@ public class Page1 extends Fragment {
 
         }
 
-        private void removeItem(int position){
+        private void removeItem(int position, String article_id){
             listItems.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, listItems.size());
+            commonUtil.DeleteArticle(getActivity(), article_id);
             if(listItems.size() == 0){
                 my_story_empty_layout.setVisibility(View.VISIBLE);
             }
@@ -271,7 +272,7 @@ public class Page1 extends Fragment {
         list_pos = mPushEvent.getList_pos();
         Log.d("delete", delete_article_id);
         Log.d("delete", list_pos+"");
-        adapter.removeItem(list_pos);
+        adapter.removeItem(list_pos, delete_article_id);
 
     }
 }
