@@ -291,9 +291,10 @@ public class FragmentPage1 extends Fragment {
                 final ArticleComment currentItem = getItem(position);
                 final ArticleComment_VHitem VHitem = (ArticleComment_VHitem)holder;
 
+
                 Glide.clear(VHitem.user_profile_img);
                 Glide.with(getActivity())
-                        .load(res.getIdentifier(User.getInstance().getProfile_img(), "mipmap", "com.yssh1020.blossom"))
+                        .load(res.getIdentifier(currentItem.getProfile_img(), "mipmap", "com.yssh1020.blossom"))
                         .error(null)
                         .into(VHitem.user_profile_img);
 

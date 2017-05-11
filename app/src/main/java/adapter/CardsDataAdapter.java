@@ -161,6 +161,8 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     if(IsMyArticle(position)){
                         //내 아티클인 경우
                         Intent intent_me = new Intent(getContext(), Me_ArticleMoreDialog.class);
+                        intent_me.putExtra("article_id", getItem(position).getArticle_id());
+                        intent_me.putExtra("pos", position);
                         getContext().startActivity(intent_me);
                     }else{
                         //내 아티클이 아닌 경우
@@ -286,7 +288,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                         articleComment = new ArticleComment();
                         articleComment.setComment_id(articleCommentResponse.getArticle_comment().get(i).getComment_id());
                         articleComment.setUid(articleCommentResponse.getArticle_comment().get(i).getUid());
-                        articleComment.setUser_profile_img(articleCommentResponse.getArticle_comment().get(i).getUser_profile_img());
+                        articleComment.setProfile_img(articleCommentResponse.getArticle_comment().get(i).getProfile_img());
                         articleComment.setComment_text(articleCommentResponse.getArticle_comment().get(i).getComment_text());
                         articleComment.setLike_state(articleCommentResponse.getArticle_comment().get(i).getLike_state());
                         articleComment.setLike_cnt(articleCommentResponse.getArticle_comment().get(i).getLike_cnt());

@@ -355,7 +355,7 @@ public class ArticleActivity extends Activity {
                         articleComment = new ArticleComment();
                         articleComment.setComment_id(articleCommentResponse.getArticle_comment().get(i).getComment_id());
                         articleComment.setUid(articleCommentResponse.getArticle_comment().get(i).getUid());
-                        articleComment.setUser_profile_img(articleCommentResponse.getArticle_comment().get(i).getUser_profile_img());
+                        articleComment.setProfile_img(articleCommentResponse.getArticle_comment().get(i).getProfile_img());
                         articleComment.setComment_text(articleCommentResponse.getArticle_comment().get(i).getComment_text());
                         articleComment.setLike_state(articleCommentResponse.getArticle_comment().get(i).getLike_state());
                         articleComment.setLike_cnt(articleCommentResponse.getArticle_comment().get(i).getLike_cnt());

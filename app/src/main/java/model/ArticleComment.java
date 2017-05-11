@@ -10,7 +10,7 @@ public class ArticleComment {
     private String comment_id;
     private String article_id;
     private String uid;
-    private String user_profile_img;
+    private String profile_img;
     private String article_text;    //댓글을 작성한 아티클 내용
     private String comment_text;
     private String like_state;
@@ -42,12 +42,12 @@ public class ArticleComment {
         this.uid = uid;
     }
 
-    public String getUser_profile_img() {
-        return user_profile_img;
+    public String getProfile_img() {
+        return profile_img;
     }
 
-    public void setUser_profile_img(String user_profile_img) {
-        this.user_profile_img = user_profile_img;
+    public void setProfile_img(String profile_img) {
+        this.profile_img = profile_img;
     }
 
     public String getArticle_text() {
