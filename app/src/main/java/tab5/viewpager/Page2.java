@@ -38,6 +38,7 @@ public class Page2 extends Fragment {
     private ArrayList<ArticleComment> listItems;
     View v;
     ViewGroup my_comment_empty_layout;
+    ViewGroup background_layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public class Page2 extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         my_comment_empty_layout = (ViewGroup) v.findViewById(R.id.my_comment_empty_layout);
+        background_layout = (ViewGroup)v.findViewById(R.id.background_layout);
 
         LoadMyCommentData(User.getInstance().getUid());
     }
@@ -100,11 +102,13 @@ public class Page2 extends Fragment {
                         listItems.add(articleComment);
                     }
                     recyclerView.setAdapter(adapter);
+                    background_layout.setBackgroundColor(getResources().getColor(R.color.backgroundGray));
                     adapter.notifyDataSetChanged();
 
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
                     my_comment_empty_layout.setVisibility(View.VISIBLE);
+                    background_layout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                     Toast.makeText(getActivity().getApplicationContext(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
