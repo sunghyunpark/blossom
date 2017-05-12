@@ -21,6 +21,8 @@ public class UserData extends RealmObject{
     @Required
     private String gender;
     @Required
+    private String token;
+    @Required
     private String created_at;
 
     public int getNo() {
@@ -70,6 +72,14 @@ public class UserData extends RealmObject{
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getCreated_at() {

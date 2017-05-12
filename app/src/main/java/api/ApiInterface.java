@@ -163,4 +163,17 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("article/article.php")
     Call<CommonResponse> DeleteArticle(@Field("tag") String tag, @Field("article_id") String article_id);
+
+    /**
+     * register push token
+     * @param tag -> token_register
+     * @param uid
+     * @param token
+     * @param login_state
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("push/push.php")
+    Call<CommonResponse> RegisterPushToken(@Field("tag") String tag, @Field("uid") String uid,
+                                           @Field("token") String token, @Field("login_state") String login_state);
 }

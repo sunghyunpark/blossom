@@ -13,6 +13,7 @@ public class User {
     private String profile_img;
     private String birth;
     private String gender;
+    private String token;
     private String created_at;
 
     public static  User getInstance(){
@@ -65,6 +66,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getCreated_at() {

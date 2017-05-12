@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 
 import api.ApiClient;
@@ -128,7 +129,8 @@ public class LoginPage extends FragmentActivity {
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
     }
 
-    private void InsertDB(String uid, String email, String profile_img, String birth, String gender, String created_at){
+    private void InsertDB(String uid, String email, String profile_img, String birth, String gender,
+                          String token, String created_at){
         mRealm.beginTransaction();
         UserData userData = new UserData();
         userData.setNo(1);
@@ -137,6 +139,7 @@ public class LoginPage extends FragmentActivity {
         userData.setProfile_img(profile_img);
         userData.setBirth(birth);
         userData.setGender(gender);
+        userData.setToken(token);
         userData.setCreated_at(created_at);
         mRealm.copyToRealmOrUpdate(userData);
         mRealm.commitTransaction();
@@ -181,9 +184,12 @@ public class LoginPage extends FragmentActivity {
                     Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
 
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
+                    String token = FirebaseInstanceId.getInstance().getToken();
                     //realm에 저장
                     InsertDB(userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
-                            userdata.getUser().getGender(), userdata.getUser().getCreated_at());
+                            userdata.getUser().getGender(), token, userdata.getUser().getCreated_at());
+                    //push token 등록
+                    commonUtil.RegisterPushToken(getApplicationContext(), userdata.getUser().getUid(), token, "Y");
 
                     //로그인 성공 후 메인화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

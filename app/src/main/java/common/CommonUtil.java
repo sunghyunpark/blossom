@@ -19,6 +19,38 @@ import retrofit2.Response;
 
 public class CommonUtil {
 
+
+    /**
+     * Push Token 등록
+     * @param context
+     * @param uid
+     * @param token
+     * @param login_state
+     */
+    public void RegisterPushToken(final Context context, String uid, String token, String login_state){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.RegisterPushToken("token_register", uid, token, login_state);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
     /**
      * 아티클 삭제
      * @param context
