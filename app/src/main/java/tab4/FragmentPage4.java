@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.yssh1020.blossom.R;
@@ -21,15 +23,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import api.ApiClient;
+import api.ApiInterface;
+import common.CommonUtil;
 import dialog.Public_Me_Article_More_Dialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Alarm;
+import model.AlarmResponse;
 import model.Article;
+import model.ArticleResponse;
+import model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tab5.ArticleActivity;
 import tab5.viewpager.Page1;
 
 /**
- * created by sunghyun 2017-03-27
+ * created by sunghyun 2017-05-12
  */
 public class FragmentPage4 extends Fragment {
 
@@ -40,6 +51,7 @@ public class FragmentPage4 extends Fragment {
     private ArrayList<Alarm> listItems;
     View v;
 
+    CommonUtil commonUtil = new CommonUtil();
 
 
     @Override
@@ -62,7 +74,7 @@ public class FragmentPage4 extends Fragment {
             }
         }
 
-
+        InitView();
         return v;
     }
 
@@ -72,6 +84,47 @@ public class FragmentPage4 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        GetAlarmData(User.getInstance().getUid());
+    }
+
+    private void GetAlarmData(String uid){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<AlarmResponse> call = apiService.GetAlarmData("get_alarm_data", uid);
+        call.enqueue(new Callback<AlarmResponse>() {
+            @Override
+            public void onResponse(Call<AlarmResponse> call, Response<AlarmResponse> response) {
+
+                AlarmResponse alarmResponse = response.body();
+                if(!alarmResponse.isError()){
+                    int dataSize = alarmResponse.getAlarm().size();
+                    Alarm alarm;
+                    for(int i=0;i<dataSize;i++){
+                        alarm = new Alarm();
+                        alarm.setArticle_id(alarmResponse.getAlarm().get(i).getArticle_id());
+                        alarm.setCategory(alarmResponse.getAlarm().get(i).getCategory());
+                        alarm.setInfo(alarmResponse.getAlarm().get(i).getInfo());
+                        alarm.setCreated_at(alarmResponse.getAlarm().get(i).getCreated_at());
+                        listItems.add(alarm);
+                    }
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                }else{
+                    recyclerView.setNestedScrollingEnabled(false);
+                    //my_story_empty_layout.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity().getApplicationContext(), alarmResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AlarmResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
     }
 
 
@@ -107,7 +160,68 @@ public class FragmentPage4 extends Fragment {
                 final Alarm_VHitem VHitem = (Alarm_VHitem)holder;
 
 
+                Glide.clear(VHitem.alarm_img);
+                Glide.with(getActivity())
+                        .load(res.getIdentifier(SetAlarmImg(position), "mipmap", "com.yssh1020.blossom"))
+                        .error(null)
+                        .into(VHitem.alarm_img);
+
+                VHitem.alarm_txt.setText(SetAlarmText(position));
+
+                Date to = null;
+                try{
+                    SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    to = transFormat.parse(getItem(position).getCreated_at());
+                }catch (ParseException p){
+                    p.printStackTrace();
+                }
+                VHitem.created_at_txt.setText(commonUtil.formatTimeString(to));
+
             }
+        }
+
+        //말줄임 처리
+        private String ellipsis(String text, int length){
+            String ellipsisString = "...";
+            String outputString = text;
+            outputString = outputString.replace("\n"," ");    //줄바꿈이 있을 경우 띄어쓰기로 변경
+
+            if(text.length()>0 && length>0){
+                if(text.length() > length){
+                    outputString = text.substring(0, length);
+                    outputString += ellipsisString;
+                }
+            }
+            return outputString;
+        }
+
+        private String SetAlarmImg(int position){
+            String type = getItem(position).getCategory();
+            String ImgName = "";
+            if(type.equals("like")){
+                ImgName = "alarm_like_img";
+            }else if(type.equals("comment")){
+                ImgName = "alarm_comment_img";
+            }else if(type.equals("bookmark")){
+                ImgName = "alarm_bookmark_img";
+            }
+            return ImgName;
+        }
+
+        private String SetAlarmText(int position){
+            String type = getItem(position).getCategory();
+            String alarmStr = "";
+            if(type.equals("like")){
+                alarmStr = String.format(res.getString(R.string.tab4_alarm_type_like_txt),
+                        ellipsis(getItem(position).getInfo(),20));
+            }else if(type.equals("comment")){
+                alarmStr = String.format(res.getString(R.string.tab4_alarm_type_comment_txt),
+                        ellipsis(getItem(position).getInfo(),20));
+            }else if(type.equals("bookmark")){
+                alarmStr = String.format(res.getString(R.string.tab4_alarm_type_bookmark_txt),
+                        ellipsis(getItem(position).getInfo(),20));
+            }
+            return alarmStr;
         }
 
         public class Alarm_VHitem extends RecyclerView.ViewHolder{

@@ -1,5 +1,6 @@
 package api;
 
+import model.AlarmResponse;
 import model.ArticleCommentResponse;
 import model.ArticleDetailResponse;
 import model.ArticleResponse;
@@ -176,4 +177,13 @@ public interface ApiInterface {
     @POST("push/push.php")
     Call<CommonResponse> RegisterPushToken(@Field("tag") String tag, @Field("uid") String uid,
                                            @Field("token") String token, @Field("login_state") String login_state);
+
+    /**
+     * alarm data
+     * @param tag -> get_alarm_data
+     * @param uid
+     * @return
+     */
+    @GET("push/push.php")
+    Call<AlarmResponse> GetAlarmData(@Query("tag") String tag, @Query("uid") String uid);
 }

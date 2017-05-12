@@ -8,17 +8,9 @@ package model;
 public class Alarm {
 
     private String article_id;
-    private String alarlmType;
-    private String alarm_txt;
+    private String category;
+    private String info;
     private String created_at;
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
 
     public String getArticle_id() {
         return article_id;
@@ -28,20 +20,28 @@ public class Alarm {
         this.article_id = article_id;
     }
 
-    public String getAlarlmType() {
-        return alarlmType;
+    public String getCategory() {
+        return category;
     }
 
-    public void setAlarlmType(String alarlmType) {
-        this.alarlmType = alarlmType;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getAlarm_txt() {
-        return alarm_txt;
+    public String getInfo() {
+        return info;
     }
 
-    public void setAlarm_txt(String alarm_txt) {
-        this.alarm_txt = alarm_txt;
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
 }
