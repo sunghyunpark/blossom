@@ -216,13 +216,13 @@ public class FragmentPage4 extends Fragment {
             String alarmStr = "";
             if(type.equals("like")){
                 alarmStr = String.format(res.getString(R.string.tab4_alarm_type_like_txt),
-                        ellipsis(getItem(position).getInfo(),20));
+                        "\""+ellipsis(getItem(position).getInfo(),20)+"\"");
             }else if(type.equals("comment")){
                 alarmStr = String.format(res.getString(R.string.tab4_alarm_type_comment_txt),
-                        ellipsis(getItem(position).getInfo(),20));
+                        "\""+ellipsis(getItem(position).getInfo(),20)+"\"");
             }else if(type.equals("bookmark")){
                 alarmStr = String.format(res.getString(R.string.tab4_alarm_type_bookmark_txt),
-                        ellipsis(getItem(position).getInfo(),20));
+                        "\""+ellipsis(getItem(position).getInfo(),20)+"\"");
             }
             return alarmStr;
         }

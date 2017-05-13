@@ -32,6 +32,7 @@ import event.BusProvider;
 import event.MyArticleDeleteEvent;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import model.Article;
+import model.ArticleDetailResponse;
 import model.ArticleResponse;
 import model.User;
 import retrofit2.Call;
@@ -57,6 +58,9 @@ public class Page1 extends Fragment {
     private String delete_article_id;
     private int list_pos;
 
+    private int detail_pos = -1;    //디테일뷰 클릭했을 때의 position
+    private String detail_article_id;    //디테일뷰 클릭했을 때의 id값
+
     public Page1() {
         // Required empty public constructor
     }
@@ -72,6 +76,9 @@ public class Page1 extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        if(detail_pos>=0){
+            GetArticleDetailBack(User.getInstance().getUid(), detail_article_id);
+        }
     }
 
     @Override
@@ -97,9 +104,9 @@ public class Page1 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
 
         my_story_empty_layout = (ViewGroup)v.findViewById(R.id.my_story_empty_layout);
-
         GetMyArticleData(User.getInstance().getUid());
     }
 
@@ -128,7 +135,6 @@ public class Page1 extends Fragment {
                         article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
                         listItems.add(article);
                     }
-                    recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
                 }else{
@@ -140,6 +146,46 @@ public class Page1 extends Fragment {
 
             @Override
             public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
+
+    private void GetArticleDetailBack(String uid, final String article_id){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ArticleDetailResponse> call = apiService.GetArticleDetailData("article_detail", uid, article_id);
+        call.enqueue(new Callback<ArticleDetailResponse>() {
+            @Override
+            public void onResponse(Call<ArticleDetailResponse> call, Response<ArticleDetailResponse> response) {
+
+                ArticleDetailResponse articleResponse = response.body();
+                if(!articleResponse.isError()){
+                    Article article;
+                    article = new Article();
+                    article.setArticle_id(article_id);
+                    article.setUid(articleResponse.getArticle_detail().getUid());
+                    article.setArticle_text(articleResponse.getArticle_detail().getArticle_text());
+                    article.setArticle_photo(articleResponse.getArticle_detail().getArticle_photo());
+                    article.setLike_cnt(articleResponse.getArticle_detail().getLike_cnt());
+                    article.setLike_state(articleResponse.getArticle_detail().getLike_state());
+                    article.setComment_cnt(articleResponse.getArticle_detail().getComment_cnt());
+                    article.setCreated_at(articleResponse.getArticle_detail().getCreated_at());
+                    listItems.set(detail_pos, article);
+
+                    adapter.notifyDataSetChanged();
+                    detail_pos = -1;
+
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleDetailResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
             }
@@ -180,6 +226,8 @@ public class Page1 extends Fragment {
                 VHitem.my_article_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        detail_article_id = currentItem.getArticle_id();
+                        detail_pos = position;
                         Intent intent = new Intent(getContext(), ArticleActivity.class);
                         intent.putExtra("article_id", currentItem.getArticle_id());
                         startActivity(intent);
