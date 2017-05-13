@@ -40,7 +40,7 @@ import tab5.ArticleActivity;
 import tab5.viewpager.Page1;
 
 /**
- * created by sunghyun 2017-05-12
+ * created by sunghyun 2017-03-27
  */
 public class FragmentPage4 extends Fragment {
 
@@ -52,6 +52,7 @@ public class FragmentPage4 extends Fragment {
     View v;
 
     CommonUtil commonUtil = new CommonUtil();
+    ViewGroup tab4_empty_layout;
 
 
     @Override
@@ -85,6 +86,8 @@ public class FragmentPage4 extends Fragment {
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        tab4_empty_layout = (ViewGroup)v.findViewById(R.id.tab4_empty_layout);
+
         GetAlarmData(User.getInstance().getUid());
     }
 
@@ -114,7 +117,7 @@ public class FragmentPage4 extends Fragment {
 
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
-                    //my_story_empty_layout.setVisibility(View.VISIBLE);
+                    tab4_empty_layout.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity().getApplicationContext(), alarmResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }

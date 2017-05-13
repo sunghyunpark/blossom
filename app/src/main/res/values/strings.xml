@@ -55,4 +55,5 @@
     <string name="tab4_alarm_type_like_txt">누군가 %1$s 이야기에 공감합니다.</string>
     <string name="tab4_alarm_type_comment_txt">누군가 %1$s 이야기에 댓글을 남겼습니다.</string>
     <string name="tab4_alarm_type_bookmark_txt">누군가 %1$s 이야기를 북마크합니다.</string>
+    <string name="tab4_alarm_empty_txt">아직 받은 알림이 없습니다.\n이야기 또는 댓글을 남겨보세요.</string>
 </resources>

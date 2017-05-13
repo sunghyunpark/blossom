@@ -58,14 +58,14 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@mipmap/emoji_btn"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="11dp"/>
 
             <ImageView
                 android:id="@+id/select_bg_btn"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@mipmap/select_bg_btn"
-                android:layout_marginLeft="8dp"/>
+                android:layout_marginLeft="11dp"/>
         </LinearLayout>
 
         <Button
