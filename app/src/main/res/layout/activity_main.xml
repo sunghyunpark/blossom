@@ -34,14 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@null"
+        android:background="@color/bottomTabMenu"
         android:layout_alignParentBottom="true">
 
         <!--아이콘 색상 8C8C8C  F7F7F7-->
         <LinearLayout
             android:id="@+id/menu_layout"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:orientation="horizontal">
@@ -63,10 +63,10 @@
 
             <ImageView
                 android:id="@+id/tab_3"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:src="@mipmap/tab3_img"/>
 
             <ImageView

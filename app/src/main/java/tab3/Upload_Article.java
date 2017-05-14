@@ -21,6 +21,7 @@ import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 import api.ApiClient;
 import api.ApiInterface;
+import common.CommonUtil;
 import event.BusProvider;
 import event.SelectArticleBGEvent;
 import model.CommonResponse;
@@ -40,6 +41,7 @@ public class Upload_Article extends Activity implements TextWatcher {
     private String imgPath;
     private String beforeStr;
     private int select_pos = 0;    //selectBG_Activity에서 선택한 아이템 position
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class Upload_Article extends Activity implements TextWatcher {
         select_bg_btn.setOnTouchListener(myOnTouchListener);
         article_edit_box.addTextChangedListener(this);
 
-        imgPath = AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_1.jpg";
+        imgPath = commonUtil.GetArticleBGName();
         LoadBackground(imgPath);
     }
 

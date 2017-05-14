@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.yssh1020.blossom.AppController;
+
 import java.util.Date;
 
 import api.ApiClient;
@@ -177,6 +179,16 @@ public class CommonUtil {
             }
         });
 
+    }
+
+    /**
+     * upload article bg 이미지 랜덤
+     * @return
+     */
+    public String GetArticleBGName(){
+        int randomNum = (int)(Math.random() * 54)+1;
+        String ImgName = AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_"+randomNum+".jpg";
+        return ImgName;
     }
 
     /**

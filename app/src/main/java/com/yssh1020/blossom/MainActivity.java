@@ -168,7 +168,7 @@ public class MainActivity extends FragmentActivity {
 
                     case R.id.tab_1 :
                         tab1.setImageResource(R.mipmap.tab1_click_img);
-                        CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(Color.TRANSPARENT);
+                        CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                         if(current_page == 1){
                             is_current_page = true;
                         }else{
@@ -244,6 +244,7 @@ public class MainActivity extends FragmentActivity {
     public void onBackPressed() {
         if (FragmentPage1.mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN){
             FragmentPage1.mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+            CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.VISIBLE);
         }else {
             super.onBackPressed();
         }
