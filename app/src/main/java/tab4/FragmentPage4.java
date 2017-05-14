@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,7 +43,7 @@ import tab5.viewpager.Page1;
 /**
  * created by sunghyun 2017-03-27
  */
-public class FragmentPage4 extends Fragment {
+public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     //리사이클러뷰
     RecyclerAdapter adapter;
@@ -53,6 +54,16 @@ public class FragmentPage4 extends Fragment {
 
     CommonUtil commonUtil = new CommonUtil();
     ViewGroup tab4_empty_layout;
+    //리프레쉬
+    private SwipeRefreshLayout mSwipeRefresh;
+
+
+    //리프레쉬
+    @Override
+    public void onRefresh() {
+        InitView();
+        mSwipeRefresh.setRefreshing(false);
+    }
 
 
     @Override
@@ -85,6 +96,12 @@ public class FragmentPage4 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        //리프레쉬
+        mSwipeRefresh = (SwipeRefreshLayout)v.findViewById(R.id.swipe_layout);
+        mSwipeRefresh.setOnRefreshListener(this);
+        mSwipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorSky), getResources().getColor(R.color.colorSky),
+                getResources().getColor(R.color.colorSky), getResources().getColor(R.color.colorSky));
 
         tab4_empty_layout = (ViewGroup)v.findViewById(R.id.tab4_empty_layout);
 
@@ -161,6 +178,15 @@ public class FragmentPage4 extends Fragment {
             if (holder instanceof Alarm_VHitem) {
                 final Alarm currentItem = getItem(position);
                 final Alarm_VHitem VHitem = (Alarm_VHitem)holder;
+
+                VHitem.alarm_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                        intent.putExtra("article_id", currentItem.getArticle_id());
+                        startActivity(intent);
+                    }
+                });
 
 
                 Glide.clear(VHitem.alarm_img);
