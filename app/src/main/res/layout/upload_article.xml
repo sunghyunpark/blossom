@@ -18,8 +18,9 @@
 
     <EditText
         android:id="@+id/article_text_edit_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@null"
@@ -28,7 +29,7 @@
         android:textColor="@color/colorWhite"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
         android:textSize="20dp"/>
 
     <RelativeLayout
