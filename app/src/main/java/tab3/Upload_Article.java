@@ -69,8 +69,8 @@ public class Upload_Article extends Activity implements TextWatcher {
         article_edit_box.addTextChangedListener(this);
 
         //키보드 자동 노출
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+        //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         imgPath = commonUtil.GetArticleBGName();
         LoadBackground(imgPath);
