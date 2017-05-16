@@ -236,10 +236,12 @@ public class Page3 extends Fragment {
         }
 
         private void removeItem(int position, String article_id){
+            Resources res = getResources();
+            String toast_msg = String.format(res.getString(R.string.toast_bookmark_off));
             listItems.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, listItems.size());
-            commonUtil.BookMarkArticle(getActivity(), User.getInstance().getUid(), article_id, "Y");
+            commonUtil.BookMarkArticle(getActivity(), User.getInstance().getUid(), article_id, "Y", toast_msg);
             if(listItems.size() == 0){
                 my_bookmark_empty_layout.setVisibility(View.VISIBLE);
             }

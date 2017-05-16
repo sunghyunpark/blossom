@@ -72,4 +72,9 @@
 
     <!--tab1 article comment -->
     <string name="tab1_article_comment_empty_txt">등록된 댓글이 없습니다.\n댓글을 남겨보세요.</string>
+
+    <!--toast-->
+    <string name="toast_network_error">네트워크 연결상태를 확인해주세요.</string>
+    <string name="toast_bookmark_on">북마크가 되었습니다.</string>
+    <string name="toast_bookmark_off">북마크를 해제했습니다.</string>
 </resources>

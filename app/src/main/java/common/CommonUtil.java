@@ -90,7 +90,7 @@ public class CommonUtil {
      * @param article_id
      * @param bookmark_state
      */
-    public void BookMarkArticle(final Context context, String uid, String article_id, String bookmark_state){
+    public void BookMarkArticle(final Context context, String uid, String article_id, String bookmark_state, final String toast_msg){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -101,10 +101,10 @@ public class CommonUtil {
 
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), toast_msg,Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), toast_msg,Toast.LENGTH_SHORT).show();
                 }
             }
 

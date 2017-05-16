@@ -2,6 +2,7 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -94,15 +95,20 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             bookmark_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    commonUtil.BookMarkArticle(mContext, User.getInstance().getUid(), getItem(position).getArticle_id(), getItem(position).getBookmark_state());
-
+                    Resources res = mContext.getResources();
+                    String toast_msg;
+                    String state = getItem(position).getBookmark_state();
                     if(getItem(position).getBookmark_state().equals("Y")){
                         ChangeBookMarkState(true, position);
                         bookmark_btn.setBackgroundResource(R.mipmap.bookmark_no_click_btn_img);
+                        toast_msg = String.format(res.getString(R.string.toast_bookmark_off));
                     }else{
                         ChangeBookMarkState(false, position);
                         bookmark_btn.setBackgroundResource(R.mipmap.bookmark_click_btn);
+                        toast_msg = String.format(res.getString(R.string.toast_bookmark_on));
                     }
+                    commonUtil.BookMarkArticle(mContext, User.getInstance().getUid(), getItem(position).getArticle_id(), state, toast_msg);
+
                 }
             });
 
