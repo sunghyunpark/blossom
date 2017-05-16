@@ -69,4 +69,7 @@
     <string name="app_setting_opensource_txt">오픈소스 라이선스</string>
     <string name="app_setting_app_version_txt">앱 버전</string>
     <string name="app_setting_logout_txt">로그아웃</string>
+
+    <!--tab1 article comment -->
+    <string name="tab1_article_comment_empty_txt">등록된 댓글이 없습니다.\n댓글을 남겨보세요.</string>
 </resources>

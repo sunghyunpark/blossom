@@ -47,9 +47,10 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private String currentArticleID = "";
     CommonUtil commonUtil = new CommonUtil();
     private ArrayList<ArticleComment> comment_listItems;
+    private ViewGroup comment_empty_layout;
 
     public CardsDataAdapter(Context context, ArrayList<Article> items, SlidingUpPanelLayout mLayout, RecyclerView recyclerView,
-                            FragmentPage1.RecyclerAdapter adapter, ArrayList<ArticleComment> comment_listItems) {
+                            FragmentPage1.RecyclerAdapter adapter, ArrayList<ArticleComment> comment_listItems, ViewGroup comment_empty_layout) {
         super(context, R.layout.card_content);
         this.mContext = context;
         this.items = items;
@@ -57,6 +58,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         this.adapter = adapter;
         this.recyclerView = recyclerView;
         this.comment_listItems = comment_listItems;
+        this.comment_empty_layout = comment_empty_layout;
 
     }
 
@@ -144,7 +146,6 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     currentArticleID = getItem(position).getArticle_id();
                     LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
-                    Toast.makeText(mContext,currentArticleID, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -290,7 +291,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
                 ArticleCommentResponse articleCommentResponse = response.body();
                 if (!articleCommentResponse.isError()) {
-                    //Toast.makeText(getActivity(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    comment_empty_layout.setVisibility(View.GONE);
 
                     int dataSize = articleCommentResponse.getArticle_comment().size();
                     ArticleComment articleComment;
@@ -303,11 +304,11 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                         articleComment.setLike_state(articleCommentResponse.getArticle_comment().get(i).getLike_state());
                         articleComment.setLike_cnt(articleCommentResponse.getArticle_comment().get(i).getLike_cnt());
                         articleComment.setCreated_at(articleCommentResponse.getArticle_comment().get(i).getCreated_at());
-                        Log.d("profile_img123", articleCommentResponse.getArticle_comment().get(i).getProfile_img());
                         comment_listItems.add(articleComment);
                     }
                     adapter.notifyDataSetChanged();
                 } else {
+                    comment_empty_layout.setVisibility(View.VISIBLE);
                     //Toast.makeText(getActivity(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
 

@@ -63,6 +63,7 @@ public class FragmentPage1 extends Fragment {
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ArticleComment> comment_listItems;
+    private ViewGroup comment_empty_layout;
 
     public static ArrayList<Article> listItems;
     public static String LastArticleID = "";
@@ -146,12 +147,13 @@ public class FragmentPage1 extends Fragment {
     private void InitArticleView(){
         mCardStack = (CardStack) v.findViewById(R.id.container);
         mCardStack.setContentResource(R.layout.card_content);
+        comment_empty_layout = (ViewGroup)v.findViewById(R.id.empty_layout);
         //mCardStack.setEnableLoop(true);
         //mCardStack.setEnableRotation(true);
         //mCardStack.setStackMargin(20);
 
         listItems = new ArrayList<Article>();
-        mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout, recyclerView, adapter, comment_listItems);
+        mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout, recyclerView, adapter, comment_listItems, comment_empty_layout);
     }
 
     private void LoadArticle(String last_article_id) {
