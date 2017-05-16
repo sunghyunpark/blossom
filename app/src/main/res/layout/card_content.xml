@@ -29,14 +29,6 @@
             android:layout_marginRight="10dp"
             android:src="@mipmap/more_btn_img_white"/>
 
-        <ImageView
-            android:id="@+id/bookmark_btn"
-            android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"/>
-
         <TextView
             android:id="@+id/article_text"
             android:layout_width="match_parent"
@@ -73,12 +65,22 @@
             android:textColor="@color/colorWhite"/>
 
         <ImageView
+            android:id="@+id/bookmark_btn"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/divider_layout"
+            android:layout_marginTop="10dp"
+            />
+
+        <ImageView
             android:id="@+id/save_btn_img"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_below="@+id/divider_layout"
             android:layout_marginTop="10dp"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/bookmark_btn"
             android:layout_marginRight="15dp"
             android:src="@mipmap/save_btn_img"/>
 

@@ -8,15 +8,6 @@
     android:background="@drawable/common_dialog_shape">
 
     <Button
-        android:id="@+id/bookmark_btn"
-        android:layout_width="230dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/colorWhite"
-        android:text="@string/other_article_more_dialog_bookmark_btn_txt"
-        android:onClick="buttonPressed"
-        android:textColor="#000000"/>
-    <Button
         android:id="@+id/send_seed_btn"
         android:layout_width="230dp"
         android:layout_height="45dp"

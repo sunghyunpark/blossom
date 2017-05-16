@@ -25,9 +25,6 @@ public class Other_ArticleMoreDialog extends Activity {
     //button event
     public void buttonPressed(View v) {
         switch ((v.getId())){
-            case R.id.bookmark_btn:
-                finish();
-                break;
             case R.id.send_seed_btn:
                 finish();
                 break;
