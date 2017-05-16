@@ -191,7 +191,7 @@ public class MainActivity extends FragmentActivity {
                             fragment.setArguments(bundle);
                             current_page = 2;
                             is_current_page = false;
-                            app_title_bar.setVisibility(View.VISIBLE);
+                            app_title_bar.setVisibility(View.GONE);
                         }
                         break ;
                     case R.id.tab_3 :

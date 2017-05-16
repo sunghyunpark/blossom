@@ -5,6 +5,7 @@ import model.ArticleCommentResponse;
 import model.ArticleDetailResponse;
 import model.ArticleResponse;
 import model.CommonResponse;
+import model.FamousArticleResponse;
 import model.MyPageResponse;
 import model.UserResponse;
 import retrofit2.Call;
@@ -186,4 +187,13 @@ public interface ApiInterface {
      */
     @GET("push/push.php")
     Call<AlarmResponse> GetAlarmData(@Query("tag") String tag, @Query("uid") String uid);
+
+    /**
+     * famous article
+     * @param tag -> famous_article
+     * @param last_famous_article_id
+     * @return
+     */
+    @GET("article/article.php")
+    Call<FamousArticleResponse> GetFamousArticleData(@Query("tag") String tag, @Query("last_famous_article_id") String last_famous_article_id);
 }
