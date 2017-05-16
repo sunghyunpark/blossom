@@ -290,7 +290,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id, last_comment_id);
+        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id, last_comment_id, User.getInstance().getUid());
         call.enqueue(new Callback<ArticleCommentResponse>() {
             @Override
             public void onResponse(Call<ArticleCommentResponse> call, Response<ArticleCommentResponse> response) {

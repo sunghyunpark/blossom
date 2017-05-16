@@ -109,7 +109,7 @@ public interface ApiInterface {
      */
     @GET("article/comment.php")
     Call<ArticleCommentResponse> GetArticleComment(@Query("tag") String tag, @Query("article_id") String article_id,
-                                                   @Query("last_comment_id") String last_comment_id);
+                                                   @Query("last_comment_id") String last_comment_id, @Query("uid") String uid);
 
     /**
      * article detail
@@ -196,4 +196,28 @@ public interface ApiInterface {
      */
     @GET("article/article.php")
     Call<FamousArticleResponse> GetFamousArticleData(@Query("tag") String tag, @Query("last_famous_article_id") String last_famous_article_id);
+
+    /**
+     * post seed
+     * @param tag -> insert_seed
+     * @param uid
+     * @param seed_cnt
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/article.php")
+    Call<CommonResponse> PostSeed(@Field("tag") String tag, @Field("uid") String uid,
+                                  @Field("seed_cnt") int seed_cnt);
+
+    /**
+     * comment like
+     * @param tag -> comment_like
+     * @param uid_other
+     * @param uid_me
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/comment.php")
+    Call<CommonResponse> CommentLike(@Field("tag") String tag, @Field("comment_id") String comment_id,
+                                     @Field("uid_other") String uid_other, @Field("uid_me") String uid_me);
 }

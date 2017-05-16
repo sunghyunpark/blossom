@@ -23,6 +23,65 @@ public class CommonUtil {
 
 
     /**
+     * comment like
+     * @param context
+     * @param comment_id
+     * @param uid_other
+     * @param uid_me
+     */
+    public void CommentLike(final Context context, String comment_id, String uid_other, String uid_me){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.CommentLike("comment_like", comment_id, uid_other, uid_me);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
+    /**
+     * post seed
+     * @param context
+     * @param uid
+     * @param seed_cnt
+     */
+    public void PostSeed(final Context context, String uid, int seed_cnt){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.PostSeed("insert_seed", uid, seed_cnt);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
+    /**
      * Push Token 등록
      * @param context
      * @param uid

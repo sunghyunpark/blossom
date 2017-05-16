@@ -136,6 +136,7 @@ public class ArticleActivity extends Activity {
         linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         adapter = new RecyclerAdapter(comment_listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     private void LoadArticleData(String article_id){
@@ -360,7 +361,7 @@ public class ArticleActivity extends Activity {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id, "0");
+        Call<ArticleCommentResponse> call = apiService.GetArticleComment("comment", article_id, "0", User.getInstance().getUid());
         call.enqueue(new Callback<ArticleCommentResponse>() {
             @Override
             public void onResponse(Call<ArticleCommentResponse> call, Response<ArticleCommentResponse> response) {
@@ -382,7 +383,6 @@ public class ArticleActivity extends Activity {
                         articleComment.setCreated_at(articleCommentResponse.getArticle_comment().get(i).getCreated_at());
                         comment_listItems.add(articleComment);
                     }
-                    recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
                     //Toast.makeText(getActivity(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
@@ -433,5 +433,13 @@ public class ArticleActivity extends Activity {
             return true;
         }
     };
+    @Override
+    public void onBackPressed() {
+        if (mLayout.getPanelState() != SlidingUpPanelLayout.PanelState.HIDDEN){
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        }else {
+            super.onBackPressed();
+        }
+    }
 
 }
