@@ -3,6 +3,9 @@
     package="com.yssh1020.blossom">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--사진 로컬 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -88,6 +91,11 @@
         </activity>
         <activity
             android:name="tab5.Setting_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="common.Share_Activity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>

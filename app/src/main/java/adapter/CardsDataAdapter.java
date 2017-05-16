@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +24,7 @@ import java.util.Date;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import common.Share_Activity;
 import dialog.Me_ArticleMoreDialog;
 import dialog.Other_ArticleMoreDialog;
 import model.Article;
@@ -36,7 +36,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tab1.FragmentPage1;
 import view.CommonTabMenu;
-import view.CommonTopTitle;
 
 public class CardsDataAdapter extends ArrayAdapter<Article> {
 
@@ -77,7 +76,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
             //아티클 사진
 
-            ImageView article_picture = (ImageView)(v.findViewById(R.id.background_img));
+            final ImageView article_picture = (ImageView)(v.findViewById(R.id.background_img));
             Picasso.with(getContext())
                     .load(getItem(position).getArticle_photo())
                     //.transform(PicassoTransformations.resizeTransformation)
@@ -146,6 +145,17 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
                     Toast.makeText(mContext,currentArticleID, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            ImageView save_btn = (ImageView)(v.findViewById(R.id.save_btn_img));
+            save_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), Share_Activity.class);
+                    intent.putExtra("article_img", getItem(position).getArticle_photo());
+                    intent.putExtra("article_text", getItem(position).getArticle_text());
+                    mContext.startActivity(intent);
                 }
             });
 
@@ -293,6 +303,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                         articleComment.setLike_state(articleCommentResponse.getArticle_comment().get(i).getLike_state());
                         articleComment.setLike_cnt(articleCommentResponse.getArticle_comment().get(i).getLike_cnt());
                         articleComment.setCreated_at(articleCommentResponse.getArticle_comment().get(i).getCreated_at());
+                        Log.d("profile_img123", articleCommentResponse.getArticle_comment().get(i).getProfile_img());
                         comment_listItems.add(articleComment);
                     }
                     adapter.notifyDataSetChanged();

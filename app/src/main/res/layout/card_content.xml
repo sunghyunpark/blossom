@@ -71,13 +71,24 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:textColor="@color/colorWhite"/>
+
+        <ImageView
+            android:id="@+id/save_btn_img"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_below="@+id/divider_layout"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/save_btn_img"/>
+
         <TextView
             android:id="@+id/article_comment_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
             android:layout_below="@+id/divider_layout"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/save_btn_img"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp" />
         <ImageView
@@ -108,6 +119,7 @@
             android:layout_toLeftOf="@+id/article_like_txt"
             android:layout_marginTop="10dp"
             android:layout_marginRight="8dp"/>
+
 
     </RelativeLayout>
 </RelativeLayout>
