@@ -140,7 +140,6 @@ public class Page1 extends Fragment {
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
                     my_story_empty_layout.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 

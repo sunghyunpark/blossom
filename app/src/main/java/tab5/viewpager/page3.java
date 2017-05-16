@@ -129,7 +129,7 @@ public class Page3 extends Fragment {
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
                     my_bookmark_empty_layout.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity().getApplicationContext(), articleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
                 }
             }
 

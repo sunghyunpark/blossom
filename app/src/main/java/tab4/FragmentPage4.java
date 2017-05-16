@@ -135,7 +135,7 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
                 }else{
                     recyclerView.setNestedScrollingEnabled(false);
                     tab4_empty_layout.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity().getApplicationContext(), alarmResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+
                 }
             }
 

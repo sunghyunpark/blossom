@@ -109,7 +109,6 @@ public class Page2 extends Fragment {
                     recyclerView.setNestedScrollingEnabled(false);
                     my_comment_empty_layout.setVisibility(View.VISIBLE);
                     background_layout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                    Toast.makeText(getActivity().getApplicationContext(), articleCommentResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
