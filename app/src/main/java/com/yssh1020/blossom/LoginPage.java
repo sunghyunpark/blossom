@@ -130,7 +130,7 @@ public class LoginPage extends FragmentActivity {
     }
 
     private void InsertDB(String uid, String email, String profile_img, String birth, String gender,
-                          String token, String created_at){
+                          String token, String created_at, int seed_cnt){
         mRealm.beginTransaction();
         UserData userData = new UserData();
         userData.setNo(1);
@@ -141,6 +141,7 @@ public class LoginPage extends FragmentActivity {
         userData.setGender(gender);
         userData.setToken(token);
         userData.setCreated_at(created_at);
+        userData.setSeed_cnt(seed_cnt);
         mRealm.copyToRealmOrUpdate(userData);
         mRealm.commitTransaction();
 
@@ -187,7 +188,7 @@ public class LoginPage extends FragmentActivity {
                     String token = FirebaseInstanceId.getInstance().getToken();
                     //realm에 저장
                     InsertDB(userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
-                            userdata.getUser().getGender(), token, userdata.getUser().getCreated_at());
+                            userdata.getUser().getGender(), token, userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
                     //push token 등록
                     commonUtil.RegisterPushToken(getApplicationContext(), userdata.getUser().getUid(), token, "Y");
 

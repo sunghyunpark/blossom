@@ -24,6 +24,7 @@ public class UserData extends RealmObject{
     private String token;
     @Required
     private String created_at;
+    private int seed_cnt;
 
     public int getNo() {
         return no;
@@ -90,4 +91,11 @@ public class UserData extends RealmObject{
         this.created_at = created_at;
     }
 
+    public int getSeed_cnt() {
+        return seed_cnt;
+    }
+
+    public void setSeed_cnt(int seed_cnt) {
+        this.seed_cnt = seed_cnt;
+    }
 }

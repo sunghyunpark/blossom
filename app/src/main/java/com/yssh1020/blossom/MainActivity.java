@@ -134,6 +134,7 @@ public class MainActivity extends FragmentActivity {
         Log.d("UserInfo", "Created_at : "+user.getCreated_at());
         Log.d("UserInfo", "Profile_img : "+user.getProfile_img());
         Log.d("UserInfo", "Push_Token : "+user.getToken());
+        Log.d("UserInfo", "Seed_Cnt : "+user.getSeed_cnt());
         Toast.makeText(getApplicationContext(),User.getInstance().getUid(),Toast.LENGTH_SHORT).show();
     }
 

@@ -15,6 +15,7 @@ public class User {
     private String gender;
     private String token;
     private String created_at;
+    private String seed_cnt;
 
     public static  User getInstance(){
         if(user == null)
@@ -84,4 +85,11 @@ public class User {
         this.created_at = created_at;
     }
 
+    public String getSeed_cnt() {
+        return seed_cnt;
+    }
+
+    public void setSeed_cnt(String seed_cnt) {
+        this.seed_cnt = seed_cnt;
+    }
 }
