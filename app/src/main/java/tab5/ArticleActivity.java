@@ -280,7 +280,28 @@ public class ArticleActivity extends Activity {
                 }
                 VHitem.created_at_txt.setText(commonUtil.formatTimeString(to));
 
-
+                if(currentItem.getUid().equals(User.getInstance().getUid())){
+                    VHitem.comment_seed_btn.setVisibility(View.GONE);
+                }else{
+                    if(CurrentLikeState(position)){
+                        //댓글 공감 상태
+                        VHitem.comment_seed_btn.setBackgroundResource(R.mipmap.seed_click_img);
+                    }else{
+                        VHitem.comment_seed_btn.setBackgroundResource(R.mipmap.seed_img);
+                    }
+                }
+                VHitem.comment_seed_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(CurrentLikeState(position)){
+                            Toast.makeText(getApplicationContext(), "이미 공감한 댓글입니다.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            ChangeLikeState(false,position);
+                            VHitem.comment_seed_btn.setBackgroundResource(R.mipmap.seed_click_img);
+                        }
+                        commonUtil.CommentLike(getApplicationContext(), currentItem.getComment_id(), currentItem.getUid(), User.getInstance().getUid());
+                    }
+                });
 
 
             }
@@ -314,6 +335,28 @@ public class ArticleActivity extends Activity {
             }
 
         }*/
+        private boolean ChangeLikeState(boolean state, int position){
+            if(state){
+                state = false;
+                getItem(position).setLike_state("N");
+                return state;
+            }else{
+                state = true;
+                getItem(position).setLike_state("Y");
+                return state;
+            }
+        }
+        private boolean CurrentLikeState(int position){
+            boolean state = true;
+            String state_str = getItem(position).getLike_state();
+
+            if(state_str.equals("Y")){
+                state = true;
+            }else{
+                state = false;
+            }
+            return state;
+        }
         @Override
         public int getItemViewType(int position) {
             return TYPE_ITEM_ARTICLE_COMMENT;
