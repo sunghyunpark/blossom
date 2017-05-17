@@ -23,6 +23,7 @@ import com.yssh1020.blossom.R;
 
 import api.ApiClient;
 import api.ApiInterface;
+import db.RealmUtil;
 import model.MyPageResponse;
 import model.User;
 import retrofit2.Call;
@@ -49,7 +50,7 @@ public class FragmentPage5 extends Fragment {
     private ViewGroup story_underbar, comment_underbar, favorite_underbar;
     private Button story_btn, comment_btn, favorite_btn;
 
-
+    RealmUtil realmUtil = new RealmUtil();
     View v;
 
     @Override
@@ -200,6 +201,7 @@ public class FragmentPage5 extends Fragment {
 
         seed_txt.setText(seed);
         story_cnt_txt.setText(story_cnt);
+        realmUtil.UpdateUserSeedCnt(getActivity(),User.getInstance().getUid(), seed);
     }
 
     private void PixViewPagerSize(){
