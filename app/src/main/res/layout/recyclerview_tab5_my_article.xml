@@ -18,10 +18,11 @@
 
     <TextView
         android:id="@+id/article_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
         android:textColor="@color/colorWhite"
         android:maxLines="3"
         android:paddingLeft="15dp"
