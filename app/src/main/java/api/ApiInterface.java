@@ -36,6 +36,14 @@ public interface ApiInterface {
                                 @Field("profile_img") String profile_img);
 
     /**
+     * load user data
+     * @param tag -> load_user_data
+     * @param uid
+     * @return
+     */
+    @GET("login/login.php")
+    Call<UserResponse> GetUserData(@Query("tag") String tag, @Query("uid") String uid);
+    /**
      * article upload
      * @param tag -> upload
      * @param uid -> 유저 uid

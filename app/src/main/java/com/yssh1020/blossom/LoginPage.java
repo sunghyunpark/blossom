@@ -23,6 +23,7 @@ import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
 import db.RealmConfig;
+import db.RealmUtil;
 import db.model.UserData;
 import dialog.SelectBirthDialog;
 import event.BusProvider;
@@ -39,9 +40,6 @@ public class LoginPage extends FragmentActivity {
 
     private SessionManager mSessionManager;
 
-    //realm
-    private Realm mRealm;
-    private RealmConfig realmConfig;
     //Viewpager
     private ViewPager mViewPager;
 
@@ -52,6 +50,7 @@ public class LoginPage extends FragmentActivity {
     private String profile_img;
 
     CommonUtil commonUtil = new CommonUtil();
+    RealmUtil realmUtil = new RealmUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class LoginPage extends FragmentActivity {
         BusProvider.getInstance().register(this);
 
         InitView();
-        InitDB();
 
     }
 
@@ -122,32 +120,6 @@ public class LoginPage extends FragmentActivity {
     }
 
     /**
-     * realm 초기화
-     */
-    private void InitDB(){
-        realmConfig = new RealmConfig();
-        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
-    }
-
-    private void InsertDB(String uid, String email, String profile_img, String birth, String gender,
-                          String token, String created_at, int seed_cnt){
-        mRealm.beginTransaction();
-        UserData userData = new UserData();
-        userData.setNo(1);
-        userData.setUid(uid);
-        userData.setEmail(email);
-        userData.setProfile_img(profile_img);
-        userData.setBirth(birth);
-        userData.setGender(gender);
-        userData.setToken(token);
-        userData.setCreated_at(created_at);
-        userData.setSeed_cnt(seed_cnt);
-        mRealm.copyToRealmOrUpdate(userData);
-        mRealm.commitTransaction();
-
-    }
-
-    /**
      * 성별 선택 초기화
      * @param male
      * @param female
@@ -187,7 +159,7 @@ public class LoginPage extends FragmentActivity {
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
                     String token = FirebaseInstanceId.getInstance().getToken();
                     //realm에 저장
-                    InsertDB(userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
+                    realmUtil.InsertDB(getApplicationContext(), userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
                             userdata.getUser().getGender(), token, userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
                     //push token 등록
                     commonUtil.RegisterPushToken(getApplicationContext(), userdata.getUser().getUid(), token, "Y");

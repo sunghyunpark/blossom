@@ -17,11 +17,19 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import api.ApiClient;
+import api.ApiInterface;
 import db.RealmConfig;
+import db.RealmUtil;
 import db.model.UserData;
 import io.realm.Realm;
+import model.UserResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tab3.SelectBG_Activity;
 import view.CommonTabMenu;
 import model.User;
@@ -44,6 +52,7 @@ public class MainActivity extends FragmentActivity {
 
     //현재 페이지
     private int current_page;
+    RealmUtil realmUtil = new RealmUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,27 +124,42 @@ public class MainActivity extends FragmentActivity {
         SaveUserInfo();
     }
 
+    /**
+     * 나중에 로그인 기능 들어가면 로그인 즉시 로컬디비에 토큰도 저장해둬야함.
+     */
     private void SaveUserInfo(){
         RealmConfig realmConfig = new RealmConfig();
         Realm mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
-        UserData user = mRealm.where(UserData.class).equalTo("no",1).findFirst();
+        final UserData user = mRealm.where(UserData.class).equalTo("no",1).findFirst();
 
-        User.getInstance().setUid(user.getUid());
-        User.getInstance().setEmail(user.getEmail());
-        User.getInstance().setBirth(user.getBirth());
-        User.getInstance().setGender(user.getGender());
-        User.getInstance().setCreated_at(user.getCreated_at());
-        User.getInstance().setProfile_img(user.getProfile_img());
-        User.getInstance().setToken(user.getToken());
-        Log.d("UserInfo", "UserUid : "+user.getUid()+"");
-        Log.d("UserInfo", "UserEmail : "+user.getEmail());
-        Log.d("UserInfo", "UserBirth : "+user.getBirth());
-        Log.d("UserInfo", "UserGender : "+user.getGender());
-        Log.d("UserInfo", "Created_at : "+user.getCreated_at());
-        Log.d("UserInfo", "Profile_img : "+user.getProfile_img());
-        Log.d("UserInfo", "Push_Token : "+user.getToken());
-        Log.d("UserInfo", "Seed_Cnt : "+user.getSeed_cnt());
-        Toast.makeText(getApplicationContext(),User.getInstance().getUid(),Toast.LENGTH_SHORT).show();
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        /*
+        최초 가입이므로 이메일 주소는 빈값
+         */
+        Call<UserResponse> call = apiService.GetUserData("load_user_data",user.getUid());
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+
+                UserResponse userdata = response.body();
+                if(!userdata.isError()){
+                    Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
+                    realmUtil.InsertDB(getApplicationContext(), userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
+                            userdata.getUser().getGender(), user.getToken(), userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
+
+                }else{
+                    Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+
     }
 
 
