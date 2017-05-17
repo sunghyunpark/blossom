@@ -15,6 +15,7 @@ public class Article {
     private String like_state;
     private String comment_cnt;
     private String bookmark_state;
+    private String private_mode;
     private String created_at;
 
     public String getArticle_id() {
@@ -81,6 +82,13 @@ public class Article {
         this.bookmark_state = bookmark_state;
     }
 
+    public String getPrivate_mode() {
+        return private_mode;
+    }
+
+    public void setPrivate_mode(String private_mode) {
+        this.private_mode = private_mode;
+    }
 
     public String getCreated_at() {
         return created_at;

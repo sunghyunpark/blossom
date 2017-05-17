@@ -184,6 +184,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     }else{
                         //내 아티클이 아닌 경우
                         Intent intent_other = new Intent(getContext(), Other_ArticleMoreDialog.class);
+                        intent_other.putExtra("article_id", getItem(position).getArticle_id());
                         getContext().startActivity(intent_other);
                     }
                 }

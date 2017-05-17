@@ -22,6 +22,29 @@ import retrofit2.Response;
 public class CommonUtil {
 
 
+    public void MyArticlePrivateModeChange(final Context context, String article_id, String private_mode){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.ChangePrivateMode("change_private_mode", article_id, private_mode);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
     /**
      * comment like
      * @param context
@@ -29,7 +52,7 @@ public class CommonUtil {
      * @param uid_other
      * @param uid_me
      */
-    public void CommentLike(final Context context, String comment_id, String uid_other, String uid_me){
+    public void CommentLike(final Context context, String comment_id, String uid_other, final String uid_me){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -39,9 +62,9 @@ public class CommonUtil {
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }else{
-
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 

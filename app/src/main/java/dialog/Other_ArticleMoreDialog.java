@@ -1,6 +1,7 @@
 package dialog;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,6 +13,7 @@ import com.yssh1020.blossom.R;
  */
 public class Other_ArticleMoreDialog extends Activity {
 
+    private String article_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,8 @@ public class Other_ArticleMoreDialog extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);//위의 타이틀바 제거인데 setContentView 전에 넣어줘야함 뷰가 생성되기전에 제거되어야하므로...
         setContentView(R.layout.other_article_more_dialog);
 
+        Intent intent = getIntent();
+        article_id = intent.getExtras().getString("article_id");
 
     }
 

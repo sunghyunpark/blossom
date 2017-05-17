@@ -27,6 +27,7 @@ import java.util.List;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import dialog.Private_Me_Article_More_Dialog;
 import dialog.Public_Me_Article_More_Dialog;
 import event.BusProvider;
 import event.MyArticleDeleteEvent;
@@ -132,6 +133,7 @@ public class Page1 extends Fragment {
                         article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
                         article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
                         article.setComment_cnt(articleResponse.getArticle().get(i).getComment_cnt());
+                        article.setPrivate_mode(articleResponse.getArticle().get(i).getPrivate_mode());
                         article.setCreated_at(articleResponse.getArticle().get(i).getCreated_at());
                         listItems.add(article);
                     }
@@ -171,6 +173,7 @@ public class Page1 extends Fragment {
                     article.setLike_cnt(articleResponse.getArticle_detail().getLike_cnt());
                     article.setLike_state(articleResponse.getArticle_detail().getLike_state());
                     article.setComment_cnt(articleResponse.getArticle_detail().getComment_cnt());
+                    article.setPrivate_mode(articleResponse.getArticle_detail().getPrivate_mode());
                     article.setCreated_at(articleResponse.getArticle_detail().getCreated_at());
                     listItems.set(detail_pos, article);
 
@@ -257,10 +260,22 @@ public class Page1 extends Fragment {
                 VHitem.more_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), Public_Me_Article_More_Dialog.class);
-                        intent.putExtra("article_id", currentItem.getArticle_id());
-                        intent.putExtra("pos", position);
-                        startActivity(intent);
+                        detail_article_id = currentItem.getArticle_id();
+                        detail_pos = position;
+                        if(GetPrivateModeState(position)){
+                            //공개인경우
+                            Intent intent = new Intent(getActivity(), Public_Me_Article_More_Dialog.class);
+                            intent.putExtra("article_id", currentItem.getArticle_id());
+                            intent.putExtra("pos", position);
+                            startActivity(intent);
+                        }else{
+                            //비공개인경우
+                            Intent intent = new Intent(getActivity(), Private_Me_Article_More_Dialog.class);
+                            intent.putExtra("article_id", currentItem.getArticle_id());
+                            intent.putExtra("pos", position);
+                            startActivity(intent);
+                        }
+
                     }
                 });
             }
@@ -284,6 +299,17 @@ public class Page1 extends Fragment {
 
             }
 
+        }
+
+        private boolean GetPrivateModeState(int position){
+            boolean flag = true;
+            if(getItem(position).getPrivate_mode().equals("Y")){
+                //비공개인경우
+                flag = false;
+            }else{
+                flag = true;
+            }
+            return flag;
         }
 
         private void removeItem(int position, String article_id){

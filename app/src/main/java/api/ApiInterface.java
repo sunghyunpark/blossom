@@ -220,4 +220,16 @@ public interface ApiInterface {
     @POST("article/comment.php")
     Call<CommonResponse> CommentLike(@Field("tag") String tag, @Field("comment_id") String comment_id,
                                      @Field("uid_other") String uid_other, @Field("uid_me") String uid_me);
+
+    /**
+     * change private mode
+     * @param tag -> change_private_mode
+     * @param article_id
+     * @param private_mode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/article.php")
+    Call<CommonResponse> ChangePrivateMode(@Field("tag") String tag, @Field("article_id") String article_id,
+                                           @Field("private_mode") String private_mode);
 }
