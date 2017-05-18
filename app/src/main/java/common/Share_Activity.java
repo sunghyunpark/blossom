@@ -2,6 +2,7 @@ package common;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,6 +48,8 @@ public class Share_Activity extends Activity {
     private String image_path, article_text;
     private ViewGroup title_lay;
     private TextView app_logo_txt;
+
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +164,8 @@ public class Share_Activity extends Activity {
             }catch(IOException e){
 
             }
+            JMediaScanner scanner = new JMediaScanner(getApplicationContext());
+            scanner.startScan(Environment.getExternalStorageDirectory()+"/Blossom/"+timeStamp+"_BLOSSOM.png");
             Toast.makeText(getApplicationContext(), "저장 완료", Toast.LENGTH_SHORT).show();
         }
 
@@ -203,6 +210,38 @@ public class Share_Activity extends Activity {
                 }
                 break;
 
+        }
+    }
+
+    /**
+     * sdcard에 사진을 저장 시 단말기 갤러리에 바로 갱신되게 해줌
+     */
+    public class JMediaScanner implements MediaScannerConnection.MediaScannerConnectionClient {
+        private MediaScannerConnection mScanner;
+        private String mFilepath = null;
+
+        public JMediaScanner(Context context) {
+            mScanner = new MediaScannerConnection(context, this);
+        }
+
+        public void startScan(String filepath) {
+            mFilepath = filepath;
+            mScanner.connect(); // 이 함수 호출 후 onMediaScannerConnected가 호출 됨.
+        }
+
+        @Override
+        public void onMediaScannerConnected() {
+            if(mFilepath != null) {
+                String filepath = new String(mFilepath);
+                mScanner.scanFile(filepath, null); // MediaStore의 정보를 업데이트
+            }
+
+            mFilepath = null;
+        }
+
+        @Override
+        public void onScanCompleted(String path, Uri uri) {
+            mScanner.disconnect(); // onMediaScannerConnected 수행이 끝난 후 연결 해제
         }
     }
 }
