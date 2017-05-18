@@ -109,6 +109,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomDialog" >
         </activity>
+        <activity
+            android:name="tab5.OpenSource_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

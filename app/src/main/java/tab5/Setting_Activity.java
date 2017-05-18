@@ -31,7 +31,7 @@ public class Setting_Activity extends Activity {
 
     CommonUtil commonUtil = new CommonUtil();
 
-    private ViewGroup logout_layout;
+    private ViewGroup logout_layout, open_source_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,14 @@ public class Setting_Activity extends Activity {
     private void InitView(){
         mSessionManager = new SessionManager(getApplicationContext());
         logout_layout = (ViewGroup)findViewById(R.id.logout_layout);
+        open_source_layout = (ViewGroup)findViewById(R.id.open_source_layout);
+        open_source_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OpenSource_Activity.class);
+                startActivity(intent);
+            }
+        });
         logout_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
