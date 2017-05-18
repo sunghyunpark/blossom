@@ -62,10 +62,6 @@ public class Page1 extends Fragment {
     private int detail_pos = -1;    //디테일뷰 클릭했을 때의 position
     private String detail_article_id;    //디테일뷰 클릭했을 때의 id값
 
-    public Page1() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +75,8 @@ public class Page1 extends Fragment {
         super.onResume();
         if(detail_pos>=0){
             GetArticleDetailBack(User.getInstance().getUid(), detail_article_id);
+        }else{
+            GetMyArticleData(User.getInstance().getUid());
         }
     }
 
@@ -108,10 +106,13 @@ public class Page1 extends Fragment {
         recyclerView.setAdapter(adapter);
 
         my_story_empty_layout = (ViewGroup)v.findViewById(R.id.my_story_empty_layout);
-        GetMyArticleData(User.getInstance().getUid());
+        //GetMyArticleData(User.getInstance().getUid());
     }
 
     private void GetMyArticleData(String uid){
+        if(listItems != null){
+            listItems.clear();
+        }
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 

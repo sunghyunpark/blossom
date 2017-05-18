@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -18,6 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -49,8 +51,6 @@ public class Share_Activity extends Activity {
     private ViewGroup title_lay;
     private TextView app_logo_txt;
 
-    CommonUtil commonUtil = new CommonUtil();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,48 +79,9 @@ public class Share_Activity extends Activity {
         article_text_txt.setText(article_text);
 
         Button save_btn = (Button)findViewById(R.id.save_btn);
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                /**
-                 * os 6.0 권한체크 및 요청
-                 */
-                if (ContextCompat.checkSelfPermission(Share_Activity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat
-                        .checkSelfPermission(Share_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale
-                            (Share_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
-                            ActivityCompat.shouldShowRequestPermissionRationale(Share_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                        ActivityCompat.requestPermissions(Share_Activity.this,
-                                new String[]{Manifest.permission
-                                        .WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                                REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE);
-                    } else {
-                        ActivityCompat.requestPermissions(Share_Activity.this,
-                                new String[]{Manifest.permission
-                                        .WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                                REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE);
-
-                    }
-
-                } else {
-                    title_lay.setVisibility(View.GONE);
-                    app_logo_txt.setVisibility(View.VISIBLE);
-                    try{
-                        SaveArticle saveArticle = new SaveArticle();
-                        saveArticle.execute();
-                        finish();
-                    }catch (Exception e){
-
-                    }
-                }
-
-
-            }
-        });
+        save_btn.setOnTouchListener(myOnTouchListener);
+        Button back_btn = (Button)findViewById(R.id.back_btn);
+        back_btn.setOnTouchListener(myOnTouchListener);
     }
 
     private class SaveArticle extends AsyncTask<Integer, Bitmap, Bitmap> {
@@ -244,4 +205,61 @@ public class Share_Activity extends Activity {
             mScanner.disconnect(); // onMediaScannerConnected 수행이 끝난 후 연결 해제
         }
     }
+
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+                    case R.id.back_btn:
+                        finish();
+                        break;
+                    case R.id.save_btn:
+                        /**
+                         * os 6.0 권한체크 및 요청
+                         */
+                        if (ContextCompat.checkSelfPermission(Share_Activity.this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat
+                                .checkSelfPermission(Share_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale
+                                    (Share_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                                    ActivityCompat.shouldShowRequestPermissionRationale(Share_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                                ActivityCompat.requestPermissions(Share_Activity.this,
+                                        new String[]{Manifest.permission
+                                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE);
+                            } else {
+                                ActivityCompat.requestPermissions(Share_Activity.this,
+                                        new String[]{Manifest.permission
+                                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE);
+
+                            }
+
+                        } else {
+                            title_lay.setVisibility(View.GONE);
+                            app_logo_txt.setVisibility(View.VISIBLE);
+                            try{
+                                SaveArticle saveArticle = new SaveArticle();
+                                saveArticle.execute();
+                                finish();
+                            }catch (Exception e){
+
+                            }
+                        }
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 }

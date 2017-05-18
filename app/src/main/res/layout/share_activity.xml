@@ -65,6 +65,15 @@
             android:text="저장"
             android:textColor="@color/colorSky"
             android:layout_alignParentRight="true"/>
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:text="닫기"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentLeft="true"/>
     </RelativeLayout>
 
 </RelativeLayout>
