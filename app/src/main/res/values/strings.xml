@@ -79,4 +79,12 @@
     <string name="toast_network_error">네트워크 연결상태를 확인해주세요.</string>
     <string name="toast_bookmark_on">북마크가 되었습니다.</string>
     <string name="toast_bookmark_off">북마크를 해제했습니다.</string>
+
+    <!--send report dialog -->
+    <string name="send_report_title_txt">신고 사유를 선택함과 동시에 신고가 완료됩니다.</string>
+    <string name="send_report_btn_1_txt">불쾌한 게시물</string>
+    <string name="send_report_btn_2_txt">불법 광고나 홍보</string>
+    <string name="send_report_btn_3_txt">폭력적이거나 음란한 게시물</string>
+    <string name="send_report_btn_4_txt">타인을 사칭하는 게시물</string>
+    <string name="send_report_btn_5_txt">기타</string>
 </resources>

@@ -21,7 +21,43 @@ import retrofit2.Response;
 
 public class CommonUtil {
 
+    /**
+     * send article report
+     * @param context
+     * @param article_id
+     * @param uid
+     * @param report_text
+     */
+    public void SendArticleReport(final Context context, String article_id, String uid, String report_text){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
 
+        Call<CommonResponse> call = apiService.PostArticleReport("send_report", article_id, uid, report_text);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
+
+    /**
+     * 내 아티클 공개 설정 변경
+     * @param context
+     * @param article_id
+     * @param private_mode
+     */
     public void MyArticlePrivateModeChange(final Context context, String article_id, String private_mode){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);

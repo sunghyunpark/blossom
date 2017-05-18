@@ -33,6 +33,9 @@ public class Other_ArticleMoreDialog extends Activity {
                 finish();
                 break;
             case R.id.report_btn:
+                Intent intent_report = new Intent(getApplicationContext(), Send_Report_Dialog.class);
+                intent_report.putExtra("article_id", article_id);
+                startActivity(intent_report);
                 finish();
                 break;
 
