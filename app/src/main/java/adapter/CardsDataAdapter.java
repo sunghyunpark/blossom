@@ -172,21 +172,18 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
             //더보기 버튼
             ImageView more_btn = (ImageView)(v.findViewById(R.id.more_btn));
+            if(IsMyArticle(position)){
+                more_btn.setVisibility(View.GONE);
+            }else{
+                more_btn.setVisibility(View.VISIBLE);
+            }
             more_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(IsMyArticle(position)){
-                        //내 아티클인 경우
-                        Intent intent_me = new Intent(getContext(), Me_ArticleMoreDialog.class);
-                        intent_me.putExtra("article_id", getItem(position).getArticle_id());
-                        intent_me.putExtra("pos", position);
-                        getContext().startActivity(intent_me);
-                    }else{
-                        //내 아티클이 아닌 경우
-                        Intent intent_other = new Intent(getContext(), Other_ArticleMoreDialog.class);
-                        intent_other.putExtra("article_id", getItem(position).getArticle_id());
-                        getContext().startActivity(intent_other);
-                    }
+                    //내 아티클이 아닌 경우
+                    Intent intent_other = new Intent(getContext(), Other_ArticleMoreDialog.class);
+                    intent_other.putExtra("article_id", getItem(position).getArticle_id());
+                    getContext().startActivity(intent_other);
                 }
             });
 
