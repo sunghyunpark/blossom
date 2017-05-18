@@ -1,11 +1,13 @@
 package tab5;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.yssh1020.blossom.R;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,10 +15,15 @@ import java.io.InputStreamReader;
 
 public class OpenSource_Activity extends Activity {
 
+    ImageView back_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.opensource_activity);
+
+        back_btn = (ImageView)findViewById(R.id.back_btn);
+        back_btn.setOnTouchListener(myOnTouchListener);
 
         try{
 
@@ -48,8 +55,29 @@ public class OpenSource_Activity extends Activity {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
+
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Resources res = getResources();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+                    case R.id.back_btn:
+                        finish();
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 
 
 }
