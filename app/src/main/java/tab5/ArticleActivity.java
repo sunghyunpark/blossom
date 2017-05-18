@@ -32,6 +32,7 @@ import java.util.List;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import common.Share_Activity;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
@@ -58,7 +59,7 @@ public class ArticleActivity extends Activity {
 
     private Article article = new Article();
     private String articleID;
-    private ImageView background_img, article_comment_btn, article_like_btn, back_btn;
+    private ImageView background_img, article_comment_btn, article_like_btn, back_btn, save_btn;
     private TextView article_text, created_at_txt, article_comment_txt, article_like_txt, top_title_txt;
 
     @Override
@@ -87,6 +88,7 @@ public class ArticleActivity extends Activity {
         top_title_txt = (TextView)findViewById(R.id.top_title_txt);
         back_btn = (ImageView)findViewById(R.id.back_btn);
         back_btn.setOnTouchListener(myOnTouchListener);
+        save_btn = (ImageView)findViewById(R.id.save_btn_img);
     }
 
     private void InitCommentPanel(){
@@ -148,7 +150,7 @@ public class ArticleActivity extends Activity {
             @Override
             public void onResponse(Call<ArticleDetailResponse> call, Response<ArticleDetailResponse> response) {
 
-                ArticleDetailResponse articleDetailResponse = response.body();
+                final ArticleDetailResponse articleDetailResponse = response.body();
                 if(!articleDetailResponse.isError()){
                     article.setUid(articleDetailResponse.getArticle_detail().getUid());
                     article.setArticle_text(articleDetailResponse.getArticle_detail().getArticle_text());
@@ -157,6 +159,7 @@ public class ArticleActivity extends Activity {
                     article.setLike_cnt(articleDetailResponse.getArticle_detail().getLike_cnt());
                     article.setLike_state(articleDetailResponse.getArticle_detail().getLike_state());
                     article.setCreated_at(articleDetailResponse.getArticle_detail().getCreated_at());
+                    article.setBookmark_state(articleDetailResponse.getArticle_detail().getBookmark_state());
 
                     Picasso.with(getApplicationContext())
                             .load(article.getArticle_photo())
@@ -171,6 +174,17 @@ public class ArticleActivity extends Activity {
                     });
 
                     article_text.setText(article.getArticle_text());
+
+                    //저장 버튼
+                    save_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
+                            intent.putExtra("article_img", articleDetailResponse.getArticle_detail().getArticle_photo());
+                            intent.putExtra("article_text", articleDetailResponse.getArticle_detail().getArticle_text());
+                            startActivity(intent);
+                        }
+                    });
 
                     if(CurrentLikeState(article)){
                         //좋아요 일때
