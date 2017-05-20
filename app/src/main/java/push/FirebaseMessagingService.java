@@ -60,7 +60,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private void ArticleLikeSendPushNotification(String message, String article_id){
         Resources res = getResources();
 
-        Intent intent = new Intent(this, ArticleActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("from_push","article_like");
         intent.putExtra("article_id", article_id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -120,7 +121,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private void ArticleCommentSendPushNotification(String message, String article_id){
         Resources res = getResources();
 
-        Intent intent = new Intent(this, ArticleActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("from_push","article_comment");
         intent.putExtra("article_id", article_id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,

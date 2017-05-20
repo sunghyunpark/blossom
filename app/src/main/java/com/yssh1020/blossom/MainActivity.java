@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tab3.SelectBG_Activity;
+import tab5.ArticleActivity;
 import view.CommonTabMenu;
 import model.User;
 import tab1.FragmentPage1;
@@ -56,13 +57,36 @@ public class MainActivity extends FragmentActivity {
     //현재 페이지
     private int current_page;
     RealmUtil realmUtil = new RealmUtil();
+    //로딩페이지 노출 여부
+    private boolean loadingpage = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(getApplicationContext(), SplashPage.class));
+        /**
+         * 푸시로 진입했을 경우 분기처리
+         */
+        try{
+            String str = getIntent().getExtras().getString("from_push");
+            if(str != null){
+                loadingpage = false;
+                if(str.equals("article_like") || str.equals("article_comment")){
+                    String article_id = getIntent().getExtras().getString("article_id");
+                    Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+                    intent.putExtra("article_id", article_id);
+                    startActivity(intent);
+                }
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+        //푸시로 진입하는 경우에는 로딩화면 미노출 시키기 위해...
+        if(loadingpage){
+            startActivity(new Intent(getApplicationContext(), SplashPage.class));
+        }
 
         InitData();
     }
