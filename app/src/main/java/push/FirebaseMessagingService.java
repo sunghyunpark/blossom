@@ -13,32 +13,50 @@ import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.yssh1020.blossom.AppSettingManager;
 import com.yssh1020.blossom.MainActivity;
 import com.yssh1020.blossom.R;
+import com.yssh1020.blossom.SessionManager;
 
 import tab5.ArticleActivity;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMsgService";
+    private AppSettingManager appSettingManager;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
+        appSettingManager = new AppSettingManager(getApplicationContext());
+
         if(remoteMessage.getData().get("flag").equals("bookmark")){
+            //북마크 했을 때
             BookMarkSendPushNotification(remoteMessage.getData().get("message"),
                     remoteMessage.getData().get("article_id"));
+            appSettingManager.setTab4_State(true);
         }else if(remoteMessage.getData().get("flag").equals("article_comment")){
+            //아티클에 댓글이 달렸을 때
             ArticleCommentSendPushNotification(remoteMessage.getData().get("message"),
                     remoteMessage.getData().get("article_id"));
+            appSettingManager.setTab4_State(true);
         }else if(remoteMessage.getData().get("flag").equals("comment_like")){
+            //댓글을 공감할 때
             CommentLikeSendPushNotification(remoteMessage.getData().get("message"));
+            appSettingManager.setTab4_State(true);
         }else if(remoteMessage.getData().get("flag").equals("article_like")){
+            //아티클을 공감할 때
             ArticleLikeSendPushNotification(remoteMessage.getData().get("message"),
                     remoteMessage.getData().get("article_id"));
+            appSettingManager.setTab4_State(true);
         }
 
     }
 
+    /**
+     * 아티클 좋아요
+     * @param message
+     * @param article_id
+     */
     private void ArticleLikeSendPushNotification(String message, String article_id){
         Resources res = getResources();
 
@@ -133,8 +151,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     private void BookMarkSendPushNotification(String message, String article_id) {
         Resources res = getResources();
 
-        Intent intent = new Intent(this, ArticleActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("article_id", article_id);
+        //intent.putExtra("from_push", "bookmark");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

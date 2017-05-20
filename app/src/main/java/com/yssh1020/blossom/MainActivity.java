@@ -45,8 +45,11 @@ import static tab1.FragmentPage1.mLayout;
 public class MainActivity extends FragmentActivity {
 
     private SessionManager session;    // session
+    private AppSettingManager appSettingManager;    //app setting
 
-    ImageView tab1, tab2, tab3, tab4, tab5;    //하단 탭 버튼들
+    ViewGroup tab1, tab2, tab3, tab4, tab5;    //하단 탭 버튼들
+    ImageView tab1_img, tab2_img, tab3_img, tab4_img, tab5_img;
+    ImageView tab1_new_img, tab2_new_img, tab4_new_img, tab5_new_img;
     private ViewGroup bottom_tab_menu;    //하단 탭 메뉴
     private ViewGroup app_title_bar;    //상단 타이틀 바
 
@@ -103,11 +106,20 @@ public class MainActivity extends FragmentActivity {
          * 최초 화면 진입 시 랜딩되는 화면 및 버튼 초기화
          */
         //하단 탭 버튼 초기화
-        tab1 = (ImageView)findViewById(R.id.tab_1);
-        tab2 = (ImageView)findViewById(R.id.tab_2);
-        tab3 = (ImageView)findViewById(R.id.tab_3);
-        tab4 = (ImageView)findViewById(R.id.tab_4);
-        tab5 = (ImageView)findViewById(R.id.tab_5);
+        tab1 = (ViewGroup)findViewById(R.id.tab_1);
+        tab2 = (ViewGroup)findViewById(R.id.tab_2);
+        tab3 = (ViewGroup)findViewById(R.id.tab_3);
+        tab4 = (ViewGroup)findViewById(R.id.tab_4);
+        tab5 = (ViewGroup)findViewById(R.id.tab_5);
+        tab1_img = (ImageView)findViewById(R.id.tab1_img);
+        tab2_img = (ImageView)findViewById(R.id.tab2_img);
+        tab3_img = (ImageView)findViewById(R.id.tab3_img);
+        tab4_img = (ImageView)findViewById(R.id.tab4_img);
+        tab5_img = (ImageView)findViewById(R.id.tab5_img);
+        tab1_new_img = (ImageView)findViewById(R.id.tab1_new_img);
+        tab2_new_img = (ImageView)findViewById(R.id.tab2_new_img);
+        tab4_new_img = (ImageView)findViewById(R.id.tab4_new_img);
+        tab5_new_img = (ImageView)findViewById(R.id.tab5_new_img);
         tab1.setOnTouchListener(myOnTouchListener);
         tab2.setOnTouchListener(myOnTouchListener);
         tab3.setOnTouchListener(myOnTouchListener);
@@ -118,10 +130,28 @@ public class MainActivity extends FragmentActivity {
         android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, new FragmentPage1());
         fragmentTransaction.commit();
-        tab1.setImageResource(R.mipmap.tab1_click_img);
+        tab1_img.setImageResource(R.mipmap.tab1_click_img);
         current_page = 1;
 
+        InitTabNewImg();
         SaveUserInfo();
+    }
+
+    /**
+     * app setting manager를 통해 new 빨콩 초기화
+     */
+    private void InitTabNewImg(){
+        appSettingManager = new AppSettingManager(getApplicationContext());
+
+        if(appSettingManager.getTab1_State()){
+            tab1_new_img.setVisibility(View.VISIBLE);
+        }else if(appSettingManager.getTab2_State()){
+            tab2_new_img.setVisibility(View.VISIBLE);
+        }else if(appSettingManager.getTab4_State()){
+            tab4_new_img.setVisibility(View.VISIBLE);
+        }else if(appSettingManager.getTab5_State()){
+            tab5_new_img.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -173,11 +203,11 @@ public class MainActivity extends FragmentActivity {
              * 3번쨰 글쓰기 버튼 탭 시 하단 탭 메뉴에서 이전에 선택한 아이콘 유지하기 위해
              */
             if(v.getId() != R.id.tab_3){
-                tab1.setImageResource(R.mipmap.tab1_no_click_img);
-                tab2.setImageResource(R.mipmap.tab2_no_click_img);
-                tab3.setImageResource(R.mipmap.tab3_img);
-                tab4.setImageResource(R.mipmap.tab4_no_click_img);
-                tab5.setImageResource(R.mipmap.tab5_no_click_img);
+                tab1_img.setImageResource(R.mipmap.tab1_no_click_img);
+                tab2_img.setImageResource(R.mipmap.tab2_no_click_img);
+                tab3_img.setImageResource(R.mipmap.tab3_img);
+                tab4_img.setImageResource(R.mipmap.tab4_no_click_img);
+                tab5_img.setImageResource(R.mipmap.tab5_no_click_img);
             }
 
             Bundle bundle = new Bundle();
@@ -192,7 +222,9 @@ public class MainActivity extends FragmentActivity {
                 switch(v.getId()){
 
                     case R.id.tab_1 :
-                        tab1.setImageResource(R.mipmap.tab1_click_img);
+                        tab1_img.setImageResource(R.mipmap.tab1_click_img);
+                        tab1_new_img.setVisibility(View.GONE);
+                        appSettingManager.setTab1_State(false);
                         CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                         if(current_page == 1){
                             is_current_page = true;
@@ -207,7 +239,9 @@ public class MainActivity extends FragmentActivity {
                         break ;
                     case R.id.tab_2 :
                         CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
-                        tab2.setImageResource(R.mipmap.tab2_click_img);
+                        tab2_img.setImageResource(R.mipmap.tab2_click_img);
+                        tab2_new_img.setVisibility(View.GONE);
+                        appSettingManager.setTab2_State(false);
                         if(current_page == 2){
                             is_current_page = true;
                         }else{
@@ -224,7 +258,9 @@ public class MainActivity extends FragmentActivity {
                         app_title_bar.setVisibility(View.VISIBLE);
                         break ;
                     case R.id.tab_4:
-                        tab4.setImageResource(R.mipmap.tab4_click_img);
+                        tab4_img.setImageResource(R.mipmap.tab4_click_img);
+                        tab4_new_img.setVisibility(View.GONE);
+                        appSettingManager.setTab4_State(false);
                         CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                         if(current_page == 4){
                             is_current_page = true;
@@ -238,7 +274,9 @@ public class MainActivity extends FragmentActivity {
                         }
                         break;
                     case R.id.tab_5:
-                        tab5.setImageResource(R.mipmap.tab5_click_img);
+                        tab5_img.setImageResource(R.mipmap.tab5_click_img);
+                        tab5_new_img.setVisibility(View.GONE);
+                        appSettingManager.setTab4_State(false);
                         CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                         if(current_page == 5){
                             is_current_page = true;
