@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.yssh1020.blossom.AppController;
+import com.yssh1020.blossom.AppSettingManager;
 
 import java.util.Date;
 
@@ -20,6 +21,54 @@ import retrofit2.Response;
  */
 
 public class CommonUtil {
+
+
+    /**
+     * push state 변졍
+     * @param context
+     * @param tag
+     * @param uid
+     * @param push_state
+     */
+    public void PostPushState(final Context context, final String tag, String uid, final String push_state){
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.PostPushState(tag, uid, push_state);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    boolean state;
+                    AppSettingManager appSettingManager = new AppSettingManager(context);
+                    if(push_state.equals("Y")){
+                        state = true;
+                    }else{
+                        state = false;
+                    }
+
+                    if(tag.equals("app_push")){
+                        appSettingManager.setAppAlarm_State(state);
+                    }else if(tag.equals("comment_push")){
+                        appSettingManager.setCommentAlarm_State(state);
+                    }else if(tag.equals("like_push")){
+                        appSettingManager.setArticleLikeAlarm_State(state);
+                    }
+                }else{
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
 
     /**
      * send article report

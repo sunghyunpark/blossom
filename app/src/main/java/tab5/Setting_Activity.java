@@ -34,6 +34,7 @@ public class Setting_Activity extends Activity {
     private ImageView back_btn, app_push_btn, comment_push_btn, article_like_push_btn;
 
     AppSettingManager appSettingManager;
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +111,7 @@ public class Setting_Activity extends Activity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             Resources res = getResources();
+            String push_flag;
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.setAlpha(0.55f);
             }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
@@ -124,34 +126,35 @@ public class Setting_Activity extends Activity {
                         //앱 알림
                         if(appSettingManager.getAppAlarm_State()){
                             app_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
-                            appSettingManager.setAppAlarm_State(false);
+                            push_flag = "N";
                         }else{
                             app_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
-                            appSettingManager.setAppAlarm_State(true);
+                            push_flag = "Y";
                         }
+                        commonUtil.PostPushState(getApplicationContext(), "app_push", User.getInstance().getUid(), push_flag);
 
                         break;
                     case R.id.comment_push_btn:
                         //댓글 알림
                         if(appSettingManager.getCommentAlarm_State()){
                             comment_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
-                            appSettingManager.setCommentAlarm_State(false);
+                            push_flag = "N";
                         }else{
                             comment_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
-                            appSettingManager.setCommentAlarm_State(true);
+                            push_flag = "Y";
                         }
-
+                        commonUtil.PostPushState(getApplicationContext(), "comment_push", User.getInstance().getUid(), push_flag);
                         break;
                     case R.id.article_like_push_btn:
                         //공감 알림
                         if(appSettingManager.getArticleLikeAlarm_State()){
                             article_like_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
-                            appSettingManager.setArticleLikeAlarm_State(false);
+                            push_flag = "N";
                         }else{
                             article_like_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
-                            appSettingManager.setArticleLikeAlarm_State(true);
+                            push_flag = "Y";
                         }
-
+                        commonUtil.PostPushState(getApplicationContext(), "like_push", User.getInstance().getUid(), push_flag);
                         break;
 
                 }

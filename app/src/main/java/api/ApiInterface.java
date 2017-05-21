@@ -253,4 +253,16 @@ public interface ApiInterface {
     @POST("report/article_report.php")
     Call<CommonResponse> PostArticleReport(@Field("tag") String tag, @Field("article_id") String article_id,
                                            @Field("uid") String uid, @Field("report_text") String report_text);
+
+    /**
+     * post push state
+     * @param tag -> app_push / comment_push / like_push
+     * @param uid
+     * @param push_state
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("login/login.php")
+    Call<CommonResponse> PostPushState(@Field("tag") String tag, @Field("uid") String uid,
+                                       @Field("push_state") String push_state);
 }

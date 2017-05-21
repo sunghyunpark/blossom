@@ -45,7 +45,7 @@
                 <LinearLayout
                     android:id="@+id/share_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:layout_alignParentLeft="true">
                     <ImageView

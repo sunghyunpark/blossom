@@ -39,6 +39,7 @@ import retrofit2.Response;
 public class LoginPage extends FragmentActivity {
 
     private SessionManager mSessionManager;
+    private AppSettingManager appSettingManager;
 
     //Viewpager
     private ViewPager mViewPager;
@@ -68,6 +69,8 @@ public class LoginPage extends FragmentActivity {
      */
     private void InitView(){
         mSessionManager = new SessionManager(getApplicationContext());
+        appSettingManager = new AppSettingManager(getApplicationContext());
+
         final ImageView select_circle1 = (ImageView) findViewById(R.id.circle_1);
         final ImageView select_circle2 = (ImageView) findViewById(R.id.circle_2);
         register_layout = (ViewGroup)findViewById(R.id.register_layout);
@@ -163,6 +166,11 @@ public class LoginPage extends FragmentActivity {
                             userdata.getUser().getGender(), token, userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
                     //push token 등록
                     commonUtil.RegisterPushToken(getApplicationContext(), userdata.getUser().getUid(), token, "Y");
+
+                    //push state 저장
+                    appSettingManager.setAppAlarm_State(true);
+                    appSettingManager.setCommentAlarm_State(true);
+                    appSettingManager.setArticleLikeAlarm_State(true);
 
                     //로그인 성공 후 메인화면으로 이동
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

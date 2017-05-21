@@ -16,6 +16,10 @@ public class User {
     private String token;
     private String created_at;
     private String seed_cnt;
+    private String app_push;
+    private String comment_push;
+    private String like_push;
+
 
     public static  User getInstance(){
         if(user == null)
@@ -91,5 +95,29 @@ public class User {
 
     public void setSeed_cnt(String seed_cnt) {
         this.seed_cnt = seed_cnt;
+    }
+
+    public String getLike_push() {
+        return like_push;
+    }
+
+    public void setLike_push(String like_push) {
+        this.like_push = like_push;
+    }
+
+    public String getApp_push() {
+        return app_push;
+    }
+
+    public void setApp_push(String app_push) {
+        this.app_push = app_push;
+    }
+
+    public String getComment_push() {
+        return comment_push;
+    }
+
+    public void setComment_push(String comment_push) {
+        this.comment_push = comment_push;
     }
 }
