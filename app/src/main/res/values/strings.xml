@@ -87,4 +87,7 @@
     <string name="send_report_btn_3_txt">폭력적이거나 음란한 게시물</string>
     <string name="send_report_btn_4_txt">타인을 사칭하는 게시물</string>
     <string name="send_report_btn_5_txt">기타</string>
+
+    <!--logout_dialog -->
+    <string name="logout_dialog_txt">정말 로그아웃을 하시겠습니까?</string>
 </resources>

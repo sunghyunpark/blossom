@@ -85,6 +85,14 @@
                     android:textColor="@color/colorTextGray"
                     android:text="@string/app_setting_push_sub_txt_1"
                     android:layout_below="@+id/app_push_txt_1"/>
+
+                <ImageView
+                    android:id="@+id/app_push_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
             <!--구분선-->
             <LinearLayout
@@ -116,6 +124,14 @@
                     android:textColor="@color/colorTextGray"
                     android:text="@string/app_setting_push_sub_txt_2"
                     android:layout_below="@+id/app_push_txt_2"/>
+
+                <ImageView
+                    android:id="@+id/comment_push_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
             <!--구분선-->
             <LinearLayout
@@ -147,6 +163,14 @@
                     android:textColor="@color/colorTextGray"
                     android:text="@string/app_setting_push_sub_txt_3"
                     android:layout_below="@+id/app_push_txt_3"/>
+
+                <ImageView
+                    android:id="@+id/article_like_push_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
 
             <TextView

@@ -27,6 +27,9 @@ public class AppSettingManager {
     private static final String KEY_TAB2_ON_OFF = "tab2";
     private static final String KEY_TAB4_ON_OFF = "tab4";
     private static final String KEY_TAB5_ON_OFF = "tab5";
+    private static final String KEY_APP_ALARM_ON_OFF = "app_alarm";
+    private static final String KEY_COMMENT_ALARM_ON_OFF = "comment_alarm";
+    private static final String KEY_ARTICLE_LIKE_ALARM_ON_OFF = "article_like_alarm";
 
 
     public AppSettingManager(Context context) {
@@ -36,8 +39,8 @@ public class AppSettingManager {
     }
 
 
-    public void setTab1_State(boolean isLoggedIn) {
-        editor.putBoolean(KEY_TAB1_ON_OFF, isLoggedIn);
+    public void setTab1_State(boolean flag) {
+        editor.putBoolean(KEY_TAB1_ON_OFF, flag);
         // commit changes
         editor.commit();
 
@@ -46,8 +49,8 @@ public class AppSettingManager {
     public boolean getTab1_State(){
         return pref.getBoolean(KEY_TAB1_ON_OFF, false);
     }
-    public void setTab2_State(boolean isLoggedIn) {
-        editor.putBoolean(KEY_TAB2_ON_OFF, isLoggedIn);
+    public void setTab2_State(boolean flag) {
+        editor.putBoolean(KEY_TAB2_ON_OFF, flag);
         // commit changes
         editor.commit();
 
@@ -56,8 +59,8 @@ public class AppSettingManager {
     public boolean getTab2_State(){
         return pref.getBoolean(KEY_TAB2_ON_OFF, false);
     }
-    public void setTab4_State(boolean isLoggedIn) {
-        editor.putBoolean(KEY_TAB4_ON_OFF, isLoggedIn);
+    public void setTab4_State(boolean flag) {
+        editor.putBoolean(KEY_TAB4_ON_OFF, flag);
         // commit changes
         editor.commit();
 
@@ -66,8 +69,8 @@ public class AppSettingManager {
     public boolean getTab4_State(){
         return pref.getBoolean(KEY_TAB4_ON_OFF, false);
     }
-    public void setTab5_State(boolean isLoggedIn) {
-        editor.putBoolean(KEY_TAB5_ON_OFF, isLoggedIn);
+    public void setTab5_State(boolean flag) {
+        editor.putBoolean(KEY_TAB5_ON_OFF, flag);
         // commit changes
         editor.commit();
 
@@ -75,5 +78,38 @@ public class AppSettingManager {
     }
     public boolean getTab5_State(){
         return pref.getBoolean(KEY_TAB5_ON_OFF, false);
+    }
+
+    public void setAppAlarm_State(boolean flag) {
+        editor.putBoolean(KEY_APP_ALARM_ON_OFF, flag);
+        // commit changes
+        editor.commit();
+
+        Log.d(TAG, "app alarm on off state modified!");
+    }
+    public boolean getAppAlarm_State(){
+        return pref.getBoolean(KEY_APP_ALARM_ON_OFF, false);
+    }
+
+    public void setCommentAlarm_State(boolean flag) {
+        editor.putBoolean(KEY_COMMENT_ALARM_ON_OFF, flag);
+        // commit changes
+        editor.commit();
+
+        Log.d(TAG, "comment alarm on off state modified!");
+    }
+    public boolean getCommentAlarm_State(){
+        return pref.getBoolean(KEY_COMMENT_ALARM_ON_OFF, false);
+    }
+
+    public void setArticleLikeAlarm_State(boolean flag) {
+        editor.putBoolean(KEY_ARTICLE_LIKE_ALARM_ON_OFF, flag);
+        // commit changes
+        editor.commit();
+
+        Log.d(TAG, "article like alarm on off state modified!");
+    }
+    public boolean getArticleLikeAlarm_State(){
+        return pref.getBoolean(KEY_ARTICLE_LIKE_ALARM_ON_OFF, false);
     }
 }

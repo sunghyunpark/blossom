@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.yssh1020.blossom.AppController;
+import com.yssh1020.blossom.AppSettingManager;
 import com.yssh1020.blossom.MainActivity;
 import com.yssh1020.blossom.R;
 import com.yssh1020.blossom.SessionManager;
@@ -22,20 +23,17 @@ import com.yssh1020.blossom.SessionManager;
 import common.CommonUtil;
 import db.RealmConfig;
 import db.model.UserData;
+import dialog.Logout_Dialog;
 import io.realm.Realm;
 import model.User;
 
 
 public class Setting_Activity extends Activity {
-    private SessionManager mSessionManager;
-    //Realm
-    private Realm mRealm;
-    private RealmConfig realmConfig;
-
-    CommonUtil commonUtil = new CommonUtil();
 
     private ViewGroup logout_layout, open_source_layout;
-    private ImageView back_btn;
+    private ImageView back_btn, app_push_btn, comment_push_btn, article_like_push_btn;
+
+    AppSettingManager appSettingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +44,18 @@ public class Setting_Activity extends Activity {
     }
 
     private void InitView(){
-        mSessionManager = new SessionManager(getApplicationContext());
+        appSettingManager = new AppSettingManager(getApplicationContext());
+
         logout_layout = (ViewGroup)findViewById(R.id.logout_layout);
         back_btn = (ImageView)findViewById(R.id.back_btn);
         back_btn.setOnTouchListener(myOnTouchListener);
+        app_push_btn = (ImageView)findViewById(R.id.app_push_btn);
+        app_push_btn.setOnTouchListener(myOnTouchListener);
+        comment_push_btn = (ImageView)findViewById(R.id.comment_push_btn);
+        comment_push_btn.setOnTouchListener(myOnTouchListener);
+        article_like_push_btn = (ImageView)findViewById(R.id.article_like_push_btn);
+        article_like_push_btn.setOnTouchListener(myOnTouchListener);
+
         open_source_layout = (ViewGroup)findViewById(R.id.open_source_layout);
         open_source_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,28 +67,43 @@ public class Setting_Activity extends Activity {
         logout_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Logout();
+                startActivity(new Intent(getApplicationContext(), Logout_Dialog.class));
             }
         });
+
+        InitAlarm();
     }
 
-    private void Logout(){
-        mSessionManager.setLogin(false);
-        realmConfig = new RealmConfig();
-        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
-        UserData user_db = mRealm.where(UserData.class).equalTo("no",1).findFirst();
-        mRealm.beginTransaction();
-        user_db.deleteFromRealm();
-        mRealm.commitTransaction();
-        //fcm 토큰 서버에 등록
+    /**
+     * 알림 상태 초기화
+     */
+    private void InitAlarm(){
+        boolean app_push = appSettingManager.getAppAlarm_State();
+        boolean comment_push = appSettingManager.getCommentAlarm_State();
+        boolean article_like_push = appSettingManager.getArticleLikeAlarm_State();
 
-        commonUtil.RegisterPushToken(getApplicationContext(), User.getInstance().getUid(), User.getInstance().getToken(), "N");
+        if(app_push){
+            //app push on
+            app_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
+        }else{
+            app_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
+        }
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if(comment_push){
+            //comment push on
+            comment_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
+        }else{
+            comment_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
+        }
+
+        if(article_like_push){
+            //article like push on
+            article_like_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
+        }else{
+            article_like_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
+        }
     }
+
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
@@ -98,6 +119,39 @@ public class Setting_Activity extends Activity {
                 switch(v.getId()){
                     case R.id.back_btn:
                         finish();
+                        break;
+                    case R.id.app_push_btn:
+                        //앱 알림
+                        if(appSettingManager.getAppAlarm_State()){
+                            app_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
+                            appSettingManager.setAppAlarm_State(false);
+                        }else{
+                            app_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
+                            appSettingManager.setAppAlarm_State(true);
+                        }
+
+                        break;
+                    case R.id.comment_push_btn:
+                        //댓글 알림
+                        if(appSettingManager.getCommentAlarm_State()){
+                            comment_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
+                            appSettingManager.setCommentAlarm_State(false);
+                        }else{
+                            comment_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
+                            appSettingManager.setCommentAlarm_State(true);
+                        }
+
+                        break;
+                    case R.id.article_like_push_btn:
+                        //공감 알림
+                        if(appSettingManager.getArticleLikeAlarm_State()){
+                            article_like_push_btn.setBackgroundResource(R.drawable.circle_shape_gray);
+                            appSettingManager.setArticleLikeAlarm_State(false);
+                        }else{
+                            article_like_push_btn.setBackgroundResource(R.mipmap.check_btn_img);
+                            appSettingManager.setArticleLikeAlarm_State(true);
+                        }
+
                         break;
 
                 }
