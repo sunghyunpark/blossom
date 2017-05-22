@@ -119,6 +119,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomDialog" >
         </activity>
+        <activity
+            android:name="dialog.Send_Seed_Dialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDialog" >
+        </activity>
     </application>
 
 </manifest>

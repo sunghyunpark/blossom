@@ -14,6 +14,7 @@ import com.yssh1020.blossom.R;
 public class Other_ArticleMoreDialog extends Activity {
 
     private String article_id;
+    private String article_user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class Other_ArticleMoreDialog extends Activity {
 
         Intent intent = getIntent();
         article_id = intent.getExtras().getString("article_id");
+        article_user_id = intent.getExtras().getString("article_user_id");
 
     }
 
@@ -30,6 +32,9 @@ public class Other_ArticleMoreDialog extends Activity {
     public void buttonPressed(View v) {
         switch ((v.getId())){
             case R.id.send_seed_btn:
+                Intent intent_seed = new Intent(getApplicationContext(), Send_Seed_Dialog.class);
+                intent_seed.putExtra("article_user_id", article_user_id);
+                startActivity(intent_seed);
                 finish();
                 break;
             case R.id.report_btn:
