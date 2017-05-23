@@ -30,16 +30,15 @@
 
     <RelativeLayout
         android:id="@+id/tab4_empty_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/tab4_empty_logo"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/tab4_empty_logo"/>
         <TextView
