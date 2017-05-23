@@ -278,4 +278,17 @@ public interface ApiInterface {
     @POST("article/article.php")
     Call<CommonResponse> PostSeedToArticleUser(@Field("tag") String tag, @Field("article_user_id") String article_user_id,
                                                @Field("uid_me") String uid_me, @Field("seed_cnt") int seed_cnt);
+
+    /**
+     * register email
+     * @param tag -> register_email
+     * @param uid
+     * @param email
+     * @param password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("login/login.php")
+    Call<CommonResponse> RegisterEmail(@Field("tag") String tag, @Field("uid") String uid,
+                                       @Field("email") String email, @Field("password") String password);
 }

@@ -24,6 +24,7 @@ import common.CommonUtil;
 import db.RealmConfig;
 import db.model.UserData;
 import dialog.Logout_Dialog;
+import dialog.Logout_For_Not_Email_Dialog;
 import io.realm.Realm;
 import model.User;
 
@@ -68,7 +69,12 @@ public class Setting_Activity extends Activity {
         logout_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Logout_Dialog.class));
+                if(User.getInstance().getEmail().equals("")){
+                    //이메일 등록안한 경우
+                    startActivity(new Intent(getApplicationContext(), Logout_For_Not_Email_Dialog.class));
+                }else{
+                    startActivity(new Intent(getApplicationContext(), Logout_Dialog.class));
+                }
             }
         });
 

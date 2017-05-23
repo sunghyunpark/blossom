@@ -90,10 +90,18 @@
 
     <!--logout_dialog -->
     <string name="logout_dialog_txt">정말 로그아웃을 하시겠습니까?</string>
+    <string name="logout_for_not_email_txt">이메일을 등록하지 않으면 다시 본 계정으로 로그인을 할 수 없습니다.\n이메일을 등록해주세요.</string>
+
 
     <!--send seed dialog-->
     <string name="send_seed_dialog_title_txt">씨앗 선물하기</string>
     <string name="send_seed_dialog_subtitle_txt">좋은 이야기를 공개한 작성자에게 씨앗을 선물합니다.</string>
     <string name="send_seed_dialog_sub_txt_1">선물하고 싶은 씨앗수</string>
     <string name="send_seed_dialog_sub_txt_2">내가 가진 씨앗은 %1$s개 입니다.</string>
+
+    <!--register email-->
+    <string name="register_email_email_edit_box_txt">이메일을 입력해주세요.</string>
+    <string name="register_email_pw_edit_box_txt">비밀번호를 입력해주세요.(6자 이상)</string>
 </resources>
+
+

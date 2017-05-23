@@ -22,6 +22,37 @@ import retrofit2.Response;
 
 public class CommonUtil {
 
+    /**
+     * 로그아웃 시 이메일 등록
+     * @param context
+     * @param uid
+     * @param email
+     * @param password
+     */
+
+    public void RegisterEmail(final Context context, String uid, String email, String password){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.RegisterEmail("register_email", uid, email, password);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context, commonResponse.getError_msg(), Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, commonResponse.getError_msg(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
 
     /**
      * push state 변졍
