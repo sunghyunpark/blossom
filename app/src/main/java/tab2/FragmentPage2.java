@@ -8,13 +8,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.yssh1020.blossom.R;
 
 import java.text.ParseException;
@@ -31,6 +34,7 @@ import model.Article;
 import model.ArticleResponse;
 import model.FamousArticle;
 import model.FamousArticleResponse;
+import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +50,7 @@ public class FragmentPage2 extends Fragment {
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<FamousArticle> listItems;
+    private ViewGroup retry_network_layout;
     View v;
 
     @Override
@@ -79,6 +84,10 @@ public class FragmentPage2 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+        retry_network_layout = (ViewGroup)v.findViewById(R.id.retry_network_layout);
+
+        Button retry_network_btn = (Button)v.findViewById(R.id.retry_network_btn);
+        retry_network_btn.setOnTouchListener(myOnTouchListener);
 
         GetFamousArticleData();
     }
@@ -94,6 +103,7 @@ public class FragmentPage2 extends Fragment {
 
                 FamousArticleResponse famousArticleResponse = response.body();
                 if(!famousArticleResponse.isError()){
+                    retry_network_layout.setVisibility(View.GONE);
                     int dataSize = famousArticleResponse.getFamous_article().size();
                     FamousArticle article;
                     for(int i=0;i<dataSize;i++){
@@ -117,6 +127,9 @@ public class FragmentPage2 extends Fragment {
             @Override
             public void onFailure(Call<FamousArticleResponse> call, Throwable t) {
                 // Log error here since request failed
+                Resources res = getResources();
+                retry_network_layout.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), String.format(res.getString(R.string.toast_network_error)), Toast.LENGTH_SHORT).show();
                 Log.e("tag", t.toString());
             }
         });
@@ -192,4 +205,25 @@ public class FragmentPage2 extends Fragment {
         }
     }
 
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Resources res = getResources();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+                    case R.id.retry_network_btn:
+                        InitView();
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 }

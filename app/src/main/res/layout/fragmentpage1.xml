@@ -6,6 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/retry_network_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/network_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:src="@mipmap/network_img"/>
+
+        <TextView
+            android:id="@+id/retry_network_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/network_img"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorWhite"
+            android:text="네트워크 연결 상태를 확인해주세요."/>
+
+        <Button
+            android:id="@+id/retry_network_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/retry_network_txt"
+            android:layout_centerHorizontal="true"
+            android:text="다시 시도하기"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/send_seed_btn_shape"
+            android:textColor="@color/colorWhite"/>
+
+    </RelativeLayout>
+
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_layout"
         android:layout_width="match_parent"

@@ -56,14 +56,13 @@ public class FragmentPage1 extends Fragment {
     public static SlidingUpPanelLayout mLayout;
 
     private EditText comment_edit_box;
-    private Button comment_send_btn;
 
     //리사이클러뷰
     RecyclerAdapter adapter;
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ArticleComment> comment_listItems;
-    private ViewGroup comment_empty_layout;
+    private ViewGroup comment_empty_layout, retry_network_layout;
 
     public static ArrayList<Article> listItems;
     public static String LastArticleID = "";
@@ -102,7 +101,7 @@ public class FragmentPage1 extends Fragment {
     private void InitCommentPanel(){
         final ViewGroup comment_edit_layout = (ViewGroup) v.findViewById(R.id.comment_edit_layout);
         comment_edit_box = (EditText)v.findViewById(R.id.comment_edit_box);
-        comment_send_btn = (Button)v.findViewById(R.id.comment_send_btn);
+        Button comment_send_btn = (Button)v.findViewById(R.id.comment_send_btn);
         comment_send_btn.setOnTouchListener(myOnTouchListener);
 
         mLayout = (SlidingUpPanelLayout) v.findViewById(R.id.sliding_layout);
@@ -148,6 +147,9 @@ public class FragmentPage1 extends Fragment {
         mCardStack = (CardStack) v.findViewById(R.id.container);
         mCardStack.setContentResource(R.layout.card_content);
         comment_empty_layout = (ViewGroup)v.findViewById(R.id.empty_layout);
+        retry_network_layout = (ViewGroup)v.findViewById(R.id.retry_network_layout);
+        Button retry_network_btn = (Button)v.findViewById(R.id.retry_network_btn);
+        retry_network_btn.setOnTouchListener(myOnTouchListener);
         //mCardStack.setEnableLoop(true);
         //mCardStack.setEnableRotation(true);
         //mCardStack.setStackMargin(20);
@@ -168,6 +170,7 @@ public class FragmentPage1 extends Fragment {
                 ArticleResponse articleResponse = response.body();
                 if (!articleResponse.isError()) {
 
+                    retry_network_layout.setVisibility(View.GONE);
                     int dataSize = articleResponse.getArticle().size();
                     Article article;
                     Collections.shuffle(articleResponse.getArticle());
@@ -201,6 +204,9 @@ public class FragmentPage1 extends Fragment {
             @Override
             public void onFailure(Call<ArticleResponse> call, Throwable t) {
                 // Log error here since request failed
+                Resources res = getResources();
+                retry_network_layout.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), String.format(res.getString(R.string.toast_network_error)), Toast.LENGTH_SHORT).show();
                 Log.e("tag", t.toString());
             }
         });
@@ -467,6 +473,14 @@ public class FragmentPage1 extends Fragment {
                             Toast.makeText(getActivity(),String.format(res.getString(R.string.article_comment_empty_toast_txt)),Toast.LENGTH_SHORT).show();
                         }
 
+                        break;
+
+                    case R.id.retry_network_btn:
+                        InitCommentPanel();
+                        InitCommentList();
+
+                        InitArticleView();
+                        LoadArticle("0");
                         break;
 
                 }

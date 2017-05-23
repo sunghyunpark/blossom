@@ -9,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,7 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
     View v;
 
     CommonUtil commonUtil = new CommonUtil();
-    ViewGroup tab4_empty_layout;
+    ViewGroup tab4_empty_layout, retry_network_layout;
     //리프레쉬
     private SwipeRefreshLayout mSwipeRefresh;
 
@@ -96,6 +98,7 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+        retry_network_layout = (ViewGroup)v.findViewById(R.id.retry_network_layout);
 
         //리프레쉬
         mSwipeRefresh = (SwipeRefreshLayout)v.findViewById(R.id.swipe_layout);
@@ -119,6 +122,7 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
 
                 AlarmResponse alarmResponse = response.body();
                 if(!alarmResponse.isError()){
+                    retry_network_layout.setVisibility(View.GONE);
                     int dataSize = alarmResponse.getAlarm().size();
                     Alarm alarm;
                     for(int i=0;i<dataSize;i++){
@@ -141,7 +145,11 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
 
             @Override
             public void onFailure(Call<AlarmResponse> call, Throwable t) {
-                // Log error here since request failed
+                Resources res = getResources();
+                retry_network_layout.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), String.format(res.getString(R.string.toast_network_error)), Toast.LENGTH_SHORT).show();
+                Button retry_network_btn = (Button)v.findViewById(R.id.retry_network_btn);
+                retry_network_btn.setOnTouchListener(myOnTouchListener);
                 Log.e("tag", t.toString());
             }
         });
@@ -292,4 +300,26 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
             return listItems.size();
         }
     }
+
+    private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Resources res = getResources();
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setAlpha(0.55f);
+            }else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+                v.setAlpha(1.0f);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setAlpha(1.0f);
+                switch(v.getId()){
+                    case R.id.retry_network_btn:
+                        InitView();
+                        break;
+
+                }
+            }
+            return true;
+        }
+    };
 }
