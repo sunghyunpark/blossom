@@ -231,6 +231,24 @@ public class MainActivity extends FragmentActivity {
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                /**
+                 * 네트워크 off 인경우 기존 로컬데이터로 사용
+                 */
+                Realm mRealm;
+                RealmConfig realmConfig;
+                realmConfig = new RealmConfig();
+
+                mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
+                UserData user_db = mRealm.where(UserData.class).equalTo("no",1).findFirst();
+
+                User.getInstance().setUid(user_db.getUid());
+                User.getInstance().setEmail(user_db.getEmail());
+                User.getInstance().setGender(user_db.getGender());
+                User.getInstance().setBirth(user_db.getBirth());
+                User.getInstance().setProfile_img(user_db.getProfile_img());
+                User.getInstance().setToken(user_db.getToken());
+                User.getInstance().setCreated_at(user_db.getCreated_at());
+                User.getInstance().setSeed_cnt(String.valueOf(user_db.getSeed_cnt()));
             }
         });
 
