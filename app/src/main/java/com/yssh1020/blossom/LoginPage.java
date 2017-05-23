@@ -86,6 +86,14 @@ public class LoginPage extends FragmentActivity {
         female_btn.setOnTouchListener(myOnTouchListener);
         birth_btn.setOnTouchListener(myOnTouchListener);
 
+        Button login_btn = (Button)findViewById(R.id.login_btn);
+        login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Login_Email_Activity.class));
+            }
+        });
+
         //viewpager
         mViewPager = (ViewPager) findViewById(R.id.intro_pager);
         PagerAdapter mPagerAdapter = new PagerAdapter(getSupportFragmentManager());

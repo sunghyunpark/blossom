@@ -291,4 +291,15 @@ public interface ApiInterface {
     @POST("login/login.php")
     Call<CommonResponse> RegisterEmail(@Field("tag") String tag, @Field("uid") String uid,
                                        @Field("email") String email, @Field("password") String password);
+
+    /**
+     * login email
+     * @param tag -> email_login
+     * @param email
+     * @param password
+     * @return
+     */
+    @GET("login/login.php")
+    Call<UserResponse> LoginEmail(@Query("tag") String tag, @Query("email") String email,
+                                  @Query("password") String password);
 }
