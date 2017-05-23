@@ -265,4 +265,17 @@ public interface ApiInterface {
     @POST("login/login.php")
     Call<CommonResponse> PostPushState(@Field("tag") String tag, @Field("uid") String uid,
                                        @Field("push_state") String push_state);
+
+    /**
+     * 아티클 작성자에게 씨앗보내기
+     * @param tag -> post_seed_to_article_user
+     * @param article_user_id
+     * @param uid_me
+     * @param seed_cnt
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/article.php")
+    Call<CommonResponse> PostSeedToArticleUser(@Field("tag") String tag, @Field("article_user_id") String article_user_id,
+                                               @Field("uid_me") String uid_me, @Field("seed_cnt") int seed_cnt);
 }

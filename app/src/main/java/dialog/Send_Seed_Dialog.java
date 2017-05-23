@@ -17,6 +17,9 @@ import com.yssh1020.blossom.R;
 
 import org.w3c.dom.Text;
 
+import java.util.TooManyListenersException;
+
+import common.CommonUtil;
 import db.RealmConfig;
 import db.model.UserData;
 import event.BusProvider;
@@ -35,7 +38,11 @@ public class Send_Seed_Dialog extends Activity {
     private ViewGroup plus_btn, minus_btn;
     private TextView seed_cnt_txt, my_seed_cnt_txt;
     private ImageView cancel_btn;
+    private Button send_btn;
     private int current_seed_cnt;
+    private int my_seed_cnt;
+
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,8 @@ public class Send_Seed_Dialog extends Activity {
         my_seed_cnt_txt = (TextView)findViewById(R.id.my_seed_cnt_txt);
         cancel_btn = (ImageView)findViewById(R.id.cancel_btn);
         cancel_btn.setOnTouchListener(myOnTouchListener);
+        send_btn = (Button)findViewById(R.id.send_btn);
+        send_btn.setOnTouchListener(myOnTouchListener);
 
         InitSeedCnt(User.getInstance().getUid());
     }
@@ -71,7 +80,8 @@ public class Send_Seed_Dialog extends Activity {
         mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(getApplicationContext()));
 
         UserData user = mRealm.where(UserData.class).equalTo("uid",uid).findFirst();
-        String current_my_seed_cnt = user.getSeed_cnt()+"";
+        my_seed_cnt = user.getSeed_cnt();
+        String current_my_seed_cnt = my_seed_cnt+"";
         my_seed_cnt_txt.setText(String.format(res.getString(R.string.send_seed_dialog_sub_txt_2),current_my_seed_cnt));
         current_seed_cnt = Integer.parseInt(current_my_seed_cnt);
 
@@ -103,6 +113,14 @@ public class Send_Seed_Dialog extends Activity {
                         }
                         break;
                     case R.id.send_btn:
+                        if(my_seed_cnt >= current_seed_cnt){
+                            //가능
+                            commonUtil.PostSeedToArticleUser(getApplicationContext(), article_user_id, User.getInstance().getUid(),current_seed_cnt);
+                            finish();
+                        }else{
+                            //불가능
+                            Toast.makeText(getApplicationContext(), "가지고 있는 씨앗보다 적게 설정해야합니다.", Toast.LENGTH_SHORT).show();
+                        }
                         break;
 
                 }

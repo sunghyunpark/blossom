@@ -160,23 +160,25 @@ public class CommonUtil {
             }
         });
     }
+
     /**
-     * post seed
+     * 아티클 작성자에게 씨앗을 보냄
      * @param context
-     * @param uid
+     * @param article_user_id
+     * @param uid_me
      * @param seed_cnt
      */
-    public void PostSeed(final Context context, String uid, int seed_cnt){
+    public void PostSeedToArticleUser(final Context context, String article_user_id, String uid_me, int seed_cnt){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<CommonResponse> call = apiService.PostSeed("insert_seed", uid, seed_cnt);
+        Call<CommonResponse> call = apiService.PostSeedToArticleUser("post_seed_to_article_user", article_user_id, uid_me, seed_cnt);
         call.enqueue(new Callback<CommonResponse>() {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-
+                    Toast.makeText(context, "씨앗을 선물했습니다.", Toast.LENGTH_SHORT).show();
                 }else{
 
                 }
