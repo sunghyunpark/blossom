@@ -87,12 +87,7 @@ public class LoginPage extends FragmentActivity {
         birth_btn.setOnTouchListener(myOnTouchListener);
 
         Button login_btn = (Button)findViewById(R.id.login_btn);
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Login_Email_Activity.class));
-            }
-        });
+        login_btn.setOnTouchListener(myOnTouchListener);
 
         //viewpager
         mViewPager = (ViewPager) findViewById(R.id.intro_pager);
@@ -275,6 +270,10 @@ public class LoginPage extends FragmentActivity {
                             profile_img = commonUtil.GetUserProfileName();
                             RegisterUser(birth_btn.getText().toString(), gender, profile_img);
                         }
+                        break;
+
+                    case R.id.login_btn:
+                        startActivity(new Intent(getApplicationContext(), Login_Email_Activity.class));
                         break;
 
                 }

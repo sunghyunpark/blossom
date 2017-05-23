@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.AppSettingManager;
@@ -31,11 +32,24 @@ import model.User;
 
 public class Setting_Activity extends Activity {
 
-    private ViewGroup logout_layout, open_source_layout;
+    private ViewGroup logout_layout, open_source_layout, register_email_layout;
     private ImageView back_btn, app_push_btn, comment_push_btn, article_like_push_btn;
+    private TextView my_email_txt;
 
     AppSettingManager appSettingManager;
     CommonUtil commonUtil = new CommonUtil();
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(User.getInstance().getEmail().equals("")){
+            my_email_txt.setText("등록하기");
+            register_email_layout.setClickable(true);
+        }else{
+            register_email_layout.setClickable(false);
+            my_email_txt.setText(User.getInstance().getEmail());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +62,7 @@ public class Setting_Activity extends Activity {
     private void InitView(){
         appSettingManager = new AppSettingManager(getApplicationContext());
 
+        my_email_txt = (TextView)findViewById(R.id.my_email_txt);
         logout_layout = (ViewGroup)findViewById(R.id.logout_layout);
         back_btn = (ImageView)findViewById(R.id.back_btn);
         back_btn.setOnTouchListener(myOnTouchListener);
@@ -57,6 +72,15 @@ public class Setting_Activity extends Activity {
         comment_push_btn.setOnTouchListener(myOnTouchListener);
         article_like_push_btn = (ImageView)findViewById(R.id.article_like_push_btn);
         article_like_push_btn.setOnTouchListener(myOnTouchListener);
+        register_email_layout = (ViewGroup)findViewById(R.id.register_email_layout);
+        register_email_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Register_Email_Activity.class);
+                intent.putExtra("from", "register");
+                startActivity(intent);
+            }
+        });
 
         open_source_layout = (ViewGroup)findViewById(R.id.open_source_layout);
         open_source_layout.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +99,7 @@ public class Setting_Activity extends Activity {
                 }else{
                     startActivity(new Intent(getApplicationContext(), Logout_Dialog.class));
                 }
+
             }
         });
 

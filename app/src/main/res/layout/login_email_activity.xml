@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar"
-        android:background="#fff7f5f0">
+        android:background="@color/backgroundGray">
         <EditText
             android:id="@+id/email_edit_box"
             android:layout_width="320dp"

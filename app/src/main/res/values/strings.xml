@@ -61,8 +61,10 @@
     <string name="tab4_alarm_empty_txt">아직 받은 알림이 없습니다.\n이야기 또는 댓글을 남겨보세요.</string>
 
     <!--setting activity-->
+    <string name="app_setting_activity_title_0">계정</string>
     <string name="app_setting_activity_title_1">푸시 설정</string>
     <string name="app_setting_activity_title_2">일반</string>
+    <string name="app_setting_push_txt_0">이메일</string>
     <string name="app_setting_push_txt_1">BLOSSOM 알림</string>
     <string name="app_setting_push_sub_txt_1">BLOSSOM에서 보내는 새소식 알림을 받습니다.</string>
     <string name="app_setting_push_txt_2">댓글 알림</string>

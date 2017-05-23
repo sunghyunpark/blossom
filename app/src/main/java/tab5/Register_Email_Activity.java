@@ -1,9 +1,11 @@
 package tab5;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +19,18 @@ import com.yssh1020.blossom.MainActivity;
 import com.yssh1020.blossom.R;
 import com.yssh1020.blossom.SessionManager;
 
+import api.ApiClient;
+import api.ApiInterface;
 import common.CommonUtil;
 import db.RealmConfig;
 import db.model.UserData;
 import dialog.Logout_Dialog;
 import io.realm.Realm;
+import model.CommonResponse;
 import model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Register_Email_Activity extends Activity {
@@ -71,6 +79,36 @@ public class Register_Email_Activity extends Activity {
         startActivity(intent);
     }
 
+    private void RegisterEmail(String uid, final String email, String password){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.RegisterEmail("register_email", uid, email, password);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(getApplicationContext(), commonResponse.getError_msg(), Toast.LENGTH_SHORT).show();
+                    if(flag.equals("logout")){
+                        Logout();
+                        finish();
+                    }else if(flag.equals("register")){
+                        User.getInstance().setEmail(email);
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "이미 존재하는 아이디입니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+            }
+        });
+    }
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
@@ -93,13 +131,8 @@ public class Register_Email_Activity extends Activity {
                         }else if(pw.length()<6){
                             Toast.makeText(getApplicationContext(), "비밀번호가 너무 짧습니다.", Toast.LENGTH_SHORT).show();
                         }else{
-                            commonUtil.RegisterEmail(getApplicationContext(), User.getInstance().getUid(), email, pw);
-                            if(flag.equals("logout")){
-                                Logout();
-                                finish();
-                            }else if(flag.equals("register")){
-                                finish();
-                            }
+                            RegisterEmail(User.getInstance().getUid(), email, pw);
+
                         }
 
                         break;
