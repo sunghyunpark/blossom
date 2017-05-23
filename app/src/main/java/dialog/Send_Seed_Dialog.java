@@ -113,13 +113,17 @@ public class Send_Seed_Dialog extends Activity {
                         }
                         break;
                     case R.id.send_btn:
-                        if(my_seed_cnt >= current_seed_cnt){
-                            //가능
-                            commonUtil.PostSeedToArticleUser(getApplicationContext(), article_user_id, User.getInstance().getUid(),current_seed_cnt);
-                            finish();
+                        if(my_seed_cnt > 0){
+                            if((my_seed_cnt >= current_seed_cnt)){
+                                //가능
+                                commonUtil.PostSeedToArticleUser(getApplicationContext(), article_user_id, User.getInstance().getUid(),current_seed_cnt);
+                                finish();
+                            }else{
+                                //불가능
+                                Toast.makeText(getApplicationContext(), "가지고 있는 씨앗보다 적게 설정해야합니다.", Toast.LENGTH_SHORT).show();
+                            }
                         }else{
-                            //불가능
-                            Toast.makeText(getApplicationContext(), "가지고 있는 씨앗보다 적게 설정해야합니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"씨앗이 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                         break;
 

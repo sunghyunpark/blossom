@@ -123,6 +123,7 @@ public class Page1 extends Fragment {
 
                 ArticleResponse articleResponse = response.body();
                 if(!articleResponse.isError()){
+                    my_story_empty_layout.setVisibility(View.GONE);
                     int dataSize = articleResponse.getArticle().size();
                     Article article;
                     for(int i=0;i<dataSize;i++){
