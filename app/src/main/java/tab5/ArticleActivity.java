@@ -33,6 +33,7 @@ import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
 import common.Share_Activity;
+import dialog.Other_ArticleMoreDialog;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
@@ -59,7 +60,7 @@ public class ArticleActivity extends Activity {
 
     private Article article = new Article();
     private String articleID;
-    private ImageView background_img, article_comment_btn, article_like_btn, back_btn, save_btn;
+    private ImageView background_img, article_comment_btn, article_like_btn, back_btn, save_btn, more_btn;
     private TextView article_text, created_at_txt, article_comment_txt, article_like_txt, top_title_txt;
 
     @Override
@@ -89,6 +90,7 @@ public class ArticleActivity extends Activity {
         back_btn = (ImageView)findViewById(R.id.back_btn);
         back_btn.setOnTouchListener(myOnTouchListener);
         save_btn = (ImageView)findViewById(R.id.save_btn_img);
+        more_btn = (ImageView)findViewById(R.id.more_btn);
     }
 
     private void InitCommentPanel(){
@@ -174,6 +176,23 @@ public class ArticleActivity extends Activity {
                     });
 
                     article_text.setText(article.getArticle_text());
+
+                    //더보기 버튼
+                    if(IsMyArticle(articleDetailResponse.getArticle_detail().getUid())){
+                        more_btn.setVisibility(View.GONE);
+                    }else{
+                        more_btn.setVisibility(View.VISIBLE);
+                    }
+                    more_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //내 아티클이 아닌 경우
+                            Intent intent_other = new Intent(getApplicationContext(), Other_ArticleMoreDialog.class);
+                            intent_other.putExtra("article_id", articleDetailResponse.getArticle_detail().getArticle_id());
+                            intent_other.putExtra("article_user_id", articleDetailResponse.getArticle_detail().getUid());
+                            startActivity(intent_other);
+                        }
+                    });
 
                     //저장 버튼
                     save_btn.setOnClickListener(new View.OnClickListener() {
@@ -453,6 +472,22 @@ public class ArticleActivity extends Activity {
                 Log.e("tag", t.toString());
             }
         });
+    }
+
+    /**
+     * 현재 아티클이 내가 작성한 아티클인지 판별
+     * @param uid
+     * @return
+     */
+    private boolean IsMyArticle(String uid){
+        boolean flag = true;
+        if(uid.equals(User.getInstance().getUid())){
+            //아티클 작성자가 나 인경우
+            flag = true;
+        }else{
+            flag = false;
+        }
+        return flag;
     }
 
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {

@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_layout"
@@ -223,6 +222,17 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/more_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:src="@mipmap/more_btn_img_white"/>
+
         <TextView
             android:id="@+id/top_title_txt"
             android:layout_width="wrap_content"
