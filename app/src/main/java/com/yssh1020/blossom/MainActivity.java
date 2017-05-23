@@ -338,7 +338,7 @@ public class MainActivity extends FragmentActivity {
                     case R.id.tab_5:
                         tab5_img.setImageResource(R.mipmap.tab5_click_img);
                         tab5_new_img.setVisibility(View.GONE);
-                        appSettingManager.setTab4_State(false);
+                        appSettingManager.setTab5_State(false);
                         CommonTabMenu.getInstance().getBottom_menu().setBackgroundColor(getResources().getColor(R.color.bottomTabMenu));
                         if(current_page == 5){
                             is_current_page = true;

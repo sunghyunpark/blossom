@@ -48,8 +48,37 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             ArticleLikeSendPushNotification(remoteMessage.getData().get("message"),
                     remoteMessage.getData().get("article_id"));
             appSettingManager.setTab4_State(true);
+        }else if(remoteMessage.getData().get("flag").equals("post_seed_article_user_id")){
+            //아티클을 통해 씨앗을 선물받았을 때
+            PostSeedToArticleUserPushNotification(remoteMessage.getData().get("message"));
+            appSettingManager.setTab5_State(true);
         }
 
+    }
+
+    private void PostSeedToArticleUserPushNotification(String message){
+        Resources res = getResources();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.app_icon).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon) )
+                .setContentTitle(String.format(res.getString(R.string.app_name)))
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri).setLights(000000255,500,2000)
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakelock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
+        wakelock.acquire(5000);
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
     /**
