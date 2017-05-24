@@ -47,7 +47,7 @@ public class Share_Activity extends Activity {
 
     //os6.0 permission
     private static final int REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE = 10;
-    private String image_path, article_text;
+    private String image_path, article_text, from;
     private ViewGroup title_lay;
     private TextView app_logo_txt;
 
@@ -59,6 +59,8 @@ public class Share_Activity extends Activity {
         Intent intent = getIntent();
         image_path = intent.getExtras().getString("article_img");
         article_text = intent.getExtras().getString("article_text");
+        from = intent.getExtras().getString("from");
+
 
         InitView();
 
@@ -78,10 +80,18 @@ public class Share_Activity extends Activity {
         TextView article_text_txt = (TextView)findViewById(R.id.article_text);
         article_text_txt.setText(article_text);
 
+        Button share_btn = (Button)findViewById(R.id.share_btn);
+        share_btn.setOnTouchListener(myOnTouchListener);
         Button save_btn = (Button)findViewById(R.id.save_btn);
         save_btn.setOnTouchListener(myOnTouchListener);
         Button back_btn = (Button)findViewById(R.id.back_btn);
         back_btn.setOnTouchListener(myOnTouchListener);
+
+        if(from.equals("save")){
+            save_btn.setVisibility(View.VISIBLE);
+        }else if(from.equals("share")){
+            share_btn.setVisibility(View.VISIBLE);
+        }
     }
 
     private class SaveArticle extends AsyncTask<Integer, Bitmap, Bitmap> {

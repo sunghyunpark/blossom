@@ -46,6 +46,8 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private FragmentPage1.RecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private String currentArticleID = "";
+    private String currentArticlePHOTO = "";
+    private String currentArticleTEXT = "";
     CommonUtil commonUtil = new CommonUtil();
     private ArrayList<ArticleComment> comment_listItems;
     private ViewGroup comment_empty_layout;
@@ -150,6 +152,8 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                     CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.GONE);
                     currentArticleID = getItem(position).getArticle_id();
+                    currentArticlePHOTO = getItem(position).getArticle_photo();
+                    currentArticleTEXT = getItem(position).getArticle_text();
                     LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
                 }
@@ -162,6 +166,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     Intent intent = new Intent(getContext(), Share_Activity.class);
                     intent.putExtra("article_img", getItem(position).getArticle_photo());
                     intent.putExtra("article_text", getItem(position).getArticle_text());
+                    intent.putExtra("from", "save");
                     mContext.startActivity(intent);
                 }
             });
@@ -206,6 +211,12 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
     public String CurrentArticleID(){
         return currentArticleID;
+    }
+    public String CurrentArticlePHOTO(){
+        return currentArticlePHOTO;
+    }
+    public String CurrentArticleTEXT(){
+        return currentArticleTEXT;
     }
 
     /**

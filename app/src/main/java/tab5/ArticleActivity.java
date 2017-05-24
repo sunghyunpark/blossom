@@ -194,6 +194,20 @@ public class ArticleActivity extends Activity {
                         }
                     });
 
+                    //공유 버튼
+                    Button article_share_btn = (Button)findViewById(R.id.article_share_btn);
+                    article_share_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
+                            intent.putExtra("from", "share");
+                            intent.putExtra("article_img", articleDetailResponse.getArticle_detail().getArticle_photo());
+                            intent.putExtra("article_text", articleDetailResponse.getArticle_detail().getArticle_text());
+                            startActivity(intent);
+                        }
+                    });
+
+
                     //저장 버튼
                     save_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -201,6 +215,7 @@ public class ArticleActivity extends Activity {
                             Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
                             intent.putExtra("article_img", articleDetailResponse.getArticle_detail().getArticle_photo());
                             intent.putExtra("article_text", articleDetailResponse.getArticle_detail().getArticle_text());
+                            intent.putExtra("from", "save");
                             startActivity(intent);
                         }
                     });

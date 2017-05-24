@@ -1,6 +1,8 @@
 package tab1;
 
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.otto.Subscribe;
 import com.yssh1020.blossom.AppController;
@@ -34,6 +40,7 @@ import api.ApiClient;
 import api.ApiInterface;
 import cardstack.CardStack;
 import common.CommonUtil;
+import common.Share_Activity;
 import event.BusProvider;
 import event.MyArticleDeleteEvent;
 import model.Article;
@@ -43,6 +50,8 @@ import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * created by sunghyun 2017-03-27
@@ -75,6 +84,9 @@ public class FragmentPage1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(getContext());
+
     }
 
     @Override
@@ -103,6 +115,18 @@ public class FragmentPage1 extends Fragment {
         comment_edit_box = (EditText)v.findViewById(R.id.comment_edit_box);
         Button comment_send_btn = (Button)v.findViewById(R.id.comment_send_btn);
         comment_send_btn.setOnTouchListener(myOnTouchListener);
+
+        Button article_share_btn = (Button)v.findViewById(R.id.article_share_btn);
+        article_share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
+                intent.putExtra("from", "share");
+                intent.putExtra("article_img", mCardAdapter.CurrentArticlePHOTO());
+                intent.putExtra("article_text", mCardAdapter.CurrentArticleTEXT());
+                startActivity(intent);
+            }
+        });
 
         mLayout = (SlidingUpPanelLayout) v.findViewById(R.id.sliding_layout);
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
@@ -156,6 +180,27 @@ public class FragmentPage1 extends Fragment {
 
         listItems = new ArrayList<Article>();
         mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout, recyclerView, adapter, comment_listItems, comment_empty_layout);
+    }
+
+    private void ShareFacebook(){
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                //링크의 콘텐츠 제목
+                //.setContentTitle("페이스북 공유 링크입니다.")
+
+                //게시물에 표시될 썸네일 이미지의 URL
+                .setImageUrl(Uri.parse("https://lh3.googleusercontent.com/hmVeH1KmKDy1ozUlrjtYMHpzSDrBv9NSbZ0DPLzR8HdBip9kx3wn_sXmHr3wepCHXA=rw"))
+
+                //공유될 링크
+                //.setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.handykim.nbit.everytimerfree"))
+
+                //게일반적으로 2~4개의 문장으로 구성된 콘텐츠 설명
+                //.setContentDescription("문장1, 문장2, 문장3, 문장4")
+                .build();
+
+        ShareDialog shareDialog = new ShareDialog(this);
+        shareDialog.show(content, ShareDialog.Mode.NATIVE);   //AUTOMATIC, FEED, NATIVE, WEB 등이 있으며 이는 다이얼로그 형식을 말합니다.
+
+
     }
 
     private void LoadArticle(String last_article_id) {
