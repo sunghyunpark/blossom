@@ -149,9 +149,10 @@ public class Share_Activity extends Activity {
             if(!share_flag){
                 Toast.makeText(getApplicationContext(), "저장 완료", Toast.LENGTH_SHORT).show();
             }else{
-                Bitmap bit = BitmapFactory.decodeFile(imageName);
-                ShareFacebook(bit);
+                //Bitmap bit = BitmapFactory.decodeFile(imageName);
+                //ShareFacebook(bit);
 
+                ShareChooser(imageName);
             }
         }
 
@@ -231,20 +232,26 @@ public class Share_Activity extends Activity {
         }
     }
 
-    private void ShareInsta(String image_full_path){
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/*");
-        Uri uri = Uri.fromFile(new File(image_full_path));
-        try {
-            share.putExtra(Intent.EXTRA_STREAM, uri);
-            share.setPackage("com.instagram.android");
-            startActivity(share);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "인스타그램이 설치되어 있지 않습니다.", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void ShareChooser(String mediaPath){
 
+        String type = "image/*";
+        // Create the new Intent using the 'Send' action.
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // Set the MIME type
+        share.setType(type);
+
+        // Create the URI from the media
+        File media = new File(mediaPath);
+        Uri uri = Uri.fromFile(media);
+
+        // Add the URI to the Intent.
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"));
+
+        finish();
     }
 
     /**
@@ -317,6 +324,7 @@ public class Share_Activity extends Activity {
                         break;
 
                     case R.id.share_btn:
+                        share_flag = true;
                         /**
                          * os 6.0 권한체크 및 요청
                          */
@@ -341,7 +349,6 @@ public class Share_Activity extends Activity {
                             }
 
                         } else {
-                            share_flag = true;
                             title_lay.setVisibility(View.GONE);
                             app_logo_txt.setVisibility(View.VISIBLE);
                             try{

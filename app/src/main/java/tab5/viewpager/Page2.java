@@ -14,11 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yssh1020.blossom.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import api.ApiClient;
 import api.ApiInterface;
+import common.CommonUtil;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
 import model.User;
@@ -39,6 +44,7 @@ public class Page2 extends Fragment {
     View v;
     ViewGroup my_comment_empty_layout;
     ViewGroup background_layout;
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,7 +170,17 @@ public class Page2 extends Fragment {
 
                 VHitem.comment_text.setText(currentItem.getComment_text());
 
-                VHitem.comment_etc_text.setText(currentItem.getCreated_at());
+                /**
+                 * 서버에서 받아온 생성날짜 string을 Date타입으로 변환
+                 */
+                Date to = null;
+                try{
+                    SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    to = transFormat.parse(currentItem.getCreated_at());
+                }catch (ParseException p){
+                    p.printStackTrace();
+                }
+                VHitem.comment_etc_text.setText(commonUtil.formatTimeString(to));
 
             }
         }
