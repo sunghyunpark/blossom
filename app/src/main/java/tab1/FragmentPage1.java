@@ -84,9 +84,6 @@ public class FragmentPage1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(getContext());
-
     }
 
     @Override

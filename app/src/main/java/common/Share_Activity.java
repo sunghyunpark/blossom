@@ -2,6 +2,7 @@ package common;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,6 +28,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
@@ -51,6 +57,8 @@ public class Share_Activity extends Activity {
     private ViewGroup title_lay;
     private TextView app_logo_txt;
 
+    private boolean share_flag = false;    //공유인지 아닌지 판별
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,8 @@ public class Share_Activity extends Activity {
         article_text = intent.getExtras().getString("article_text");
         from = intent.getExtras().getString("from");
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(getApplicationContext());
 
         InitView();
 
@@ -75,7 +85,6 @@ public class Share_Activity extends Activity {
                 .into(article_picture);
 
         app_logo_txt = (TextView)findViewById(R.id.app_logo_txt);
-
 
         TextView article_text_txt = (TextView)findViewById(R.id.article_text);
         article_text_txt.setText(article_text);
@@ -137,7 +146,13 @@ public class Share_Activity extends Activity {
             }
             JMediaScanner scanner = new JMediaScanner(getApplicationContext());
             scanner.startScan(Environment.getExternalStorageDirectory()+"/Blossom/"+timeStamp+"_BLOSSOM.png");
-            Toast.makeText(getApplicationContext(), "저장 완료", Toast.LENGTH_SHORT).show();
+            if(!share_flag){
+                Toast.makeText(getApplicationContext(), "저장 완료", Toast.LENGTH_SHORT).show();
+            }else{
+                Bitmap bit = BitmapFactory.decodeFile(imageName);
+                ShareFacebook(bit);
+
+            }
         }
 
     }
@@ -216,6 +231,40 @@ public class Share_Activity extends Activity {
         }
     }
 
+    private void ShareInsta(String image_full_path){
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/*");
+        Uri uri = Uri.fromFile(new File(image_full_path));
+        try {
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+            share.setPackage("com.instagram.android");
+            startActivity(share);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "인스타그램이 설치되어 있지 않습니다.", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * facebook share
+     * @param image
+     */
+    private void ShareFacebook(Bitmap image){
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(image)
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+        ShareDialog shareDialog = new ShareDialog(this);
+        shareDialog.show(content, ShareDialog.Mode.NATIVE);   //AUTOMATIC, FEED, NATIVE, WEB 등이 있으며 이는 다이얼로그 형식을 말합니다.
+
+        finish();
+
+    }
+
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
         @Override
@@ -261,6 +310,44 @@ public class Share_Activity extends Activity {
                                 SaveArticle saveArticle = new SaveArticle();
                                 saveArticle.execute();
                                 finish();
+                            }catch (Exception e){
+
+                            }
+                        }
+                        break;
+
+                    case R.id.share_btn:
+                        /**
+                         * os 6.0 권한체크 및 요청
+                         */
+                        if (ContextCompat.checkSelfPermission(Share_Activity.this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat
+                                .checkSelfPermission(Share_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale
+                                    (Share_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                                    ActivityCompat.shouldShowRequestPermissionRationale(Share_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                                ActivityCompat.requestPermissions(Share_Activity.this,
+                                        new String[]{Manifest.permission
+                                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE);
+                            } else {
+                                ActivityCompat.requestPermissions(Share_Activity.this,
+                                        new String[]{Manifest.permission
+                                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE);
+
+                            }
+
+                        } else {
+                            share_flag = true;
+                            title_lay.setVisibility(View.GONE);
+                            app_logo_txt.setVisibility(View.VISIBLE);
+                            try{
+                                SaveArticle saveArticle = new SaveArticle();
+                                saveArticle.execute();
+
                             }catch (Exception e){
 
                             }
