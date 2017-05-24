@@ -40,7 +40,7 @@ public class CommonUtil {
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                     boolean state;
                     AppSettingManager appSettingManager = new AppSettingManager(context);
                     if(push_state.equals("Y")){
@@ -57,7 +57,7 @@ public class CommonUtil {
                         appSettingManager.setArticleLikeAlarm_State(state);
                     }
                 }else{
-                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -65,6 +65,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -96,6 +97,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -116,9 +118,9 @@ public class CommonUtil {
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "공개설정을 변경했습니다.",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -126,6 +128,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -146,9 +149,9 @@ public class CommonUtil {
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -156,6 +159,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -187,6 +191,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -217,6 +222,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -236,10 +242,10 @@ public class CommonUtil {
 
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "이야기를 삭제했습니다.",Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -247,6 +253,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -280,6 +287,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -298,10 +306,10 @@ public class CommonUtil {
 
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -309,6 +317,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -332,10 +341,10 @@ public class CommonUtil {
 
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
 
                 }else{
-                    Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -343,6 +352,7 @@ public class CommonUtil {
             public void onFailure(Call<CommonResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
 

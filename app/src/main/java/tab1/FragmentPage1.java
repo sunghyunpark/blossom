@@ -255,8 +255,8 @@ public class FragmentPage1 extends Fragment {
     }
 
     public static void LoadMoreArticle(final String last_article_id) {
-        Log.d("LoadMoreArticleData", "Load More Data Start");
-        Log.d("LoadMoreArticleData", "last_article_id : "+last_article_id);
+        //Log.d("LoadMoreArticleData", "Load More Data Start");
+        //Log.d("LoadMoreArticleData", "last_article_id : "+last_article_id);
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -267,7 +267,7 @@ public class FragmentPage1 extends Fragment {
 
                 ArticleResponse articleResponse = response.body();
                 if (!articleResponse.isError()) {
-                    Log.d("LoadMoreArticleData", "success");
+                    //Log.d("LoadMoreArticleData", "success");
                     int dataSize = articleResponse.getArticle().size();
                     int before_pos = FragmentPage1.listItems.size();
                     Article article;
@@ -287,17 +287,13 @@ public class FragmentPage1 extends Fragment {
                         FragmentPage1.mCardAdapter.add(FragmentPage1.listItems.get(before_pos));
                         before_pos++;
                     }
-                    Log.d("LoadMoreArticleData", "listSize : "+FragmentPage1.listItems.size());
+                    //Log.d("LoadMoreArticleData", "listSize : "+FragmentPage1.listItems.size());
                     FragmentPage1.LastArticleID = articleResponse.getLast_article_id();
                     FragmentPage1.mCardAdapter.notifyDataSetChanged();
                     FragmentPage1.mCardStack.setAdapter(mCardAdapter);
-                    //mCardStack.setVisibleCardNum(2);
-                    if (FragmentPage1.mCardStack.getAdapter() != null) {
-                        Log.i("MyActivity", "Card Stack size: " + FragmentPage1.mCardStack.getAdapter().getCount());
-                    }
 
                 } else {
-                    Log.d("LoadMoreArticleData", "not exist");
+                    //Log.d("LoadMoreArticleData", "not exist");
                 }
             }
 

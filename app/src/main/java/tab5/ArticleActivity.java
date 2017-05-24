@@ -266,7 +266,7 @@ public class ArticleActivity extends Activity {
                     }
                     created_at_txt.setText(commonUtil.formatTimeString(to));
                 }else{
-                    Toast.makeText(getApplicationContext().getApplicationContext(), articleDetailResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext().getApplicationContext(), articleDetailResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 

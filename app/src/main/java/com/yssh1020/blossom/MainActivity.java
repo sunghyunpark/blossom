@@ -198,13 +198,13 @@ public class MainActivity extends FragmentActivity {
 
                 UserResponse userdata = response.body();
                 if(!userdata.isError()){
-                    Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
                     realmUtil.InsertDB(getApplicationContext(), userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
                             userdata.getUser().getGender(), user.getToken(), userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
 
-                    Log.d("UserInfo", "AppPush : "+userdata.getUser().getApp_push());
-                    Log.d("UserInfo", "CommentPush : "+userdata.getUser().getComment_push());
-                    Log.d("UserInfo", "LikePush : "+userdata.getUser().getLike_push());
+                    //Log.d("UserInfo", "AppPush : "+userdata.getUser().getApp_push());
+                    //Log.d("UserInfo", "CommentPush : "+userdata.getUser().getComment_push());
+                    //Log.d("UserInfo", "LikePush : "+userdata.getUser().getLike_push());
                     //push state 저장
                     if(userdata.getUser().getApp_push().equals("Y")){
                         appSettingManager.setAppAlarm_State(true);

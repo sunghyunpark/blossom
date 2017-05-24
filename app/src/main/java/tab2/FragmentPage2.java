@@ -133,7 +133,7 @@ public class FragmentPage2 extends Fragment {
 
 
                 }else{
-                    Toast.makeText(getActivity().getApplicationContext(), famousArticleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), famousArticleResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }
             }
 

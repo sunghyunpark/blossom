@@ -160,7 +160,7 @@ public class LoginPage extends FragmentActivity {
 
                 UserResponse userdata = response.body();
                 if(!userdata.isError()){
-                    Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
 
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
                     String token = FirebaseInstanceId.getInstance().getToken();

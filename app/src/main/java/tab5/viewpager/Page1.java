@@ -345,8 +345,8 @@ public class Page1 extends Fragment {
     public void FinishLoad(MyArticleDeleteEvent mPushEvent) {
         delete_article_id = mPushEvent.getArticle_id();
         list_pos = mPushEvent.getList_pos();
-        Log.d("delete", delete_article_id);
-        Log.d("delete", list_pos+"");
+        //Log.d("delete", delete_article_id);
+        //Log.d("delete", list_pos+"");
         adapter.removeItem(list_pos, delete_article_id);
 
     }
