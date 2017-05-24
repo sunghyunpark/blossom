@@ -51,7 +51,9 @@ public class FragmentPage2 extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<FamousArticle> listItems;
     private ViewGroup retry_network_layout;
+    private String LastArticleID = "";
     View v;
+    private static final int LOAD_DATA_COUNT = 10;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,19 +86,30 @@ public class FragmentPage2 extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerAdapter(listItems);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
         retry_network_layout = (ViewGroup)v.findViewById(R.id.retry_network_layout);
 
         Button retry_network_btn = (Button)v.findViewById(R.id.retry_network_btn);
         retry_network_btn.setOnTouchListener(myOnTouchListener);
 
-        GetFamousArticleData();
+        GetFamousArticleData("0");
+
+        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                // do something...
+                //Toast.makeText(getActivity(),"불러오는중...", Toast.LENGTH_SHORT).show();
+                GetFamousArticleData(LastArticleID);
+
+            }
+        });
     }
 
-    private void GetFamousArticleData(){
+    private void GetFamousArticleData(String last_id){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<FamousArticleResponse> call = apiService.GetFamousArticleData("famous_article", "0");
+        Call<FamousArticleResponse> call = apiService.GetFamousArticleData("famous_article", last_id);
         call.enqueue(new Callback<FamousArticleResponse>() {
             @Override
             public void onResponse(Call<FamousArticleResponse> call, Response<FamousArticleResponse> response) {
@@ -115,7 +128,7 @@ public class FragmentPage2 extends Fragment {
 
                         listItems.add(article);
                     }
-                    recyclerView.setAdapter(adapter);
+                    LastArticleID = famousArticleResponse.getLast_article_id();
                     adapter.notifyDataSetChanged();
 
 
@@ -133,6 +146,52 @@ public class FragmentPage2 extends Fragment {
                 Log.e("tag", t.toString());
             }
         });
+    }
+
+    private abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
+
+
+        private int previousTotal = 0; // The total number of items in the dataset after the last load
+        private boolean loading = true; // True if we are still waiting for the last set of data to load.
+        private int visibleThreshold = LOAD_DATA_COUNT; // The minimum amount of items to have below your current scroll position before loading more.
+        int firstVisibleItem, visibleItemCount, totalItemCount;
+
+        private int current_page = 1;
+
+        private LinearLayoutManager mLinearLayoutManager;
+
+        public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
+            this.mLinearLayoutManager = linearLayoutManager;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            visibleItemCount = recyclerView.getChildCount();
+            totalItemCount = mLinearLayoutManager.getItemCount();
+            firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount)
+                    <= (firstVisibleItem + visibleThreshold)) {
+                // End has been reached
+
+                // Do something
+                current_page++;
+
+                onLoadMore(current_page);
+
+                loading = true;
+            }
+        }
+
+        public abstract void onLoadMore(int current_page);
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
