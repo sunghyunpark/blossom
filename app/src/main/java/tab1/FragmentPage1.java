@@ -179,26 +179,6 @@ public class FragmentPage1 extends Fragment {
         mCardAdapter = new CardsDataAdapter(getActivity(), listItems, mLayout, recyclerView, adapter, comment_listItems, comment_empty_layout);
     }
 
-    private void ShareFacebook(){
-        ShareLinkContent content = new ShareLinkContent.Builder()
-                //링크의 콘텐츠 제목
-                //.setContentTitle("페이스북 공유 링크입니다.")
-
-                //게시물에 표시될 썸네일 이미지의 URL
-                .setImageUrl(Uri.parse("https://lh3.googleusercontent.com/hmVeH1KmKDy1ozUlrjtYMHpzSDrBv9NSbZ0DPLzR8HdBip9kx3wn_sXmHr3wepCHXA=rw"))
-
-                //공유될 링크
-                //.setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.handykim.nbit.everytimerfree"))
-
-                //게일반적으로 2~4개의 문장으로 구성된 콘텐츠 설명
-                //.setContentDescription("문장1, 문장2, 문장3, 문장4")
-                .build();
-
-        ShareDialog shareDialog = new ShareDialog(this);
-        shareDialog.show(content, ShareDialog.Mode.NATIVE);   //AUTOMATIC, FEED, NATIVE, WEB 등이 있으며 이는 다이얼로그 형식을 말합니다.
-
-
-    }
 
     private void LoadArticle(String last_article_id) {
         ApiInterface apiService =
