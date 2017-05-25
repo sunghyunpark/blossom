@@ -317,7 +317,7 @@ public class MainActivity extends FragmentActivity {
                         break ;
                     case R.id.tab_3 :
                         startActivity(new Intent(getApplicationContext(), Upload_Article.class));
-                        app_title_bar.setVisibility(View.VISIBLE);
+                        //app_title_bar.setVisibility(View.VISIBLE);
                         break ;
                     case R.id.tab_4:
                         tab4_img.setImageResource(R.mipmap.tab4_click_img);

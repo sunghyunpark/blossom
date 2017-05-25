@@ -2,6 +2,9 @@
     <string name="app_name">Blossom</string>
     <string name="facebook_app_id">1696863397282167</string>
     <!--로그인 인트로 화면-->
+    <string name="intro1_sub_txt">자신만의 솔직한 이야기를 \n나눠보세요.</string>
+    <string name="intro2_sub_txt">힘들고 지칠 때 힘이 될 수 있는 \n명언</string>
+    <string name="intro3_sub_txt">공감하는 글에 씨앗을 \n선물해주세요.</string>
     <string name="login_txt1">Welcome</string>
     <string name="login_txt2">별다른 가입 절차 없이 생년과 성별만 선택하시면 바로 이용할 수 있습니다</string>
     <string name="login_birth_btn_txt">년도 선택</string>

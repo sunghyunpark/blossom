@@ -42,7 +42,7 @@ public class Fragment_Intro extends Fragment {
      */
     private void Set_FullSize_Background(){
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.login_background_blur2);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.intro_not_title1 +position);
         Bitmap resized = Bitmap.createScaledBitmap(bitmap, AppController.getInstance().getDISPLAY_WIDTH(),
                 AppController.getInstance().getDISPLAY_HEIGHT(), true);
 

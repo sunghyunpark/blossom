@@ -12,6 +12,98 @@
     </android.support.v4.view.ViewPager>
 
     <LinearLayout
+        android:id="@+id/intro_1_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/intro1_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BLOSSOM"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"/>
+
+        <TextView
+            android:id="@+id/intro1_sub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/intro1_sub_txt"
+            android:gravity="center_horizontal"
+            android:textSize="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/intro_2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/intro2_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BLOSSOM"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"/>
+
+        <TextView
+            android:id="@+id/intro2_sub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/intro2_sub_txt"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/intro_3_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/intro3_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BLOSSOM"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"/>
+
+        <TextView
+            android:id="@+id/intro3_sub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/intro3_sub_txt"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/register_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +119,7 @@
             android:textSize="40dp"
             android:textColor="#ffffff"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="60dp"/>
 
         <TextView
             android:id="@+id/login_txt2"
@@ -36,14 +128,15 @@
             android:text="@string/login_txt2"
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
             android:textColor="#ffffff"/>
 
         <LinearLayout
             android:id="@+id/info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
             <Button
@@ -158,6 +251,18 @@
             android:src="@drawable/select_circle"/>
         <ImageView
             android:id="@+id/circle_2"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/no_select_circle"/>
+        <ImageView
+            android:id="@+id/circle_3"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/no_select_circle"/>
+        <ImageView
+            android:id="@+id/circle_4"
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_marginRight="5dp"

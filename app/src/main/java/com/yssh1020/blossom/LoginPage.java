@@ -44,7 +44,7 @@ public class LoginPage extends FragmentActivity {
     //Viewpager
     private ViewPager mViewPager;
 
-    private ViewGroup male_btn, female_btn, register_layout;
+    private ViewGroup male_btn, female_btn, register_layout, intro_1_layout, intro_2_layout, intro_3_layout;
     private ImageView male_check_img, female_check_img;
     private Button birth_btn;
     private String gender = "male";
@@ -73,7 +73,12 @@ public class LoginPage extends FragmentActivity {
 
         final ImageView select_circle1 = (ImageView) findViewById(R.id.circle_1);
         final ImageView select_circle2 = (ImageView) findViewById(R.id.circle_2);
+        final ImageView select_circle3 = (ImageView) findViewById(R.id.circle_3);
+        final ImageView select_circle4 = (ImageView) findViewById(R.id.circle_4);
         register_layout = (ViewGroup)findViewById(R.id.register_layout);
+        intro_1_layout = (ViewGroup)findViewById(R.id.intro_1_layout);
+        intro_2_layout = (ViewGroup)findViewById(R.id.intro_2_layout);
+        intro_3_layout = (ViewGroup)findViewById(R.id.intro_3_layout);
         male_btn = (ViewGroup)findViewById(R.id.male_btn);
         female_btn = (ViewGroup)findViewById(R.id.female_btn);
         male_check_img = (ImageView)findViewById(R.id.male_check_img);
@@ -107,17 +112,40 @@ public class LoginPage extends FragmentActivity {
             public void onPageSelected(int position) {
                 // TODO Auto-generated method stub
                 mViewPager.setCurrentItem(position);
-                mViewPager.setOffscreenPageLimit(2);
+                mViewPager.setOffscreenPageLimit(4);
                 register_layout.setVisibility(View.GONE);
+                intro_1_layout.setVisibility(View.GONE);
+                intro_2_layout.setVisibility(View.GONE);
+                intro_3_layout.setVisibility(View.GONE);
 
                 switch (position) {
                     case 0:
                         select_circle1.setImageResource(R.drawable.select_circle);
                         select_circle2.setImageResource(R.drawable.no_select_circle);
+                        select_circle3.setImageResource(R.drawable.no_select_circle);
+                        select_circle4.setImageResource(R.drawable.no_select_circle);
+                        intro_1_layout.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         select_circle1.setImageResource(R.drawable.no_select_circle);
                         select_circle2.setImageResource(R.drawable.select_circle);
+                        select_circle3.setImageResource(R.drawable.no_select_circle);
+                        select_circle4.setImageResource(R.drawable.no_select_circle);
+                        intro_2_layout.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        select_circle1.setImageResource(R.drawable.no_select_circle);
+                        select_circle2.setImageResource(R.drawable.no_select_circle);
+                        select_circle3.setImageResource(R.drawable.select_circle);
+                        select_circle4.setImageResource(R.drawable.no_select_circle);
+                        intro_3_layout.setVisibility(View.VISIBLE);
+                        break;
+
+                    case 3:
+                        select_circle1.setImageResource(R.drawable.no_select_circle);
+                        select_circle2.setImageResource(R.drawable.no_select_circle);
+                        select_circle3.setImageResource(R.drawable.no_select_circle);
+                        select_circle4.setImageResource(R.drawable.select_circle);
                         register_layout.setVisibility(View.VISIBLE);
                         break;
                 }
@@ -224,7 +252,7 @@ public class LoginPage extends FragmentActivity {
         }
         @Override
         public int getCount() {
-            return 2;  // 총 2개의 page를 반환
+            return 4;  // 총 2개의 page를 반환
         }
 
     }
