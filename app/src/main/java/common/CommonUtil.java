@@ -363,7 +363,7 @@ public class CommonUtil {
      * @return
      */
     public String GetArticleBGName(){
-        int randomNum = (int)(Math.random() * 92)+1;
+        int randomNum = (int)(Math.random() * 102)+1;
         String ImgName = AppController.getInstance().getServer_img_path()+"/article_bg/article_bg_"+randomNum+".jpg";
         return ImgName;
     }

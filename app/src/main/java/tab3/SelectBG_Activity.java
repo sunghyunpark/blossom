@@ -59,7 +59,7 @@ public class SelectBG_Activity extends Activity {
 
     private void SetList(){
         ArticleBg item;
-        for(int i=1;i<=92;i++){
+        for(int i=1;i<=102;i++){
             item = new ArticleBg();
             item.setArticle_background_url("article_bg_"+i+".jpg");
             listItems.add(item);

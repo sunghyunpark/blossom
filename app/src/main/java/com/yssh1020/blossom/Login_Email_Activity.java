@@ -63,7 +63,7 @@ public class Login_Email_Activity extends Activity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse userResponse = response.body();
                 if(!userResponse.isError()){
-                    Toast.makeText(getApplicationContext(), userResponse.getError_msg(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), userResponse.getError_msg(), Toast.LENGTH_SHORT).show();
                     mSessionManager.setLogin(true);    //로그인 성공 시 세션 유지
                     String token = FirebaseInstanceId.getInstance().getToken();
                     //realm에 저장
