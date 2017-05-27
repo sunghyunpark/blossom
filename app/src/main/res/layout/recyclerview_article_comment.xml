@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/user_profile_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"/>
 

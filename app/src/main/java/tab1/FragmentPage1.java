@@ -321,7 +321,7 @@ public class FragmentPage1 extends Fragment {
                 Glide.clear(VHitem.user_profile_img);
                 Glide.with(getActivity())
                         .load(res.getIdentifier(currentItem.getProfile_img(), "mipmap", "com.yssh1020.blossom"))
-                        .error(null)
+                        .error(R.mipmap.user_profile_img1)
                         .into(VHitem.user_profile_img);
 
                 VHitem.comment_txt.setText(currentItem.getComment_text());
