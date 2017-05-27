@@ -66,7 +66,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.app_icon).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon) )
+                .setSmallIcon(R.mipmap.app_icon_72).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon_72) )
                 .setContentTitle(String.format(res.getString(R.string.app_name)))
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -98,7 +98,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.app_icon).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon) )
+                .setSmallIcon(R.mipmap.app_icon_72).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon_72) )
                 .setContentTitle(String.format(res.getString(R.string.app_name)))
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -127,7 +127,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.app_icon).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon) )
+                .setSmallIcon(R.mipmap.app_icon_72).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon_72) )
                 .setContentTitle(String.format(res.getString(R.string.app_name)))
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -159,7 +159,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.app_icon).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon) )
+                .setSmallIcon(R.mipmap.app_icon_72).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon_72) )
                 .setContentTitle(String.format(res.getString(R.string.app_name)))
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -191,7 +191,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.app_icon).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon) )
+                .setSmallIcon(R.mipmap.app_icon_72).setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.app_icon_72) )
                 .setContentTitle(String.format(res.getString(R.string.app_name)))
                 .setContentText(message)
                 .setAutoCancel(true)
