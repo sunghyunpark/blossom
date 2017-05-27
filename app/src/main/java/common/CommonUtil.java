@@ -373,7 +373,7 @@ public class CommonUtil {
      * @return
      */
     public String GetUserProfileName(){
-        int randomNum = (int)(Math.random() * 10)+1;
+        int randomNum = (int)(Math.random() * 7)+1;
         String ImgName = "user_profile_img"+randomNum;
         return ImgName;
     }

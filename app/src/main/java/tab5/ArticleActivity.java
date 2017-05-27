@@ -312,10 +312,20 @@ public class ArticleActivity extends Activity {
                 final ArticleComment_VHitem VHitem = (ArticleComment_VHitem)holder;
 
                 Glide.clear(VHitem.user_profile_img);
-                Glide.with(getApplicationContext())
-                        .load(res.getIdentifier(currentItem.getProfile_img(), "mipmap", "com.yssh1020.blossom"))
-                        .error(R.mipmap.user_profile_img1)
-                        .into(VHitem.user_profile_img);
+                if(IsMyArticle(position)){
+                    Glide.clear(VHitem.user_profile_img);
+                    Glide.with(getApplicationContext())
+                            .load(res.getIdentifier("my_article_user_profile", "mipmap", "com.yssh1020.blossom"))
+                            .error(R.mipmap.user_profile_img1)
+                            .into(VHitem.user_profile_img);
+                }else{
+                    Glide.clear(VHitem.user_profile_img);
+                    Glide.with(getApplicationContext())
+                            .load(res.getIdentifier(currentItem.getProfile_img(), "mipmap", "com.yssh1020.blossom"))
+                            .error(R.mipmap.user_profile_img1)
+                            .into(VHitem.user_profile_img);
+                }
+
 
                 VHitem.comment_txt.setText(currentItem.getComment_text());
 
@@ -371,6 +381,19 @@ public class ArticleActivity extends Activity {
 
             }
 
+        }
+
+        private boolean IsMyArticle(int position){
+            boolean flag = true;
+            String article_writer_uid = getItem(position).getUid();
+
+            if(article_writer_uid.equals(User.getInstance().getUid())){
+                //아티클 작성자가 나 인경우
+                flag = true;
+            }else{
+                flag = false;
+            }
+            return flag;
         }
         /*
         private void removeItem(int position){
