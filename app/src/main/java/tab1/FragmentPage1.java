@@ -26,6 +26,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.otto.Subscribe;
 import com.yssh1020.blossom.AppController;
+import com.yssh1020.blossom.AppSettingManager;
 import com.yssh1020.blossom.R;
 
 import java.text.ParseException;
@@ -41,6 +42,7 @@ import api.ApiInterface;
 import cardstack.CardStack;
 import common.CommonUtil;
 import common.Share_Activity;
+import dialog.Article_Start_CoachMark_Activity;
 import event.BusProvider;
 import event.MyArticleDeleteEvent;
 import model.Article;
@@ -216,6 +218,10 @@ public class FragmentPage1 extends Fragment {
                     //mCardStack.setVisibleCardNum(2);
                     if (mCardStack.getAdapter() != null) {
                         Log.i("MyActivity", "Card Stack size: " + mCardStack.getAdapter().getCount());
+                    }
+                    AppSettingManager appSettingManager = new AppSettingManager(getApplicationContext());
+                    if(appSettingManager.getCoachMarkArticleStart()){
+                        getActivity().startActivity(new Intent(getApplicationContext(), Article_Start_CoachMark_Activity.class));
                     }
 
                 } else {

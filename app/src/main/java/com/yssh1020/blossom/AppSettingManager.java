@@ -30,6 +30,7 @@ public class AppSettingManager {
     private static final String KEY_APP_ALARM_ON_OFF = "app_alarm";
     private static final String KEY_COMMENT_ALARM_ON_OFF = "comment_alarm";
     private static final String KEY_ARTICLE_LIKE_ALARM_ON_OFF = "article_like_alarm";
+    private static final String KEY_COACH_MARK_ARTICLE_START_ON_OFF = "article_start_coach_mark";
 
 
     public AppSettingManager(Context context) {
@@ -111,5 +112,17 @@ public class AppSettingManager {
     }
     public boolean getArticleLikeAlarm_State(){
         return pref.getBoolean(KEY_ARTICLE_LIKE_ALARM_ON_OFF, false);
+    }
+
+    public void setCoachMarkArticleStartState(boolean flag){
+        editor.putBoolean(KEY_COACH_MARK_ARTICLE_START_ON_OFF, flag);
+        // commit changes
+        editor.commit();
+
+        Log.d(TAG, "coach mark article start on off state modified!");
+    }
+
+    public boolean getCoachMarkArticleStart(){
+        return pref.getBoolean(KEY_COACH_MARK_ARTICLE_START_ON_OFF, false);
     }
 }

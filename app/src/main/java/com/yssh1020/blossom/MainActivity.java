@@ -84,9 +84,10 @@ public class MainActivity extends FragmentActivity {
         }
 
         //푸시로 진입하는 경우에는 로딩화면 미노출 시키기 위해...
+        /*
         if(loadingpage){
             startActivity(new Intent(getApplicationContext(), SplashPage.class));
-        }
+        }*/
 
         InitData();
     }

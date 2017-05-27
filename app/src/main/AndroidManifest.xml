@@ -143,6 +143,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        <activity
+            android:name="dialog.Article_Start_CoachMark_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomHalfColorActivity" >
+        </activity>
+
 
     </application>
 

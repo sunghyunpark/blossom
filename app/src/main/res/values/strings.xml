@@ -109,6 +109,10 @@
     <!--register email-->
     <string name="register_email_email_edit_box_txt">이메일을 입력해주세요.</string>
     <string name="register_email_pw_edit_box_txt">비밀번호를 입력해주세요.(6자 이상)</string>
+
+    <!--coach mark txt-->
+    <string name="article_start_coach_mark_txt1">시작하기</string>
+    <string name="article_start_coach_mark_txt2">화면을 넘기면\n다른 이야기가 보여요.</string>
 </resources>
 
 

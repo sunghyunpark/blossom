@@ -70,6 +70,8 @@ public class LoginPage extends FragmentActivity {
     private void InitView(){
         mSessionManager = new SessionManager(getApplicationContext());
         appSettingManager = new AppSettingManager(getApplicationContext());
+        //인트로화면 진입하면 다시 셋팅되게
+        appSettingManager.setCoachMarkArticleStartState(true);
 
         final ImageView select_circle1 = (ImageView) findViewById(R.id.circle_1);
         final ImageView select_circle2 = (ImageView) findViewById(R.id.circle_2);
