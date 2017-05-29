@@ -8,8 +8,10 @@ import android.view.Window;
 
 import com.yssh1020.blossom.R;
 
+import common.Share_Activity;
 import event.BusProvider;
 import event.MyBookMarkCancelEvent;
+
 
 /**
  * 아티클내에서 더보기 버튼 탭했을 때 노출되는 다이얼로그
@@ -18,6 +20,8 @@ import event.MyBookMarkCancelEvent;
 public class BookMark_More_Dialog extends Activity {
 
     private String article_id;
+    private String article_img;
+    private String article_text;
     private int pos;
 
     @Override
@@ -28,6 +32,8 @@ public class BookMark_More_Dialog extends Activity {
 
         Intent intent = getIntent();
         article_id = intent.getExtras().getString("article_id");
+        article_img = intent.getExtras().getString("article_img");
+        article_text = intent.getExtras().getString("article_text");
         pos = intent.getExtras().getInt("pos");
 
     }
@@ -40,6 +46,11 @@ public class BookMark_More_Dialog extends Activity {
                 finish();
                 break;
             case R.id.share_sns_btn:
+                Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
+                intent.putExtra("from", "share");
+                intent.putExtra("article_img", article_img);
+                intent.putExtra("article_text", article_text);
+                startActivity(intent);
                 finish();
                 break;
 

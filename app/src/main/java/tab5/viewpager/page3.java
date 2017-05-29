@@ -207,6 +207,8 @@ public class Page3 extends Fragment {
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), BookMark_More_Dialog.class);
                         intent.putExtra("article_id", currentItem.getArticle_id());
+                        intent.putExtra("article_img", currentItem.getArticle_photo());
+                        intent.putExtra("article_text", currentItem.getArticle_text());
                         intent.putExtra("pos", position);
                         startActivity(intent);
 
