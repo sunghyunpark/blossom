@@ -360,6 +360,9 @@ public class FragmentPage1 extends Fragment {
                         VHitem.comment_seed_btn.setBackgroundResource(R.mipmap.seed_img);
                     }
                 }
+
+                VHitem.comment_like_cnt_txt.setText(currentItem.getLike_cnt());
+
                 VHitem.comment_seed_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -368,8 +371,8 @@ public class FragmentPage1 extends Fragment {
                         }else{
                             ChangeLikeState(false,position);
                             VHitem.comment_seed_btn.setBackgroundResource(R.mipmap.seed_click_img);
+                            commonUtil.CommentLike(getActivity(), currentItem.getComment_id(), currentItem.getUid(), User.getInstance().getUid());
                         }
-                        commonUtil.CommentLike(getActivity(), currentItem.getComment_id(), currentItem.getUid(), User.getInstance().getUid());
                     }
                 });
             }
@@ -381,6 +384,7 @@ public class FragmentPage1 extends Fragment {
             private TextView comment_txt;
             private TextView created_at_txt;
             private ImageView comment_seed_btn;
+            private TextView comment_like_cnt_txt;
 
             public ArticleComment_VHitem(View itemView){
                 super(itemView);
@@ -388,6 +392,7 @@ public class FragmentPage1 extends Fragment {
                 comment_txt = (TextView)itemView.findViewById(R.id.comment_txt);
                 created_at_txt = (TextView)itemView.findViewById(R.id.created_at_txt);
                 comment_seed_btn = (ImageView)itemView.findViewById(R.id.comment_seed_btn);
+                comment_like_cnt_txt = (TextView)itemView.findViewById(R.id.comment_like_cnt_txt);
 
             }
 
