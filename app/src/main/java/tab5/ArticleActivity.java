@@ -60,6 +60,7 @@ public class ArticleActivity extends Activity {
 
     private Article article = new Article();
     private String articleID;
+    private String articleUID;
     private ImageView background_img, article_comment_btn, article_like_btn, back_btn, save_btn, more_btn;
     private TextView article_text, created_at_txt, article_comment_txt, article_like_txt, top_title_txt;
 
@@ -174,6 +175,8 @@ public class ArticleActivity extends Activity {
                             }
                         }
                     });
+
+                    articleUID = articleDetailResponse.getArticle_detail().getUid();
 
                     article_text.setText(article.getArticle_text());
 
@@ -385,9 +388,8 @@ public class ArticleActivity extends Activity {
 
         private boolean IsMyArticle(int position){
             boolean flag = true;
-            String article_writer_uid = getItem(position).getUid();
 
-            if(article_writer_uid.equals(User.getInstance().getUid())){
+            if(articleUID.equals(getItem(position).getUid())){
                 //아티클 작성자가 나 인경우
                 flag = true;
             }else{

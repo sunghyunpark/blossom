@@ -395,9 +395,8 @@ public class FragmentPage1 extends Fragment {
 
         private boolean IsMyArticle(int position){
             boolean flag = true;
-            String article_writer_uid = getItem(position).getUid();
 
-            if(article_writer_uid.equals(User.getInstance().getUid())){
+            if(mCardAdapter.CurrentArticleUID().equals(getItem(position).getUid())){
                 //아티클 작성자가 나 인경우
                 flag = true;
             }else{

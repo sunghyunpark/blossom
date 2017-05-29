@@ -48,6 +48,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private String currentArticleID = "";
     private String currentArticlePHOTO = "";
     private String currentArticleTEXT = "";
+    private String currentArticleUID = "";
     CommonUtil commonUtil = new CommonUtil();
     private ArrayList<ArticleComment> comment_listItems;
     private ViewGroup comment_empty_layout;
@@ -154,6 +155,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     currentArticleID = getItem(position).getArticle_id();
                     currentArticlePHOTO = getItem(position).getArticle_photo();
                     currentArticleTEXT = getItem(position).getArticle_text();
+                    currentArticleUID = getItem(position).getUid();
                     LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
                 }
@@ -209,6 +211,9 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         return v;
     }
 
+    public String CurrentArticleUID(){
+        return currentArticleUID;
+    }
     public String CurrentArticleID(){
         return currentArticleID;
     }
