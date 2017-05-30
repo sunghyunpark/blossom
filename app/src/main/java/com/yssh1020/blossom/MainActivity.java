@@ -22,6 +22,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import api.ApiClient;
 import api.ApiInterface;
+import common.BackPressCloseHandler;
 import db.RealmConfig;
 import db.RealmUtil;
 import db.model.UserData;
@@ -47,6 +48,7 @@ public class MainActivity extends FragmentActivity {
 
     private SessionManager session;    // session
     private AppSettingManager appSettingManager;    //app setting
+    private BackPressCloseHandler backPressCloseHandler;
 
     ViewGroup tab1, tab2, tab3, tab4, tab5;    //하단 탭 버튼들
     ImageView tab1_img, tab2_img, tab3_img, tab4_img, tab5_img;
@@ -65,6 +67,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
         /**
          * 푸시로 진입했을 경우 분기처리
          */
@@ -372,7 +375,8 @@ public class MainActivity extends FragmentActivity {
             FragmentPage1.mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
             CommonTabMenu.getInstance().getBottom_menu().setVisibility(View.VISIBLE);
         }else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            backPressCloseHandler.onBackPressed();
         }
     }
 }

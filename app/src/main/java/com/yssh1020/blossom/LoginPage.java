@@ -21,6 +21,7 @@ import com.squareup.otto.Subscribe;
 
 import api.ApiClient;
 import api.ApiInterface;
+import common.BackPressCloseHandler;
 import common.CommonUtil;
 import db.RealmConfig;
 import db.RealmUtil;
@@ -40,6 +41,7 @@ public class LoginPage extends FragmentActivity {
 
     private SessionManager mSessionManager;
     private AppSettingManager appSettingManager;
+    private BackPressCloseHandler backPressCloseHandler;
 
     //Viewpager
     private ViewPager mViewPager;
@@ -59,9 +61,16 @@ public class LoginPage extends FragmentActivity {
         setContentView(R.layout.loginpage);
 
         BusProvider.getInstance().register(this);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         InitView();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 
     /**
