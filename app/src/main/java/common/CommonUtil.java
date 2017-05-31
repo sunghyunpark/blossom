@@ -12,6 +12,7 @@ import java.util.Date;
 import api.ApiClient;
 import api.ApiInterface;
 import model.CommonResponse;
+import model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,6 +22,38 @@ import retrofit2.Response;
  */
 
 public class CommonUtil {
+
+    /**
+     * edit background title
+     * @param context
+     * @param uid
+     * @param title
+     */
+    public void EditBackgroundTitle(final Context context, String uid, final String title){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<CommonResponse> call = apiService.EditBackgroundTitle("edit_background_title", uid, title);
+        call.enqueue(new Callback<CommonResponse>() {
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                CommonResponse commonResponse = response.body();
+                if(!commonResponse.isError()){
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                    User.getInstance().setBg_title(title);
+                }else{
+                    Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e("tag", t.toString());
+                Toast.makeText(context.getApplicationContext(), "네트워크 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     /**
      * push state 변졍

@@ -113,6 +113,10 @@
     <!--coach mark txt-->
     <string name="article_start_coach_mark_txt1">시작하기</string>
     <string name="article_start_coach_mark_txt2">화면을 넘기면\n다른 이야기가 보여요.</string>
+
+    <!--background title dialog txt-->
+    <string name="background_title_dialog_title_txt">문구 수정</string>
+    <string name="background_title_dialog_hint_txt">문구를 입력해주세요.</string>
 </resources>
 
 

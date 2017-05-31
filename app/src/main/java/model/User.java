@@ -19,6 +19,7 @@ public class User {
     private String app_push;
     private String comment_push;
     private String like_push;
+    private String bg_title;
 
 
     public static  User getInstance(){
@@ -119,5 +120,13 @@ public class User {
 
     public void setComment_push(String comment_push) {
         this.comment_push = comment_push;
+    }
+
+    public String getBg_title() {
+        return bg_title;
+    }
+
+    public void setBg_title(String bg_title) {
+        this.bg_title = bg_title;
     }
 }

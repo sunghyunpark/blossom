@@ -18,12 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
 import api.ApiClient;
 import api.ApiInterface;
 import db.RealmUtil;
+import dialog.Background_Title_Diaog;
+import event.BusProvider;
+import event.EditBackgroundTitleEvent;
 import model.MyPageResponse;
 import model.User;
 import retrofit2.Call;
@@ -49,6 +53,7 @@ public class FragmentPage5 extends Fragment {
     //상단 메뉴
     private ViewGroup story_underbar, comment_underbar, favorite_underbar;
     private Button story_btn, comment_btn, favorite_btn;
+    private TextView background_txt;
 
     RealmUtil realmUtil = new RealmUtil();
     View v;
@@ -56,6 +61,8 @@ public class FragmentPage5 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        BusProvider.getInstance().register(this);
 
     }
 
@@ -91,6 +98,8 @@ public class FragmentPage5 extends Fragment {
         story_btn = (Button)v.findViewById(R.id.my_story_btn);
         comment_btn = (Button)v.findViewById(R.id.my_comment_btn);
         favorite_btn = (Button)v.findViewById(R.id.my_favorite_btn);
+        background_txt = (TextView)v.findViewById(R.id.background_txt);
+        background_txt.setOnTouchListener(myOnTouchListener);
 
         ImageView setting_btn = (ImageView)v.findViewById(R.id.setting_btn);
         setting_btn.setOnTouchListener(myOnTouchListener);
@@ -293,6 +302,19 @@ public class FragmentPage5 extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        // Always unregister when an object no longer should be on the bus.
+        BusProvider.getInstance().unregister(this);
+        super.onDestroy();
+    }
+    @Subscribe
+    public void FinishLoad(EditBackgroundTitleEvent mPushEvent) {
+
+        background_txt.setText(mPushEvent.getTitle_str());
+
+    }
+
     private View.OnTouchListener myOnTouchListener = new View.OnTouchListener() {
 
         @Override
@@ -308,6 +330,10 @@ public class FragmentPage5 extends Fragment {
                     case R.id.setting_btn:
                         Intent intent = new Intent(getActivity(), Setting_Activity.class);
                         startActivity(intent);
+                        break;
+                    case R.id.background_txt:
+                        Intent intent_background_title = new Intent(getActivity(), Background_Title_Diaog.class);
+                        startActivity(intent_background_title);
                         break;
 
                 }

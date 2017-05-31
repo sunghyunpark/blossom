@@ -148,7 +148,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomHalfColorActivity" >
         </activity>
-
+        <activity
+            android:name="dialog.Background_Title_Diaog"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDialog" >
+        </activity>
 
     </application>
 

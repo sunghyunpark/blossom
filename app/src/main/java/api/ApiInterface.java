@@ -302,4 +302,16 @@ public interface ApiInterface {
     @GET("login/login.php")
     Call<UserResponse> LoginEmail(@Query("tag") String tag, @Query("email") String email,
                                   @Query("password") String password);
+
+    /**
+     * background title edit
+     * @param tag -> edit_background_title
+     * @param uid
+     * @param title
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("login/login.php")
+    Call<CommonResponse> EditBackgroundTitle(@Field("tag") String tag, @Field("uid") String uid,
+                                             @Field("title") String title);
 }
