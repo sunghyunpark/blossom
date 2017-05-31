@@ -68,7 +68,7 @@ public class Login_Email_Activity extends Activity {
                     String token = FirebaseInstanceId.getInstance().getToken();
                     //realm에 저장
                     realmUtil.InsertDB(getApplicationContext(), userResponse.getUser().getUid(), userResponse.getUser().getEmail(), userResponse.getUser().getProfile_img(), userResponse.getUser().getBirth(),
-                            userResponse.getUser().getGender(), token, userResponse.getUser().getCreated_at(), Integer.parseInt(userResponse.getUser().getSeed_cnt()));
+                            userResponse.getUser().getGender(), token, userResponse.getUser().getCreated_at(), Integer.parseInt(userResponse.getUser().getSeed_cnt()), userResponse.getUser().getBg_title());
                     //push token 등록
                     commonUtil.RegisterPushToken(getApplicationContext(), userResponse.getUser().getUid(), token, "Y");
 

@@ -204,7 +204,7 @@ public class MainActivity extends FragmentActivity {
                 if(!userdata.isError()){
                     //Toast.makeText(getApplicationContext(), userdata.getError_msg(),Toast.LENGTH_SHORT).show();
                     realmUtil.InsertDB(getApplicationContext(), userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
-                            userdata.getUser().getGender(), user.getToken(), userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
+                            userdata.getUser().getGender(), user.getToken(), userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()), userdata.getUser().getBg_title());
 
                     //Log.d("UserInfo", "AppPush : "+userdata.getUser().getApp_push());
                     //Log.d("UserInfo", "CommentPush : "+userdata.getUser().getComment_push());

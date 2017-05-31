@@ -14,7 +14,7 @@ import model.User;
 public class RealmUtil {
 
     public void InsertDB(Context context, String uid, String email, String profile_img, String birth, String gender,
-                         String token, String created_at, int seed_cnt){
+                         String token, String created_at, int seed_cnt, String bg_title){
 
         Realm mRealm;
         RealmConfig realmConfig;
@@ -32,6 +32,7 @@ public class RealmUtil {
         userData.setToken(token);
         userData.setCreated_at(created_at);
         userData.setSeed_cnt(seed_cnt);
+        userData.setBg_title(bg_title);
         mRealm.copyToRealmOrUpdate(userData);
         mRealm.commitTransaction();
 
@@ -55,6 +56,7 @@ public class RealmUtil {
         User.getInstance().setToken(user.getToken());
         User.getInstance().setCreated_at(user.getCreated_at());
         User.getInstance().setSeed_cnt(String.valueOf(user.getSeed_cnt()));
+        User.getInstance().setBg_title(user.getBg_title());
 
         Log.d("UserInfo", "UserUid : "+user.getUid()+"");
         Log.d("UserInfo", "UserEmail : "+user.getEmail());
@@ -64,6 +66,7 @@ public class RealmUtil {
         Log.d("UserInfo", "Profile_img : "+user.getProfile_img());
         Log.d("UserInfo", "Push_Token : "+user.getToken());
         Log.d("UserInfo", "Seed_Cnt : "+user.getSeed_cnt());
+        Log.d("UserInfo", "Bg_Title : "+user.getBg_title());
 
     }
 

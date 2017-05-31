@@ -10,6 +10,16 @@ import io.realm.RealmSchema;
 
 public class Migration implements RealmMigration {
 
+    public int hashCode() {
+        return Migration.class.hashCode();
+    }
+
+    public boolean equals(Object object) {
+        if(object == null) {
+            return false;
+        }
+        return object instanceof Migration;
+    }
     @Override
     public void migrate(final DynamicRealm realm, long oldVersion, long newVersion) {
         // During a migration, a DynamicRealm is exposed. A DynamicRealm is an untyped variant of a normal Realm, but
@@ -35,12 +45,14 @@ public class Migration implements RealmMigration {
          int age;
          ************************************************/
         // Migrate from version 0 to version 1
-        if (oldVersion == 1) {
+        if (oldVersion == 0) {
             RealmObjectSchema personSchema = schema.get("UserData");
 
             // Combine 'firstName' and 'lastName' in a new field called 'fullName'
             try {
-                personSchema.addField("userPhone", String.class, FieldAttribute.REQUIRED);
+                if(!personSchema.hasField("bg_title")){
+                    personSchema.addField("bg_title", String.class, FieldAttribute.REQUIRED);
+                }
             }catch (IllegalArgumentException e){
                 Log.e("Realm_Error", e.getMessage());
             }

@@ -205,7 +205,7 @@ public class LoginPage extends FragmentActivity {
                     String token = FirebaseInstanceId.getInstance().getToken();
                     //realm에 저장
                     realmUtil.InsertDB(getApplicationContext(), userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
-                            userdata.getUser().getGender(), token, userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()));
+                            userdata.getUser().getGender(), token, userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()), userdata.getUser().getBg_title());
                     //push token 등록
                     commonUtil.RegisterPushToken(getApplicationContext(), userdata.getUser().getUid(), token, "Y");
 

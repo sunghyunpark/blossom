@@ -25,6 +25,8 @@ public class UserData extends RealmObject{
     @Required
     private String created_at;
     private int seed_cnt;
+    @Required
+    private String bg_title;
 
     public int getNo() {
         return no;
@@ -97,5 +99,13 @@ public class UserData extends RealmObject{
 
     public void setSeed_cnt(int seed_cnt) {
         this.seed_cnt = seed_cnt;
+    }
+
+    public String getBg_title() {
+        return bg_title;
+    }
+
+    public void setBg_title(String bg_title) {
+        this.bg_title = bg_title;
     }
 }
