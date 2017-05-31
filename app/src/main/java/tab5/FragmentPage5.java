@@ -87,6 +87,7 @@ public class FragmentPage5 extends Fragment {
 
     private void InitView(){
 
+        Resources res = getResources();
         collapsingToolbarLayout = (CollapsingToolbarLayout) v.findViewById(R.id.collapsing_toolbar);
         //collapsingToolbarLayout.setTitle("사진");
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.BLACK);
@@ -99,6 +100,11 @@ public class FragmentPage5 extends Fragment {
         comment_btn = (Button)v.findViewById(R.id.my_comment_btn);
         favorite_btn = (Button)v.findViewById(R.id.my_favorite_btn);
         background_txt = (TextView)v.findViewById(R.id.background_txt);
+        if(User.getInstance().getBg_title().equals("") || User.getInstance().getBg_title() == null){
+            background_txt.setText(String.format(res.getString(R.string.tab5_background_title_txt)));
+        }else{
+            background_txt.setText(User.getInstance().getBg_title());
+        }
         background_txt.setOnTouchListener(myOnTouchListener);
 
         ImageView setting_btn = (ImageView)v.findViewById(R.id.setting_btn);
@@ -333,6 +339,7 @@ public class FragmentPage5 extends Fragment {
                         break;
                     case R.id.background_txt:
                         Intent intent_background_title = new Intent(getActivity(), Background_Title_Diaog.class);
+                        intent_background_title.putExtra("title_str", background_txt.getText().toString());
                         startActivity(intent_background_title);
                         break;
 

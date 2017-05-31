@@ -11,6 +11,7 @@ import java.util.Date;
 
 import api.ApiClient;
 import api.ApiInterface;
+import db.RealmUtil;
 import model.CommonResponse;
 import model.User;
 import retrofit2.Call;
@@ -29,7 +30,7 @@ public class CommonUtil {
      * @param uid
      * @param title
      */
-    public void EditBackgroundTitle(final Context context, String uid, final String title){
+    public void EditBackgroundTitle(final Context context, final String uid, final String title){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
@@ -41,6 +42,8 @@ public class CommonUtil {
                 if(!commonResponse.isError()){
                     Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                     User.getInstance().setBg_title(title);
+                    RealmUtil realmUtil = new RealmUtil();
+                    realmUtil.UpdateBackgroundTitle(context, uid, title);
                 }else{
                     Toast.makeText(context, commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }

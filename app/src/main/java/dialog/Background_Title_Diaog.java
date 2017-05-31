@@ -32,12 +32,16 @@ public class Background_Title_Diaog extends Activity implements TextWatcher {
     private EditText background_title_edit_box;
     private TextView title_cnt_txt;
     private String beforeStr = "";
+    private String title_str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);//위의 타이틀바 제거인데 setContentView 전에 넣어줘야함 뷰가 생성되기전에 제거되어야하므로...
         setContentView(R.layout.background_title_dialog);
+
+        Intent intent = getIntent();
+        title_str = intent.getExtras().getString("title_str");
 
         InitView();
 
@@ -47,6 +51,7 @@ public class Background_Title_Diaog extends Activity implements TextWatcher {
         background_title_edit_box = (EditText)findViewById(R.id.background_title_edit_box);
         title_cnt_txt = (TextView)findViewById(R.id.title_cnt_txt);
         background_title_edit_box.addTextChangedListener(this);
+        background_title_edit_box.setText(title_str);
     }
 
     @Override

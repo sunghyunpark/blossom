@@ -1,7 +1,10 @@
 package db;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
+
+import com.yssh1020.blossom.R;
 
 import db.model.UserData;
 import io.realm.Realm;
@@ -87,4 +90,24 @@ public class RealmUtil {
             RefreshUserInfo(context, uid);
         }
     }
+
+    public void UpdateBackgroundTitle(Context context, String uid, final String title){
+        Realm mRealm;
+        RealmConfig realmConfig;
+        realmConfig = new RealmConfig();
+
+        mRealm = Realm.getInstance(realmConfig.User_DefaultRealmVersion(context));
+        UserData user_db = mRealm.where(UserData.class).equalTo("no",1).findFirst();
+        try{
+            mRealm.beginTransaction();
+            user_db.setBg_title(title);
+        }catch (Exception e){
+
+        }finally {
+            mRealm.commitTransaction();
+            RefreshUserInfo(context, uid);
+        }
+    }
+
+
 }
