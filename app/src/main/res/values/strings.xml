@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blossom</string>
+    <string name="app_name">BLOSSOM</string>
     <string name="facebook_app_id">1696863397282167</string>
     <!--로그인 인트로 화면-->
     <string name="intro1_sub_txt">자신만의 솔직한 이야기를 \n나눠보세요.</string>
