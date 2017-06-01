@@ -7,6 +7,7 @@ package model;
 public class UserResponse {
 
     private User user;
+    private int article_bg_cnt;
     private boolean error;
     private String error_msg;
 
@@ -32,6 +33,14 @@ public class UserResponse {
 
     public void setError(boolean error) {
         this.error = error;
+    }
+
+    public int getArticle_bg_cnt() {
+        return article_bg_cnt;
+    }
+
+    public void setArticle_bg_cnt(int article_bg_cnt) {
+        this.article_bg_cnt = article_bg_cnt;
     }
 
 

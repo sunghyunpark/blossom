@@ -206,6 +206,7 @@ public class MainActivity extends FragmentActivity {
                     realmUtil.InsertDB(getApplicationContext(), userdata.getUser().getUid(), userdata.getUser().getEmail(), userdata.getUser().getProfile_img(), userdata.getUser().getBirth(),
                             userdata.getUser().getGender(), user.getToken(), userdata.getUser().getCreated_at(), Integer.parseInt(userdata.getUser().getSeed_cnt()), userdata.getUser().getBg_title());
 
+                    AppController.getInstance().setArticle_Bg_Cnt(userdata.getArticle_bg_cnt());
                     //Log.d("UserInfo", "AppPush : "+userdata.getUser().getApp_push());
                     //Log.d("UserInfo", "CommentPush : "+userdata.getUser().getComment_push());
                     //Log.d("UserInfo", "LikePush : "+userdata.getUser().getLike_push());
