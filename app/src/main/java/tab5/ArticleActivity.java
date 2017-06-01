@@ -260,14 +260,7 @@ public class ArticleActivity extends Activity {
 
                     article_comment_txt.setText(article.getComment_cnt());
 
-                    Date to = null;
-                    try{
-                        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        to = transFormat.parse(article.getCreated_at());
-                    }catch (ParseException p){
-                        p.printStackTrace();
-                    }
-                    created_at_txt.setText(commonUtil.formatTimeString(to));
+                    created_at_txt.setText(commonUtil.formatTimeAMPM(article.getCreated_at()));
                 }else{
                     //Toast.makeText(getApplicationContext().getApplicationContext(), articleDetailResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }

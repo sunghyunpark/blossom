@@ -17,10 +17,12 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.R;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import api.ApiClient;
 import api.ApiInterface;
@@ -197,14 +199,8 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
 
             //작성 날짜
             TextView created_at_txt = (TextView)(v.findViewById(R.id.created_at_txt));
-            Date to = null;
-            try{
-                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                to = transFormat.parse(getItem(position).getCreated_at());
-            }catch (ParseException p){
-                p.printStackTrace();
-            }
-            created_at_txt.setText(commonUtil.formatTimeString(to));
+
+            created_at_txt.setText(commonUtil.formatTimeAMPM(getItem(position).getCreated_at()));
 
         }
 

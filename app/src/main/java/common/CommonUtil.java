@@ -1,6 +1,7 @@
 package common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -412,6 +413,34 @@ public class CommonUtil {
         int randomNum = (int)(Math.random() * 7)+1;
         String ImgName = "user_profile_img"+randomNum;
         return ImgName;
+    }
+
+    public String formatTimeAMPM(String date){
+        String format_str;
+        int hour;
+        int min;
+        String min_str;
+        String ampm;
+
+        hour = Integer.parseInt(date.substring(11,13));
+        min = Integer.parseInt(date.substring(14,16));
+        min_str = min+"";
+        if(hour >= 12){
+            ampm = "PM";
+            if(hour > 12){
+                hour -= 12;
+            }
+        }else{
+            ampm = "AM";
+        }
+        if(min < 10){
+            min_str = "0"+min;
+        }
+        format_str = hour+":"+min_str+" "+ampm;
+
+
+
+        return format_str;
     }
     /**
      * Date타입의 시간을 변환해줌
