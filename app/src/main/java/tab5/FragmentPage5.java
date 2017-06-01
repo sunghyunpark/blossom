@@ -100,10 +100,10 @@ public class FragmentPage5 extends Fragment {
         comment_btn = (Button)v.findViewById(R.id.my_comment_btn);
         favorite_btn = (Button)v.findViewById(R.id.my_favorite_btn);
         background_txt = (TextView)v.findViewById(R.id.background_txt);
-        if(User.getInstance().getBg_title().equals("") || User.getInstance().getBg_title() == null){
-            background_txt.setText(String.format(res.getString(R.string.tab5_background_title_txt)));
-        }else{
+        if((User.getInstance().getBg_title() != null) && (!User.getInstance().getBg_title().equals(""))){
             background_txt.setText(User.getInstance().getBg_title());
+        }else{
+            background_txt.setText(String.format(res.getString(R.string.tab5_background_title_txt)));
         }
         background_txt.setOnTouchListener(myOnTouchListener);
 
