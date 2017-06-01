@@ -1,6 +1,8 @@
 package db.model;
 
 
+import android.support.annotation.Nullable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -25,7 +27,7 @@ public class UserData extends RealmObject{
     @Required
     private String created_at;
     private int seed_cnt;
-    @Required
+    @Nullable
     private String bg_title;
 
     public int getNo() {

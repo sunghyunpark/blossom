@@ -12,7 +12,7 @@ public class RealmConfig{
         Realm.init(context);    //realm 초기화
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("User.realm")
-                .schemaVersion(0)
+                .schemaVersion(1)
                 //.deleteRealmIfMigrationNeeded()
                 .migration(new Migration())
                 .build();

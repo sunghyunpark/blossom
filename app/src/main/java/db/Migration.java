@@ -57,6 +57,16 @@ public class Migration implements RealmMigration {
                 Log.e("Realm_Error", e.getMessage());
             }
             oldVersion++;
+        }else if(oldVersion == 1){
+            RealmObjectSchema personSchema = schema.get("UserData");
+
+            // Combine 'firstName' and 'lastName' in a new field called 'fullName'
+            try {
+                personSchema.setNullable("bg_title", true);
+            }catch (IllegalArgumentException e){
+                Log.e("Realm_Error", e.getMessage());
+            }
+            oldVersion++;
         }
     }
 }
