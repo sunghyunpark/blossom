@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.R;
 
 import java.text.ParseException;
@@ -93,6 +94,8 @@ public class FragmentPage4 extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void InitView(){
+        AppController.getInstance().setApp_Badge_Cnt(0);
+        commonUtil.AppBadgeInit(getActivity(), AppController.getInstance().getApp_Badge_Cnt());
         listItems = new ArrayList<Alarm>();
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
         linearLayoutManager = new LinearLayoutManager(getContext());

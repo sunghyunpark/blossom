@@ -9,6 +9,7 @@ public class AppController {
     private String server_base_ip;    // 서버 베이스 주소
     private String server_img_path;    // 서버 이미지 경로
     private int Article_Bg_Cnt;    //백그라운드 이미지 갯수
+    private int App_Badge_Cnt;    //앱 뱃지
 
     public static  AppController getInstance(){
         if(appController == null)
@@ -60,5 +61,14 @@ public class AppController {
     public void setArticle_Bg_Cnt(int article_Bg_Cnt) {
         Article_Bg_Cnt = article_Bg_Cnt;
     }
+
+    public int getApp_Badge_Cnt() {
+        return App_Badge_Cnt;
+    }
+
+    public void setApp_Badge_Cnt(int app_Badge_Cnt) {
+        App_Badge_Cnt = app_Badge_Cnt;
+    }
+
 
 }

@@ -13,11 +13,13 @@ import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.AppSettingManager;
 import com.yssh1020.blossom.MainActivity;
 import com.yssh1020.blossom.R;
 import com.yssh1020.blossom.SessionManager;
 
+import common.CommonUtil;
 import tab5.ArticleActivity;
 
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
@@ -53,6 +55,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             PostSeedToArticleUserPushNotification(remoteMessage.getData().get("message"));
             appSettingManager.setTab5_State(true);
         }
+        CommonUtil commonUtil = new CommonUtil();
+        int badge = AppController.getInstance().getApp_Badge_Cnt();
+        badge++;
+        AppController.getInstance().setApp_Badge_Cnt(badge);
+        commonUtil.AppBadgeInit(getApplicationContext(), AppController.getInstance().getApp_Badge_Cnt());
 
     }
 

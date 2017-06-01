@@ -415,6 +415,17 @@ public class CommonUtil {
         return ImgName;
     }
 
+    public void AppBadgeInit(Context context, int badgeCount){
+        Intent intent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
+        intent.putExtra("badge_count", badgeCount);
+        //앱의  패키지 명
+        intent.putExtra("badge_count_package_name","com.yssh1020.blossom");
+        // AndroidManifest.xml에 정의된 메인 activity 명
+        intent.putExtra("badge_count_class_name", "com.yssh1020.blossom.MainActivity");
+        context.sendBroadcast(intent);
+
+    }
+
     public String formatTimeAMPM(String date){
         String format_str;
         int hour;
