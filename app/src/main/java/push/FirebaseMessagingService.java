@@ -54,6 +54,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             //아티클을 통해 씨앗을 선물받았을 때
             PostSeedToArticleUserPushNotification(remoteMessage.getData().get("message"));
             appSettingManager.setTab5_State(true);
+        }else if(remoteMessage.getData().get("flag").equals("blossom_push")){
+            PostSeedToArticleUserPushNotification(remoteMessage.getData().get("message"));
         }
         CommonUtil commonUtil = new CommonUtil();
         int badge = AppController.getInstance().getApp_Badge_Cnt();
