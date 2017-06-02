@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,13 @@ public class Background_Title_Diaog extends Activity implements TextWatcher {
         title_cnt_txt = (TextView)findViewById(R.id.title_cnt_txt);
         background_title_edit_box.addTextChangedListener(this);
         background_title_edit_box.setText(title_str);
+        ImageView close_btn = (ImageView)findViewById(R.id.close_btn);
+        close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
