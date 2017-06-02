@@ -8,7 +8,9 @@ import android.widget.Toast;
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.AppSettingManager;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import api.ApiClient;
 import api.ApiInterface;
@@ -424,6 +426,21 @@ public class CommonUtil {
         intent.putExtra("badge_count_class_name", "com.yssh1020.blossom.MainActivity");
         context.sendBroadcast(intent);
 
+    }
+
+    //이미지 업로드 시 파일명
+    public String MakeImageName(String uid){
+        String imageName = "";
+        String timeStamp = "";
+        String random_str = "";
+        Random random = new Random();
+
+        for(int i=0;i<4;i++){
+            random_str += String.valueOf(random.nextInt(10));
+        }
+        timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        imageName = timeStamp+random_str+uid+".jpg";
+        return imageName;
     }
 
     public String formatTimeAMPM(String date){

@@ -3,12 +3,22 @@ package event;
 public class SelectArticleBGEvent
 {
 
+    private String flag;
     private String imgPath;
     private int pos;
 
-    public SelectArticleBGEvent(String imgPath, int pos){
+    public SelectArticleBGEvent(String flag, String imgPath, int pos){
+        this.flag = flag;
         this.imgPath = imgPath;
         this.pos = pos;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     public String getImgPath() {

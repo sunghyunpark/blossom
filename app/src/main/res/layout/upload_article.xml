@@ -16,21 +16,58 @@
         android:layout_height="match_parent"
         android:background="@color/colorHalfBlack"></LinearLayout>
 
-    <EditText
-        android:id="@+id/article_text_edit_box"
+    <RelativeLayout
+        android:id="@+id/only_user_article_bg_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:hint="@string/article_edit_box_hint"
-        android:textColorHint="@color/colorWhite"
-        android:textColor="@color/colorWhite"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="100dp"
-        android:textSize="20dp"/>
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/user_article_bg_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"/>
+
+        <EditText
+            android:id="@+id/article_text_edit_box2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/user_article_bg_img"
+            android:background="@null"
+            android:hint="@string/article_edit_box_hint"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:paddingRight="20dp"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="20dp"
+            android:textSize="20dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/only_article_bg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/article_text_edit_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/article_edit_box_hint"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="100dp"
+            android:textSize="20dp"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/title_bar_layout"
@@ -55,9 +92,17 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/select_user_bg_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/camera_btn_img"
+                android:layout_marginRight="10dp"/>
+
+            <ImageView
                 android:id="@+id/select_bg_btn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
                 android:src="@mipmap/select_bg_btn" />
         </LinearLayout>
 
