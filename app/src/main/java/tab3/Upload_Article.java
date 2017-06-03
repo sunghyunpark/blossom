@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -37,10 +38,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import common.Share_Activity;
 import event.BusProvider;
 import event.SelectArticleBGEvent;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -148,6 +152,7 @@ public class Upload_Article extends Activity implements TextWatcher {
 
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
+                    Toast.makeText(getApplicationContext(), "이야기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }else{
                     //Toast.makeText(getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
@@ -172,7 +177,8 @@ public class Upload_Article extends Activity implements TextWatcher {
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        File file = new File(img_path);
+        final File file = new File(img_path);
+        final File file2 = new File(Environment.getExternalStorageDirectory()+"/Blossom/"+"resize_before.png");
 
         final RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         RequestBody Tag_body = RequestBody.create(MediaType.parse("multipart/form-data"), tag);
@@ -187,16 +193,22 @@ public class Upload_Article extends Activity implements TextWatcher {
                 if (response.isSuccessful()) {
 
                     if(!response.body().isError()){
-                        Toast.makeText(getApplicationContext(), "ImageUploader ok", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "이야기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
                         String img_path = AppController.getInstance().getServer_img_path()+"user_article_bg/"+img_name;
                         Upload_Article(User.getInstance().getUid(), article_text, img_path);
+                        if(file.exists()){
+                            file.delete();
+                        }
+                        if(file2.exists()){
+                            file2.delete();
+                        }
 
                     }else{
-                        Toast.makeText(getApplicationContext(), response.body().getError_msg(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), response.body().getError_msg(), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "response_fail", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "response_fail", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -377,6 +389,39 @@ public class Upload_Article extends Activity implements TextWatcher {
 
     }
 
+    private class ResizeBitmapTask extends AsyncTask<String, String, String> {
+
+        Bitmap bit;
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... mes){
+            String path = mes[0];
+            String article_text = mes[1];
+
+            BitmapFactory.Options bfo = new BitmapFactory.Options();
+            bfo.inSampleSize = 1;
+            bit = BitmapFactory.decodeFile(path, bfo);
+            String img_path = getBitmapUploadImg_Path(bit);
+            Upload_ArticleImage("article", commonUtil.MakeImageName(User.getInstance().getUid()), img_path, article_text);
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+        @Override
+        protected void onPostExecute(String res){
+            bit.recycle();
+
+        }
+
+    }
+
     /**
      * os 6.0 권한
      * @param requestCode
@@ -432,12 +477,11 @@ public class Upload_Article extends Activity implements TextWatcher {
                             if(article_text_str.equals("") || article_text_str == null){
                                 Toast.makeText(getApplicationContext(),String.format(res.getString(R.string.no_exist_text)),Toast.LENGTH_SHORT).show();
                             }else{
-                                BitmapFactory.Options bfo = new BitmapFactory.Options();
-                                bfo.inSampleSize = 1;
-                                Bitmap bit = BitmapFactory.decodeFile(imgPath, bfo);
-                                String img_path = getBitmapUploadImg_Path(bit);
-                                Upload_ArticleImage("article", commonUtil.MakeImageName(User.getInstance().getUid()), img_path, article_text_str);
-                                bit.recycle();
+
+                                ResizeBitmapTask resizeBitmapTask = new ResizeBitmapTask();
+                                resizeBitmapTask.execute(imgPath, article_text_str);
+
+                                //bit.recycle();
                                 finish();
                             }
                         }
