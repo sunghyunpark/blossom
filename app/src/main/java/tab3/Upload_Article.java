@@ -51,9 +51,8 @@ public class Upload_Article extends Activity implements TextWatcher {
     private static final int REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE = 10;
     private ImageView bg_img;    //백그라운드 배경
     private EditText article_edit_box, article_edit_box2;
-    private Button save_btn;
     private ViewGroup only_article_bg_layout, only_user_article_bg_layout;
-    private ImageView back_btn, select_bg_btn, select_user_bg_btn, user_article_bg;
+    private ImageView user_article_bg;
     private TextView article_length_txt;
     private String imgPath;
     private String flag = "article_bg";
@@ -78,10 +77,10 @@ public class Upload_Article extends Activity implements TextWatcher {
         bg_img = (ImageView)findViewById(R.id.background_img);
         article_edit_box = (EditText)findViewById(R.id.article_text_edit_box);
         article_edit_box2 = (EditText)findViewById(R.id.article_text_edit_box2);
-        save_btn = (Button)findViewById(R.id.save_btb);
-        back_btn = (ImageView)findViewById(R.id.back_btn);
-        select_bg_btn = (ImageView)findViewById(R.id.select_bg_btn);
-        select_user_bg_btn = (ImageView)findViewById(R.id.select_user_bg_btn);
+        Button save_btn = (Button)findViewById(R.id.save_btb);
+        ImageView back_btn = (ImageView)findViewById(R.id.back_btn);
+        ImageView select_bg_btn = (ImageView)findViewById(R.id.select_bg_btn);
+        ImageView select_user_bg_btn = (ImageView)findViewById(R.id.select_user_bg_btn);
         user_article_bg = (ImageView)findViewById(R.id.user_article_bg_img);
         article_length_txt = (TextView)findViewById(R.id.article_length_txt);
         save_btn.setOnTouchListener(myOnTouchListener);
@@ -125,7 +124,13 @@ public class Upload_Article extends Activity implements TextWatcher {
     private void Upload_Article(String uid, String article_text, String article_photo){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<CommonResponse> call = apiService.PostArticle("upload",uid,article_text,article_photo);
+        String user_article_photo;
+        if(flag.equals("article_bg")){
+            user_article_photo = "N";
+        }else{
+            user_article_photo = "Y";
+        }
+        Call<CommonResponse> call = apiService.PostArticle("upload",uid,article_text,article_photo, user_article_photo);
         call.enqueue(new Callback<CommonResponse>() {
             @Override
             public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
@@ -155,7 +160,9 @@ public class Upload_Article extends Activity implements TextWatcher {
     @Subscribe
     public void FinishLoad(SelectArticleBGEvent mPushEvent) {
         flag = mPushEvent.getFlag();
+
         if(flag.equals("article_bg")){
+            //디폴트
             article_length_txt.setText("0/350");
             only_article_bg_layout.setVisibility(View.VISIBLE);
             only_user_article_bg_layout.setVisibility(View.GONE);
@@ -163,6 +170,7 @@ public class Upload_Article extends Activity implements TextWatcher {
             select_pos = mPushEvent.getPos();
             LoadBackground(flag, imgPath);
         }else{
+            //사용자 커스텀 사진
             article_length_txt.setText("0/100");
             only_article_bg_layout.setVisibility(View.GONE);
             only_user_article_bg_layout.setVisibility(View.VISIBLE);

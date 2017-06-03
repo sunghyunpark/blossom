@@ -8,11 +8,15 @@ import model.CommonResponse;
 import model.FamousArticleResponse;
 import model.MyPageResponse;
 import model.UserResponse;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -54,7 +58,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("upload/upload.php")
     Call<CommonResponse> PostArticle(@Field("tag") String tag, @Field("uid") String uid,
-                                     @Field("article_text") String article_text, @Field("article_photo") String article_photo);
+                                     @Field("article_text") String article_text, @Field("article_photo") String article_photo,
+                                     @Field("user_article_photo") String user_article_photo);
 
     /**
      * article
@@ -314,4 +319,12 @@ public interface ApiInterface {
     @POST("login/login.php")
     Call<CommonResponse> EditBackgroundTitle(@Field("tag") String tag, @Field("uid") String uid,
                                              @Field("title") String title);
+
+
+    //게시글 이미지 업로드
+    @Multipart
+    @POST("upload/upload_img.php")
+    Call<CommonResponse> Upload_Article_Image(@Part("tag") RequestBody tag,
+                                              @Part MultipartBody.Part file);
+
 }
