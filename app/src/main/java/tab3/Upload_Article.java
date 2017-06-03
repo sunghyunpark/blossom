@@ -97,6 +97,7 @@ public class Upload_Article extends Activity implements TextWatcher {
         back_btn.setOnTouchListener(myOnTouchListener);
         select_bg_btn.setOnTouchListener(myOnTouchListener);
         article_edit_box.addTextChangedListener(this);
+        article_edit_box2.addTextChangedListener(this);
         select_user_bg_btn.setOnTouchListener(myOnTouchListener);
 
         //키보드 자동 노출
@@ -347,13 +348,23 @@ public class Upload_Article extends Activity implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(s.length() >= 350)
-        {
-            Toast.makeText(getApplicationContext(), "350자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
-            article_edit_box.setText(beforeStr);
+        if(flag.equals("article_bg")){
+            if(s.length() >= 350)
+            {
+                Toast.makeText(getApplicationContext(), "350자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                article_edit_box.setText(beforeStr);
+            }
+            article_length_txt.setText(s.length() + "/350자");
+            article_length_txt.setTextColor(getResources().getColor(R.color.colorSky));
+        }else{
+            if(s.length() >= 100)
+            {
+                Toast.makeText(getApplicationContext(), "100자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                article_edit_box.setText(beforeStr);
+            }
+            article_length_txt.setText(s.length() + "/100자");
+            article_length_txt.setTextColor(getResources().getColor(R.color.colorSky));
         }
-        article_length_txt.setText(s.length() + "/350자");
-        article_length_txt.setTextColor(getResources().getColor(R.color.colorSky));
     }
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count,

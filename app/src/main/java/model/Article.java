@@ -11,6 +11,7 @@ public class Article {
     private String uid;
     private String article_text;
     private String article_photo;
+    private String user_article_photo;
     private String like_cnt;
     private String like_state;
     private String comment_cnt;
@@ -49,6 +50,15 @@ public class Article {
     public void setArticle_photo(String article_photo) {
         this.article_photo = article_photo;
     }
+
+    public String getUser_article_photo() {
+        return user_article_photo;
+    }
+
+    public void setUser_article_photo(String user_article_photo) {
+        this.user_article_photo = user_article_photo;
+    }
+
 
     public String getLike_cnt() {
         return like_cnt;

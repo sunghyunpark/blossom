@@ -30,6 +30,13 @@
             android:visibility="gone"
             android:src="@mipmap/more_btn_img_white"/>
 
+        <ImageView
+            android:id="@+id/user_article_bg_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_marginTop="100dp"/>
         <TextView
             android:id="@+id/article_text"
             android:layout_width="match_parent"

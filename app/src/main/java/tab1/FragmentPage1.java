@@ -204,6 +204,7 @@ public class FragmentPage1 extends Fragment {
                         article.setUid(articleResponse.getArticle().get(i).getUid());
                         article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
                         article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
+                        article.setUser_article_photo(articleResponse.getArticle().get(i).getUser_article_photo());
                         article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
                         article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
                         article.setBookmark_state(articleResponse.getArticle().get(i).getBookmark_state());
@@ -264,6 +265,7 @@ public class FragmentPage1 extends Fragment {
                         article.setUid(articleResponse.getArticle().get(i).getUid());
                         article.setArticle_text(articleResponse.getArticle().get(i).getArticle_text());
                         article.setArticle_photo(articleResponse.getArticle().get(i).getArticle_photo());
+                        article.setUser_article_photo(articleResponse.getArticle().get(i).getUser_article_photo());
                         article.setLike_cnt(articleResponse.getArticle().get(i).getLike_cnt());
                         article.setLike_state(articleResponse.getArticle().get(i).getLike_state());
                         article.setBookmark_state(articleResponse.getArticle().get(i).getBookmark_state());

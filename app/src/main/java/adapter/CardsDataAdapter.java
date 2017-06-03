@@ -4,19 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
 import com.yssh1020.blossom.R;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +34,8 @@ import common.CommonUtil;
 import common.Share_Activity;
 import dialog.Me_ArticleMoreDialog;
 import dialog.Other_ArticleMoreDialog;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
@@ -85,10 +91,34 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             //아티클 사진
 
             final ImageView article_picture = (ImageView)(v.findViewById(R.id.background_img));
-            Picasso.with(getContext())
-                    .load(getItem(position).getArticle_photo())
-                    //.transform(PicassoTransformations.resizeTransformation)
-                    .into(article_picture);
+
+            if(IsUserArticleBg(position)){
+                ImageView user_article_bg = (ImageView)(v.findViewById(R.id.user_article_bg_img));
+                user_article_bg.setVisibility(View.VISIBLE);
+                int dp = dpToPx(getContext(), 190);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp);
+                params.setMargins(0,dpToPx(getContext(),250),0,0);
+                article_text.setLayoutParams(params);
+
+                Glide.clear(article_picture);
+                Glide.with(getContext())
+                        .load(getItem(position).getArticle_photo())
+                        .bitmapTransform(new BlurTransformation(getContext(), 50))
+                        .into(article_picture);
+
+                Glide.clear(user_article_bg);
+                Glide.with(getContext())
+                        .load(getItem(position).getArticle_photo())
+                        .bitmapTransform(new CropCircleTransformation(getContext()))
+                        .into(user_article_bg);
+
+
+            }else{
+                Picasso.with(getContext())
+                        .load(getItem(position).getArticle_photo())
+                        //.transform(PicassoTransformations.resizeTransformation)
+                        .into(article_picture);
+            }
 
             final ImageView bookmark_btn = (ImageView)(v.findViewById(R.id.bookmark_btn));
             if(CurrentBookMarkState(position)){
@@ -220,6 +250,18 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
         return currentArticleTEXT;
     }
 
+    private int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
+
+    private int pxToDp(Context context, int px) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int dp = Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return dp;
+    }
+
     /**
      * 현재 아티클이 내가 작성한 아티클인지 판별
      * @param position
@@ -234,6 +276,18 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             flag = true;
         }else{
             flag = false;
+        }
+        return flag;
+    }
+
+    private boolean IsUserArticleBg(int position){
+        boolean flag = false;
+        String user_article_bg = getItem(position).getUser_article_photo();
+
+        if(user_article_bg.equals("N")){
+            flag = false;
+        }else{
+            flag = true;
         }
         return flag;
     }
