@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -259,10 +260,22 @@ public class Upload_Article extends Activity implements TextWatcher {
     /**
      * 비트맵을 로컬에 저장
      */
-    private String getBitmapUploadImg_Path(Bitmap mCurrentImg_bitmap){
+    private String getBitmapUploadImg_Path(String imagePath){
 
-        Bitmap resize_before;
-        resize_before = Bitmap.createScaledBitmap(mCurrentImg_bitmap, mCurrentImg_bitmap.getWidth(), mCurrentImg_bitmap.getHeight(), false);
+        //Bitmap resize_before;
+        //resize_before = Bitmap.createScaledBitmap(mCurrentImg_bitmap, mCurrentImg_bitmap.getWidth(), mCurrentImg_bitmap.getHeight(), false);
+
+        Bitmap image = BitmapFactory.decodeFile(imagePath);
+        // 이미지를 상황에 맞게 회전시킨다
+        try{
+            ExifInterface exif = new ExifInterface(imagePath);
+            int exifOrientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int exifDegree = commonUtil.exifOrientationToDegrees(exifOrientation);
+            image = commonUtil.rotate(image, exifDegree);
+        }catch (Exception e){
+
+        }
 
         /**
          * 일단 resize_before비트맵을 로컬에 저장한다
@@ -279,7 +292,7 @@ public class Upload_Article extends Activity implements TextWatcher {
 
         try{
             outStream = new FileOutputStream(file);
-            resize_before.compress(Bitmap.CompressFormat.PNG,100,outStream);
+            image.compress(Bitmap.CompressFormat.PNG,100,outStream);
             outStream.flush();
             outStream.close();
         }catch(FileNotFoundException e){
@@ -293,10 +306,10 @@ public class Upload_Article extends Activity implements TextWatcher {
          */
         //1080px이 최대길이, 가로/세로 중에 더 긴 길이를 기준으로 리사이징
         float size_check = 0;
-        if( resize_before.getHeight() >= resize_before.getWidth() ) {
-            size_check = resize_before.getHeight();
-        } else if( resize_before.getHeight() < resize_before.getWidth() ) {
-            size_check = resize_before.getWidth();
+        if( image.getHeight() >= image.getWidth() ) {
+            size_check = image.getHeight();
+        } else if( image.getHeight() < image.getWidth() ) {
+            size_check = image.getWidth();
         }
 
         //1080px 최대길이를 넘는 이미지는 리사이징, compress 둘다 함
@@ -344,7 +357,7 @@ public class Upload_Article extends Activity implements TextWatcher {
         } else {
             try{
                 outStream = new FileOutputStream(file);
-                resize_before.compress(Bitmap.CompressFormat.JPEG,80,outStream);
+                image.compress(Bitmap.CompressFormat.JPEG,80,outStream);
                 outStream.flush();
                 outStream.close();
             }catch(FileNotFoundException e){
@@ -402,10 +415,10 @@ public class Upload_Article extends Activity implements TextWatcher {
             String path = mes[0];
             String article_text = mes[1];
 
-            BitmapFactory.Options bfo = new BitmapFactory.Options();
-            bfo.inSampleSize = 1;
-            bit = BitmapFactory.decodeFile(path, bfo);
-            String img_path = getBitmapUploadImg_Path(bit);
+            //BitmapFactory.Options bfo = new BitmapFactory.Options();
+            //bfo.inSampleSize = 1;
+            //bit = BitmapFactory.decodeFile(path, bfo);
+            String img_path = getBitmapUploadImg_Path(path);
             Upload_ArticleImage("article", commonUtil.MakeImageName(User.getInstance().getUid()), img_path, article_text);
             return null;
         }
@@ -416,7 +429,7 @@ public class Upload_Article extends Activity implements TextWatcher {
         }
         @Override
         protected void onPostExecute(String res){
-            bit.recycle();
+            //bit.recycle();
 
         }
 

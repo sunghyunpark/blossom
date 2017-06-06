@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ import api.ApiInterface;
 import common.CommonUtil;
 import common.Share_Activity;
 import dialog.Other_ArticleMoreDialog;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import model.Article;
 import model.ArticleComment;
 import model.ArticleCommentResponse;
@@ -164,9 +168,33 @@ public class ArticleActivity extends Activity {
                     article.setCreated_at(articleDetailResponse.getArticle_detail().getCreated_at());
                     article.setBookmark_state(articleDetailResponse.getArticle_detail().getBookmark_state());
 
-                    Picasso.with(getApplicationContext())
-                            .load(article.getArticle_photo())
-                            .into(background_img);
+                    if(articleDetailResponse.getArticle_detail().getUser_article_photo().equals("Y")){
+                        ImageView user_article_bg = (ImageView)(findViewById(R.id.user_article_bg_img));
+                        user_article_bg.setVisibility(View.VISIBLE);
+                        int dp = dpToPx(getApplicationContext(), 190);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp);
+                        params.setMargins(0,dpToPx(getApplicationContext(),250),0,0);
+                        article_text.setLayoutParams(params);
+
+                        Glide.clear(background_img);
+                        Glide.with(getApplicationContext())
+                                .load(articleDetailResponse.getArticle_detail().getArticle_photo())
+                                .bitmapTransform(new BlurTransformation(getApplicationContext(), 50))
+                                .into(background_img);
+
+                        Glide.clear(user_article_bg);
+                        Glide.with(getApplicationContext())
+                                .load(articleDetailResponse.getArticle_detail().getArticle_photo())
+                                .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
+                                .into(user_article_bg);
+
+
+                    }else{
+                        Picasso.with(getApplicationContext())
+                                .load(article.getArticle_photo())
+                                .into(background_img);
+                    }
+
                     background_img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -273,6 +301,11 @@ public class ArticleActivity extends Activity {
             }
         });
 
+    }
+    private int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 
 

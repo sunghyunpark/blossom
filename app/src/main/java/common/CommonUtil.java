@@ -2,12 +2,16 @@ package common;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.yssh1020.blossom.AppController;
 import com.yssh1020.blossom.AppSettingManager;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -17,6 +21,9 @@ import api.ApiInterface;
 import db.RealmUtil;
 import model.CommonResponse;
 import model.User;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +33,8 @@ import retrofit2.Response;
  */
 
 public class CommonUtil {
+
+
 
     /**
      * edit background title
@@ -507,5 +516,48 @@ public class CommonUtil {
         }
 
         return msg;
+    }
+
+    public int exifOrientationToDegrees(int exifOrientation)
+    {
+        if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_90)
+        {
+            return 90;
+        }
+        else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_180)
+        {
+            return 180;
+        }
+        else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_270)
+        {
+            return 270;
+        }
+        return 0;
+    }
+
+    public Bitmap rotate(Bitmap bitmap, int degrees)
+    {
+        if(degrees != 0 && bitmap != null)
+        {
+            Matrix m = new Matrix();
+            m.setRotate(degrees, (float) bitmap.getWidth() / 2,
+                    (float) bitmap.getHeight() / 2);
+
+            try
+            {
+                Bitmap converted = Bitmap.createBitmap(bitmap, 0, 0,
+                        bitmap.getWidth(), bitmap.getHeight(), m, true);
+                if(bitmap != converted)
+                {
+                    bitmap.recycle();
+                    bitmap = converted;
+                }
+            }
+            catch(OutOfMemoryError ex)
+            {
+                // 메모리가 부족하여 회전을 시키지 못할 경우 그냥 원본을 반환합니다.
+            }
+        }
+        return bitmap;
     }
 }
