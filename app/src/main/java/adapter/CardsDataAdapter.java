@@ -57,6 +57,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     private String currentArticlePHOTO = "";
     private String currentArticleTEXT = "";
     private String currentArticleUID = "";
+    private String currentUserArticlePhoto = "";
     CommonUtil commonUtil = new CommonUtil();
     private ArrayList<ArticleComment> comment_listItems;
     private ViewGroup comment_empty_layout;
@@ -188,6 +189,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     currentArticlePHOTO = getItem(position).getArticle_photo();
                     currentArticleTEXT = getItem(position).getArticle_text();
                     currentArticleUID = getItem(position).getUid();
+                    currentUserArticlePhoto = getItem(position).getUser_article_photo();
                     LoadArticleComment(currentArticleID, "0");
                     recyclerView.setAdapter(adapter);
                 }
@@ -201,6 +203,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                     intent.putExtra("article_img", getItem(position).getArticle_photo());
                     intent.putExtra("article_text", getItem(position).getArticle_text());
                     intent.putExtra("from", "save");
+                    intent.putExtra("user_article_photo", getItem(position).getUser_article_photo());
                     mContext.startActivity(intent);
                 }
             });
@@ -248,6 +251,9 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
     }
     public String CurrentArticleTEXT(){
         return currentArticleTEXT;
+    }
+    public String CurrentUserArticlePhto(){
+        return currentUserArticlePhoto;
     }
 
     private int dpToPx(Context context, int dp) {

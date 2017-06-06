@@ -232,6 +232,7 @@ public class ArticleActivity extends Activity {
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
                             intent.putExtra("from", "share");
+                            intent.putExtra("user_article_photo", articleDetailResponse.getArticle_detail().getUser_article_photo());
                             intent.putExtra("article_img", articleDetailResponse.getArticle_detail().getArticle_photo());
                             intent.putExtra("article_text", articleDetailResponse.getArticle_detail().getArticle_text());
                             startActivity(intent);
@@ -246,6 +247,7 @@ public class ArticleActivity extends Activity {
                             Intent intent = new Intent(getApplicationContext(), Share_Activity.class);
                             intent.putExtra("article_img", articleDetailResponse.getArticle_detail().getArticle_photo());
                             intent.putExtra("article_text", articleDetailResponse.getArticle_detail().getArticle_text());
+                            intent.putExtra("user_article_photo", articleDetailResponse.getArticle_detail().getUser_article_photo());
                             intent.putExtra("from", "save");
                             startActivity(intent);
                         }

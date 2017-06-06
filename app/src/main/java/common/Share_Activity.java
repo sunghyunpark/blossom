@@ -20,14 +20,17 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.model.SharePhoto;
@@ -48,12 +51,15 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
 
 public class Share_Activity extends Activity {
 
     //os6.0 permission
     private static final int REQUEST_PERMISSIONS_READ_EXTERNAL_STORAGE = 10;
-    private String image_path, article_text, from;
+    private String image_path, article_text, from, user_article_photo;
     private ViewGroup title_lay;
     private TextView app_logo_txt;
 
@@ -68,6 +74,7 @@ public class Share_Activity extends Activity {
         image_path = intent.getExtras().getString("article_img");
         article_text = intent.getExtras().getString("article_text");
         from = intent.getExtras().getString("from");
+        user_article_photo = intent.getExtras().getString("user_article_photo");
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(getApplicationContext());
@@ -80,13 +87,37 @@ public class Share_Activity extends Activity {
         title_lay = (ViewGroup)findViewById(R.id.title_layout);
 
         ImageView article_picture = (ImageView)(findViewById(R.id.img));
-        Picasso.with(getApplicationContext())
-                .load(image_path)
-                .into(article_picture);
+        TextView article_text_txt = (TextView)findViewById(R.id.article_text);
+
+        if(user_article_photo.equals("Y")){
+            ImageView user_article_bg = (ImageView)(findViewById(R.id.user_article_bg_img));
+            user_article_bg.setVisibility(View.VISIBLE);
+            int dp = dpToPx(getApplicationContext(), 190);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp);
+            params.setMargins(0,dpToPx(getApplicationContext(),250),0,0);
+            article_text_txt.setLayoutParams(params);
+
+            Glide.clear(article_picture);
+            Glide.with(getApplicationContext())
+                    .load(image_path)
+                    .bitmapTransform(new BlurTransformation(getApplicationContext(), 50))
+                    .into(article_picture);
+
+            Glide.clear(user_article_bg);
+            Glide.with(getApplicationContext())
+                    .load(image_path)
+                    .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
+                    .into(user_article_bg);
+
+
+        }else{
+            Picasso.with(getApplicationContext())
+                    .load(image_path)
+                    .into(article_picture);
+        }
 
         app_logo_txt = (TextView)findViewById(R.id.app_logo_txt);
 
-        TextView article_text_txt = (TextView)findViewById(R.id.article_text);
         article_text_txt.setText(article_text);
 
         Button share_btn = (Button)findViewById(R.id.share_btn);
@@ -101,6 +132,12 @@ public class Share_Activity extends Activity {
         }else if(from.equals("share")){
             share_btn.setVisibility(View.VISIBLE);
         }
+    }
+
+    private int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 
     private class SaveArticle extends AsyncTask<Integer, Bitmap, Bitmap> {

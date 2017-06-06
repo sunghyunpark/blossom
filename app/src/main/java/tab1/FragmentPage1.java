@@ -123,6 +123,7 @@ public class FragmentPage1 extends Fragment {
                 intent.putExtra("from", "share");
                 intent.putExtra("article_img", mCardAdapter.CurrentArticlePHOTO());
                 intent.putExtra("article_text", mCardAdapter.CurrentArticleTEXT());
+                intent.putExtra("user_article_photo", mCardAdapter.CurrentUserArticlePhto());
                 startActivity(intent);
             }
         });
