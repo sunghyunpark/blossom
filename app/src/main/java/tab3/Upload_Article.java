@@ -153,7 +153,7 @@ public class Upload_Article extends Activity implements TextWatcher {
 
                 CommonResponse commonResponse = response.body();
                 if(!commonResponse.isError()){
-                    Toast.makeText(getApplicationContext(), "이야기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이야기가 등록되었습니다.\n공개를 원하시면 공개설정을 변경해주세요.", Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
                 }else{
                     //Toast.makeText(getApplicationContext(), commonResponse.getError_msg(),Toast.LENGTH_SHORT).show();
@@ -194,7 +194,8 @@ public class Upload_Article extends Activity implements TextWatcher {
                 if (response.isSuccessful()) {
 
                     if(!response.body().isError()){
-                        Toast.makeText(getApplicationContext(), "이야기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "이야기가 등록되었습니다.\n" +
+                                "공개를 원하시면 공개설정을 변경해주세요.", Toast.LENGTH_SHORT).show();
                         String img_path = AppController.getInstance().getServer_img_path()+"user_article_bg/"+img_name;
                         Upload_Article(User.getInstance().getUid(), article_text, img_path);
                         if(file.exists()){
