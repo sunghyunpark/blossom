@@ -31,6 +31,7 @@ import java.util.Locale;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import common.ImageViewer;
 import common.Share_Activity;
 import dialog.Me_ArticleMoreDialog;
 import dialog.Other_ArticleMoreDialog;
@@ -96,8 +97,7 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
             if(IsUserArticleBg(position)){
                 ImageView user_article_bg = (ImageView)(v.findViewById(R.id.user_article_bg_img));
                 user_article_bg.setVisibility(View.VISIBLE);
-                int dp = dpToPx(getContext(), 190);
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(getContext(), 190));
                 params.setMargins(0,dpToPx(getContext(),250),0,0);
                 article_text.setLayoutParams(params);
 
@@ -112,6 +112,14 @@ public class CardsDataAdapter extends ArrayAdapter<Article> {
                         .load(getItem(position).getArticle_photo())
                         .bitmapTransform(new CropCircleTransformation(getContext()))
                         .into(user_article_bg);
+                user_article_bg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ImageViewer.class);
+                        intent.putExtra("user_article_bg", getItem(position).getArticle_photo());
+                        getContext().startActivity(intent);
+                    }
+                });
 
 
             }else{

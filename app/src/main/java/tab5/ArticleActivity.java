@@ -34,6 +34,7 @@ import java.util.List;
 import api.ApiClient;
 import api.ApiInterface;
 import common.CommonUtil;
+import common.ImageViewer;
 import common.Share_Activity;
 import dialog.Other_ArticleMoreDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -187,6 +188,15 @@ public class ArticleActivity extends Activity {
                                 .load(articleDetailResponse.getArticle_detail().getArticle_photo())
                                 .bitmapTransform(new CropCircleTransformation(getApplicationContext()))
                                 .into(user_article_bg);
+
+                        user_article_bg.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getApplicationContext(), ImageViewer.class);
+                                intent.putExtra("user_article_bg", articleDetailResponse.getArticle_detail().getArticle_photo());
+                                startActivity(intent);
+                            }
+                        });
 
 
                     }else{
