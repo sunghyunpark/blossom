@@ -55,7 +55,14 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             PostSeedToArticleUserPushNotification(remoteMessage.getData().get("message"));
             appSettingManager.setTab5_State(true);
         }else if(remoteMessage.getData().get("flag").equals("blossom_push")){
+            //앱 이벤트 푸시
             PostSeedToArticleUserPushNotification(remoteMessage.getData().get("message"));
+        }else if(remoteMessage.getData().get("flag").equals("blossom_update")){
+            //앱 업데이트 푸시 시 플레이스토어로 이동되게
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=" + getPackageName()));
+            startActivity(intent);
+
         }
         CommonUtil commonUtil = new CommonUtil();
         int badge = AppController.getInstance().getApp_Badge_Cnt();
