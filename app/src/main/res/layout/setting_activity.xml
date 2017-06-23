@@ -289,7 +289,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:text="v1.1.0"/>
+                    android:text="v1.1.5"/>
             </RelativeLayout>
             <!--구분선-->
             <LinearLayout
