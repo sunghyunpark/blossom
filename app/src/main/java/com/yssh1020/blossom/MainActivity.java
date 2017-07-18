@@ -45,7 +45,7 @@ import view.CommonTopTitle;
 import static tab1.FragmentPage1.mLayout;
 
 /**
- * git test
+ * git test2
  */
 public class MainActivity extends FragmentActivity {
 
