@@ -44,6 +44,9 @@ import view.CommonTopTitle;
 
 import static tab1.FragmentPage1.mLayout;
 
+/**
+ * git test
+ */
 public class MainActivity extends FragmentActivity {
 
     private SessionManager session;    // session
